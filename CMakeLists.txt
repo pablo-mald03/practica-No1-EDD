@@ -13,6 +13,7 @@ qt_add_executable(PracticaNo1
     mainwindow.h
     mainwindow.ui
     recursos.qrc
+    pantallainicio.h pantallainicio.cpp pantallainicio.ui
 )
 
 target_link_libraries(PracticaNo1

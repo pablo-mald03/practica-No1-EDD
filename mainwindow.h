@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+//Region de importacion de ui
+#include"pantallainicio.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -19,5 +22,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    //Enrutamientos
+    PantallaInicio *inicio = nullptr;
+
 };
 #endif // MAINWINDOW_H
