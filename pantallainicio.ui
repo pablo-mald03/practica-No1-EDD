@@ -95,7 +95,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="btnInicio">
        <property name="minimumSize">
         <size>
          <width>400</width>

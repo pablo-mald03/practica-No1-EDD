@@ -15,8 +15,24 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->gestorVentanas->setCurrentWidget(this->inicio);
 
-    // int indiceActual = ui->gestorVentanas->currentIndex();
-    //connect(inicio, &PantallaInicio::solicitarRegistro, this, &MainWindow::mostrarRegistro);
+    connect(inicio, &PantallaInicio::solicitarSeleccion, this, &MainWindow::mostrarSeleccion);
+}
+
+//Metodo que permite ir a la pantalla de seleccion
+void MainWindow::mostrarSeleccion() {
+
+    if (!this->pantallaSelect) { // Si no existe, la creamos
+        this->pantallaSelect = new PantallaSeleccion(this);
+        ui->gestorVentanas->addWidget(this->pantallaSelect);
+
+        // Se conectan las demas signals que esta pueda ejecutar para que sepa que hacer el main
+        //connect(pantallaOpciones, &PantallaOpciones::solicitarConfiguracion, this, &MainWindow::mostrarConfiguracion);
+
+        connect(this->pantallaSelect, &PantallaSeleccion::solicitarRegresoInicio, this, [this](){
+            ui->gestorVentanas->setCurrentWidget(this->inicio);
+        });
+    }
+    ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
 }
 
 MainWindow::~MainWindow()

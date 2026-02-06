@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>assets/layoutsGame/LayoutInicial.png</file>
+        <file>assets/layoutsGame/LayoutConfigInicial.png</file>
     </qresource>
 </RCC>

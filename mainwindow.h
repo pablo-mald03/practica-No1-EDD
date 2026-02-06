@@ -5,6 +5,7 @@
 
 //Region de importacion de ui
 #include"pantallainicio.h"
+#include"pantallaseleccion.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,6 +26,11 @@ private:
 
     //Enrutamientos
     PantallaInicio *inicio = nullptr;
+    PantallaSeleccion * pantallaSelect = nullptr;
+
+    //Metodos de signals de hijos
+    void volverInicioSeleccion();
+    void mostrarSeleccion();
 
 };
 #endif // MAINWINDOW_H
