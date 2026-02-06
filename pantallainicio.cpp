@@ -24,7 +24,7 @@ PantallaInicio::~PantallaInicio()
 
 void PantallaInicio::on_pushButton_2_clicked()
 {
-    auto respuesta = QMessageBox::question(this, "Salir", "¿Seguro que quieres abandonar salir de la aplicacion?",
+    auto respuesta = QMessageBox::question(this, "Salir", "¿Seguro que quieres salir de la aplicacion?",
                                            QMessageBox::Yes | QMessageBox::No);
     if (respuesta == QMessageBox::Yes) {
         QApplication::quit();
