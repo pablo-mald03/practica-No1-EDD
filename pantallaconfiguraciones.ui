@@ -95,7 +95,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkStacking">
+              <widget class="QCheckBox" name="checkRobo">
                <property name="minimumSize">
                 <size>
                  <width>230</width>
@@ -109,7 +109,7 @@
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QCheckBox#checkStacking {
+                <string notr="true">QCheckBox#checkRobo {
     color: black;
     font-size: 24px;
 	font-weight: bold;
@@ -117,7 +117,7 @@
 }
 
 
-QCheckBox#checkStacking::indicator {
+QCheckBox#checkRobo::indicator {
     width: 20px;
     height: 20px;
     border: 2px solid #555555;
@@ -126,23 +126,23 @@ QCheckBox#checkStacking::indicator {
 }
 
 
-QCheckBox#checkStacking::indicator:hover {
+QCheckBox#checkRobo::indicator:hover {
     border: 2px solid #3498db;
     background-color: #3D3D3D;
 }
 
 
-QCheckBox#checkStacking::indicator:checked {
+QCheckBox#checkRobo::indicator:checked {
     background-color: #3498db; 
     border: 2px solid #3498db;
 
 }
 
-QCheckBox#checkStacking:disabled {
+QCheckBox#checkRobo:disabled {
     color: black;
 	font-weight: bold;
 }
-QCheckBox#checkStacking::indicator:disabled {
+QCheckBox#checkRobo::indicator:disabled {
     border: 2px solid #333333;
     background-color: #222222;
 }</string>

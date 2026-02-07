@@ -37,6 +37,10 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    //Variables necesarias para utilizar
+    bool estaConfigurando;
+
+
     //Enrutamientos
     PantallaInicio *inicio = nullptr;
     PantallaSeleccion * pantallaSelect = nullptr;

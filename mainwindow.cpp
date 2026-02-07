@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     setCentralWidget(ui->gestorVentanas);
 
+    this->estaConfigurando = false;
+
     this->inicio = new PantallaInicio(this);
     //Se agrega el widget
     ui->gestorVentanas->addWidget(this->inicio);
@@ -52,6 +54,7 @@ void MainWindow::mostrarSeleccion() {
         connect(this->pantallaSelect, &PantallaSeleccion::solicitarModalidad, this, &MainWindow::mostrarModalidad);
 
         connect(this->pantallaSelect, &PantallaSeleccion::solicitarRegresoInicio, this, [this](){
+            this->estaConfigurando = false;
             ui->gestorVentanas->setCurrentWidget(this->inicio);
         });
     }
@@ -69,8 +72,9 @@ void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
         connect(this->pantallaModal, &PantallaModalidad::solicitarConfiguraciones, this, &MainWindow::mostrarConfiguraciones);
 
         connect(this->pantallaModal, &PantallaModalidad::solicitarRegresoSeleccion, this, [this](){
-            ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
             this->pantallaModal->setChekedOpciones(this->datosConfig);
+            this->estaConfigurando = false;
+            ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
             vaciarPunteroDatos();
         });
     }else{
@@ -87,22 +91,18 @@ void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
 void MainWindow::mostrarConfiguraciones() {
 
     if (!this->pantallaConfiguracion) { // Si no existe, la creamos
-        this->pantallaConfiguracion = new PantallaConfiguraciones(this->datosConfig, this);
+        this->pantallaConfiguracion = new PantallaConfiguraciones(this->estaConfigurando,this->datosConfig, this);
         ui->gestorVentanas->addWidget(this->pantallaConfiguracion);
 
         //Se conectan las signls para poder cambiar de pantallas
         // connect(this->pantallaModal, &PantallaSeleccion::solicitarModalidad, this, &MainWindow::mostrarModalidad);
 
         connect(this->pantallaConfiguracion, &PantallaConfiguraciones::solicitarRegresoModalidad, this, [this](){
+            this->pantallaConfiguracion->setChekedOpciones(this->datosConfig,this->estaConfigurando);
             ui->gestorVentanas->setCurrentWidget(this->pantallaModal);
-            /*this->pantallaModal->setChekedOpciones(this->datosConfig);
-            vaciarPunteroDatos();*/
         });
     }else{
-       /* this->pantallaModal->setCantidad(cantidadPersonas);
-        this->pantallaModal->setPersonalizacion(personalizacion);
-        this->pantallaModal->setSeleccion();
-        this->pantallaModal->setChekedOpciones(this->datosConfig);*/
+        this->pantallaConfiguracion->setChekedOpciones(this->datosConfig,this->estaConfigurando);
     }
 
     ui->gestorVentanas->setCurrentWidget(this->pantallaConfiguracion);
