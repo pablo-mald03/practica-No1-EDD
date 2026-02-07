@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>assets/layoutsGame/LayoutInicial.png</file>
         <file>assets/layoutsGame/LayoutConfigInicial.png</file>
+        <file>assets/layoutsGame/LayoutSeleccion.png</file>
+        <file>assets/layoutsGame/LayoutConfiguracionP.png</file>
     </qresource>
 </RCC>

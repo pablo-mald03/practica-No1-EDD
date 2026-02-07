@@ -25,14 +25,30 @@ void MainWindow::mostrarSeleccion() {
         this->pantallaSelect = new PantallaSeleccion(this);
         ui->gestorVentanas->addWidget(this->pantallaSelect);
 
-        // Se conectan las demas signals que esta pueda ejecutar para que sepa que hacer el main
-        //connect(pantallaOpciones, &PantallaOpciones::solicitarConfiguracion, this, &MainWindow::mostrarConfiguracion);
+        //Se conectan las signls para poder cambiar de pantallas
+        connect(this->pantallaSelect, &PantallaSeleccion::solicitarModalidad, this, &MainWindow::mostrarModalidad);
 
         connect(this->pantallaSelect, &PantallaSeleccion::solicitarRegresoInicio, this, [this](){
             ui->gestorVentanas->setCurrentWidget(this->inicio);
         });
     }
     ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
+}
+
+void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
+
+    if (!this->pantallaModal) { // Si no existe, la creamos
+        this->pantallaModal = new PantallaModalidad(cantidadPersonas,personalizacion, this);
+        ui->gestorVentanas->addWidget(this->pantallaModal);
+
+        //Se conectan las signls para poder cambiar de pantallas
+       // connect(this->pantallaModal, &PantallaSeleccion::solicitarModalidad, this, &MainWindow::mostrarModalidad);
+
+        connect(this->pantallaModal, &PantallaModalidad::solicitarRegresoSeleccion, this, [this](){
+            ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
+        });
+    }
+    ui->gestorVentanas->setCurrentWidget(this->pantallaModal);
 }
 
 MainWindow::~MainWindow()

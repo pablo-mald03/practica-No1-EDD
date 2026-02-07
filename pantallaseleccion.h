@@ -20,9 +20,14 @@ private:
 
 signals:
     void solicitarRegresoInicio();
+    void solicitarModalidad(int cantidadPersonas, bool personalizacion);
 
 private slots:
     void on_btnRegreso_clicked();
+    void on_btnDosJugadores_clicked();
+    void on_btnTresJugadores_clicked();
+    void on_btnCuatroJugadores_clicked();
+    void on_btnMasJugadores_clicked();
 };
 
 #endif // PANTALLASELECCION_H
