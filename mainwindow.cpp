@@ -71,6 +71,10 @@ void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
         //Se conectan las signls para poder cambiar de pantallas
         connect(this->pantallaModal, &PantallaModalidad::solicitarConfiguraciones, this, &MainWindow::mostrarConfiguraciones);
 
+
+        //Signal que inicia el juego
+        connect(this->pantallaModal, &PantallaModalidad::solicitarIniciarJuego, this, &MainWindow::mostrarJuego);
+
         connect(this->pantallaModal, &PantallaModalidad::solicitarRegresoSeleccion, this, [this](){
             this->pantallaModal->setChekedOpciones(this->datosConfig);
             this->estaConfigurando = false;
@@ -94,9 +98,6 @@ void MainWindow::mostrarConfiguraciones() {
         this->pantallaConfiguracion = new PantallaConfiguraciones(this->estaConfigurando,this->datosConfig, this);
         ui->gestorVentanas->addWidget(this->pantallaConfiguracion);
 
-        //Se conectan las signls para poder cambiar de pantallas
-        // connect(this->pantallaModal, &PantallaSeleccion::solicitarModalidad, this, &MainWindow::mostrarModalidad);
-
         connect(this->pantallaConfiguracion, &PantallaConfiguraciones::solicitarRegresoModalidad, this, [this](){
             this->pantallaConfiguracion->setChekedOpciones(this->datosConfig,this->estaConfigurando);
             ui->gestorVentanas->setCurrentWidget(this->pantallaModal);
@@ -106,6 +107,21 @@ void MainWindow::mostrarConfiguraciones() {
     }
 
     ui->gestorVentanas->setCurrentWidget(this->pantallaConfiguracion);
+}
+
+
+//Metodo para iniciar el juego
+void MainWindow::mostrarJuego() {
+
+    /*CODIGO QUE INICIA EL JUEGO DEFINITIVAMENTE*/
+
+    qDebug() << "El valor de robo es: " << this->datosConfig->modoRobo;
+    qDebug() << "El valor de flip es: " << this->datosConfig->flip;
+    qDebug() << "El valor de mas 4 es: " << this->datosConfig->retoMas4;
+    qDebug() << "El valor de stacking es: " << this->datosConfig->stacking;
+    qDebug() << "El valor de ganar negra es: " << this->datosConfig->ganarNegra;
+    qDebug() << "El valor de grito uno es: " << this->datosConfig->gritoUno;
+
 }
 
 //Metodo que se encarga de eliminar el puntero

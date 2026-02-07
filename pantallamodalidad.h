@@ -39,6 +39,7 @@ private:
 signals:
     void solicitarRegresoSeleccion();
     void solicitarConfiguraciones();
+    void solicitarIniciarJuego();
 
 private slots:
     void on_btnRetorno_clicked();
@@ -46,6 +47,7 @@ private slots:
     void on_checkStacking_toggled(bool checked);
     void on_checkMas4_toggled(bool checked);
     void on_btnAvanzada_clicked();
+    void on_btnMasJugadores_clicked();
 };
 
 #endif // PANTALLAMODALIDAD_H

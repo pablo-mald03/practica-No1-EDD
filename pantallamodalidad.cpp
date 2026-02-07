@@ -92,3 +92,9 @@ void PantallaModalidad::on_btnAvanzada_clicked()
     emit solicitarConfiguraciones();
 }
 
+
+void PantallaModalidad::on_btnMasJugadores_clicked()
+{
+    emit solicitarIniciarJuego();
+}
+

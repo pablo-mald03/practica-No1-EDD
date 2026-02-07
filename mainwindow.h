@@ -53,6 +53,7 @@ private:
     void mostrarSeleccion();
     void mostrarModalidad(int cantidadPersonas, bool personalizacion);
     void mostrarConfiguraciones();
+    void mostrarJuego();
 
     //VaciarPunteroDatos
     void vaciarPunteroDatos();
