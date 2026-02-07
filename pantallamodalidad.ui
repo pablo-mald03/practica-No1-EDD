@@ -68,20 +68,15 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QLabel#labelJugadores{
-    color: #FFFFFF;         
-    font-size: 16px;
+    color: rgb(136, 5, 29);                 
+    font-size: 26px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
     background: transparent;    
     padding: 2px;
 }
 
-
-QLabel#labelJugadores {
-    font-size: 24px;
-    color: rgb(136, 5, 29);            
-    margin-bottom: 10px;
-}</string>
+</string>
            </property>
            <property name="text">
             <string>Jugadores:</string>
@@ -236,19 +231,19 @@ QSpinBox#spinBox1::down-button:pressed QSpinBox#spinBox1::down-arrow {
          <property name="minimumSize">
           <size>
            <width>900</width>
-           <height>40</height>
+           <height>50</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>900</width>
-           <height>40</height>
+           <height>50</height>
           </size>
          </property>
          <property name="styleSheet">
           <string notr="true">QLabel#labelConfig{
-    color: #FFFFFF;         
-    font-size: 16px;
+    color: rgb(255, 120, 0);        
+    font-size: 30px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
     background: transparent;    
@@ -256,11 +251,7 @@ QSpinBox#spinBox1::down-button:pressed QSpinBox#spinBox1::down-arrow {
 }
 
 
-QLabel#labelConfig {
-    font-size: 24px;
-    color: rgb(255, 120, 0);            
-    margin-bottom: 10px;
-}</string>
+</string>
          </property>
          <property name="text">
           <string>Configuraciones mas Populares:</string>
@@ -318,20 +309,20 @@ QLabel#labelConfig {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QLabel#labelAcomulacion {
-    color: #FFFFFF;            
-    font-size: 18px;
+              <string notr="true">QLabel#labelAcomulacion {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #FF512F, stop:1 #DD2476);
+
+    font-size: 22px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
-    background: transparent;    
+    
+    background: transparent;
     padding: 2px;
+    margin-bottom: 5px;
 }
 
-QLabel#labelAcomulacion {
-    font-size: 18px;
-    color: #3498db;        
-    margin-bottom: 10px;
-}</string>
+</string>
              </property>
              <property name="text">
               <string>Acumulacion:</string>
@@ -358,7 +349,7 @@ QLabel#labelAcomulacion {
              <property name="styleSheet">
               <string notr="true">QCheckBox#checkStacking {
     color: black;
-    font-size: 14px;
+     font-size: 18px;
 	font-weight: bold;
     spacing: 10px;           
 }
@@ -432,20 +423,20 @@ QCheckBox#checkStacking::indicator:disabled {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QLabel#labelMasCuatro {
-    color: #FFFFFF;            
-    font-size: 18px;
+              <string notr="true">QLabel#labelMasCuatro {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #f12711, stop:1 #f5af19);
+
+    font-size: 22px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
-    background: transparent;    
+    
+    background: transparent;
     padding: 2px;
+    margin-bottom: 5px;
 }
 
-QLabel#labelMasCuatro {
-    font-size: 18px;
-    color: #3498db;        
-    margin-bottom: 10px;
-}</string>
+</string>
              </property>
              <property name="text">
               <string>Reto del +4:</string>
@@ -472,7 +463,7 @@ QLabel#labelMasCuatro {
              <property name="styleSheet">
               <string notr="true">QCheckBox#checkMas4 {
     color: black;
-    font-size: 14px;
+    font-size: 18px;
 	font-weight: bold;
     spacing: 10px;           
 }

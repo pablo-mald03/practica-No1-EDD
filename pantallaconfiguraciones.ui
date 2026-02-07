@@ -13,39 +13,561 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>380</x>
-     <y>560</y>
-     <width>258</width>
-     <height>49</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_7">
-    <item>
-     <spacer name="horizontalSpacer_10">
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btnRetorno">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>41</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton#btnRetorno {
+  <layout class="QVBoxLayout" name="verticalLayout_7">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QWidget" name="widget_2" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>350</width>
+         <height>620</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>350</width>
+         <height>620</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QWidget" name="widget_3" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>481</width>
+             <height>130</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>130</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <widget class="QLabel" name="labelRobo">
+               <property name="minimumSize">
+                <size>
+                 <width>260</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>260</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel#labelRobo {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2193b0, stop:1 #6dd5ed);
+
+    font-size: 28px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+               </property>
+               <property name="text">
+                <string>Modo robo:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkStacking">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QCheckBox#checkStacking {
+    color: black;
+    font-size: 24px;
+	font-weight: bold;
+    spacing: 10px;           
+}
+
+
+QCheckBox#checkStacking::indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555555;
+    border-radius: 4px;       
+    background-color: #2D2D2D;
+}
+
+
+QCheckBox#checkStacking::indicator:hover {
+    border: 2px solid #3498db;
+    background-color: #3D3D3D;
+}
+
+
+QCheckBox#checkStacking::indicator:checked {
+    background-color: #3498db; 
+    border: 2px solid #3498db;
+
+}
+
+QCheckBox#checkStacking:disabled {
+    color: black;
+	font-weight: bold;
+}
+QCheckBox#checkStacking::indicator:disabled {
+    border: 2px solid #333333;
+    background-color: #222222;
+}</string>
+               </property>
+               <property name="text">
+                <string>Activado</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_4" native="true"/>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QLabel" name="labelGrito">
+               <property name="minimumSize">
+                <size>
+                 <width>260</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>260</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel#labelGrito {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFE259, stop:1 #FFA751);
+
+    font-size: 28px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+               </property>
+               <property name="text">
+                <string>Grito de UNO:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkGrito">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QCheckBox#checkGrito {
+    color: black;
+    font-size: 24px;
+	font-weight: bold;
+    spacing: 10px;           
+}
+
+
+QCheckBox#checkGrito::indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555555;
+    border-radius: 4px;       
+    background-color: #2D2D2D;
+}
+
+
+QCheckBox#checkGrito::indicator:hover {
+    border: 2px solid #3498db;
+    background-color: #3D3D3D;
+}
+
+
+QCheckBox#checkGrito::indicator:checked {
+    background-color: #3498db; 
+    border: 2px solid #3498db;
+
+}
+
+QCheckBox#checkGrito:disabled {
+    color: black;
+	font-weight: bold;
+}
+QCheckBox#checkGrito::indicator:disabled {
+    border: 2px solid #333333;
+    background-color: #222222;
+}</string>
+               </property>
+               <property name="text">
+                <string>Activado</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_8" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>50</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QWidget" name="widget_5" native="true"/>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QLabel" name="labelGanarNegra">
+               <property name="minimumSize">
+                <size>
+                 <width>280</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>280</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel#labelGanarNegra {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #FF512F, stop:1 #DD2476);
+
+  	 font-size: 28px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+               </property>
+               <property name="text">
+                <string>Ganar con Negra:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkGanarNegra">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QCheckBox#checkGanarNegra {
+    color: black;
+    font-size: 22px;
+	font-weight: bold;
+    spacing: 10px;           
+}
+
+
+QCheckBox#checkGanarNegra::indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555555;
+    border-radius: 4px;       
+    background-color: #2D2D2D;
+}
+
+
+QCheckBox#checkGanarNegra::indicator:hover {
+    border: 2px solid #3498db;
+    background-color: #3D3D3D;
+}
+
+
+QCheckBox#checkGanarNegra::indicator:checked {
+    background-color: #3498db; 
+    border: 2px solid #3498db;
+
+}
+
+QCheckBox#checkGanarNegra:disabled {
+    color: black;
+	font-weight: bold;
+}
+QCheckBox#checkGanarNegra::indicator:disabled {
+    border: 2px solid #333333;
+    background-color: #222222;
+}</string>
+               </property>
+               <property name="text">
+                <string>Activado</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_6" native="true"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_7" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>80</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>80</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QLabel" name="labelFlip">
+           <property name="minimumSize">
+            <size>
+             <width>230</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel#labelFlip {
+
+    color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFD700, stop:1 #FF4500);
+    
+    font-family: &quot;Segoe UI Black&quot;, &quot;Arial Black&quot;;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    background-color: transparent;
+    qproperty-alignment: 'AlignCenter';
+
+    border: 2px solid rgba(255, 255, 255, 50);
+    border-radius: 10px;
+    padding: 10px;
+}</string>
+           </property>
+           <property name="text">
+            <string>Modo Flip:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxFlip">
+             <property name="minimumSize">
+              <size>
+               <width>150</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox#checkBoxFlip::indicator {
+    width: 147px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+
+QCheckBox#checkBoxFlip::indicator:unchecked {
+    border: 2px solid #777;
+    background: qradialgradient(
+        cx:0.18, cy:0.5, radius:0.22,
+        fx:0.18, fy:0.5,
+        stop:0.9 #ffffff, stop:0.95 rgba(255, 255, 255, 0)
+    ), #444444; 
+}
+
+
+QCheckBox#checkBoxFlip::indicator:checked {
+    border: 2px solid #3ebf53;
+    background: qradialgradient(
+        cx:0.82, cy:0.5, radius:0.22,
+        fx:0.82, fy:0.5,
+        stop:0.9 #ffffff, stop:0.95 rgba(255, 255, 255, 0)
+    ), #4cd964; 
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QWidget" name="widget" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>350</width>
+         <height>620</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>350</width>
+         <height>620</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <item>
+      <spacer name="horizontalSpacer_10">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnRetorno">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>41</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#btnRetorno {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
                         stop:0 rgb(186, 156, 104), 
                         stop:1 rgba(255, 255, 255, 40));
@@ -76,27 +598,28 @@ QPushButton#btnRetorno:pressed {
     padding-left: 27px;
 }
 </string>
-      </property>
-      <property name="text">
-       <string>Regresar</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="horizontalSpacer_11">
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-   </layout>
-  </widget>
+       </property>
+       <property name="text">
+        <string>Regresar</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_11">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

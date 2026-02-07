@@ -58,6 +58,7 @@ void MainWindow::mostrarSeleccion() {
     ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
 }
 
+//Metodo para mostar Modalidad
 void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
 
     if (!this->pantallaModal) { // Si no existe, la creamos
@@ -65,7 +66,7 @@ void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
         ui->gestorVentanas->addWidget(this->pantallaModal);
 
         //Se conectan las signls para poder cambiar de pantallas
-       // connect(this->pantallaModal, &PantallaSeleccion::solicitarModalidad, this, &MainWindow::mostrarModalidad);
+        connect(this->pantallaModal, &PantallaModalidad::solicitarConfiguraciones, this, &MainWindow::mostrarConfiguraciones);
 
         connect(this->pantallaModal, &PantallaModalidad::solicitarRegresoSeleccion, this, [this](){
             ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
@@ -81,6 +82,32 @@ void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
 
     ui->gestorVentanas->setCurrentWidget(this->pantallaModal);
 }
+
+//Metodo para mostrar las configuraciones
+void MainWindow::mostrarConfiguraciones() {
+
+    if (!this->pantallaConfiguracion) { // Si no existe, la creamos
+        this->pantallaConfiguracion = new PantallaConfiguraciones(this->datosConfig, this);
+        ui->gestorVentanas->addWidget(this->pantallaConfiguracion);
+
+        //Se conectan las signls para poder cambiar de pantallas
+        // connect(this->pantallaModal, &PantallaSeleccion::solicitarModalidad, this, &MainWindow::mostrarModalidad);
+
+        connect(this->pantallaConfiguracion, &PantallaConfiguraciones::solicitarRegresoModalidad, this, [this](){
+            ui->gestorVentanas->setCurrentWidget(this->pantallaModal);
+            /*this->pantallaModal->setChekedOpciones(this->datosConfig);
+            vaciarPunteroDatos();*/
+        });
+    }else{
+       /* this->pantallaModal->setCantidad(cantidadPersonas);
+        this->pantallaModal->setPersonalizacion(personalizacion);
+        this->pantallaModal->setSeleccion();
+        this->pantallaModal->setChekedOpciones(this->datosConfig);*/
+    }
+
+    ui->gestorVentanas->setCurrentWidget(this->pantallaConfiguracion);
+}
+
 //Metodo que se encarga de eliminar el puntero
 void MainWindow::vaciarPunteroDatos(){
     if (this->datosConfig != nullptr) {

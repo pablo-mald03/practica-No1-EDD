@@ -8,6 +8,7 @@
 #include"pantallaseleccion.h"
 #include"pantallamodalidad.h"
 #include"pantallaconfiguraciones.h"
+#include"pantallaconfiguraciones.h"
 
 
 struct DatosConfiguracion {
@@ -47,6 +48,7 @@ private:
     //Metodos de signals de hijos
     void mostrarSeleccion();
     void mostrarModalidad(int cantidadPersonas, bool personalizacion);
+    void mostrarConfiguraciones();
 
     //VaciarPunteroDatos
     void vaciarPunteroDatos();

@@ -72,3 +72,23 @@ void PantallaModalidad::on_btnRetorno_clicked()
     emit solicitarRegresoSeleccion();
 }
 
+
+void PantallaModalidad::on_checkStacking_toggled(bool checked)
+{
+    this->m_config->stacking = checked;
+    ui->checkStacking->setChecked(this->m_config->stacking);
+
+}
+
+void PantallaModalidad::on_checkMas4_toggled(bool checked)
+{
+    this->m_config->retoMas4 = checked;
+    ui->checkMas4->setChecked(this->m_config->retoMas4);
+}
+
+
+void PantallaModalidad::on_btnAvanzada_clicked()
+{
+    emit solicitarConfiguraciones();
+}
+

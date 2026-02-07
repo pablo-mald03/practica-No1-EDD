@@ -38,10 +38,14 @@ private:
 
 signals:
     void solicitarRegresoSeleccion();
+    void solicitarConfiguraciones();
 
 private slots:
     void on_btnRetorno_clicked();
 
+    void on_checkStacking_toggled(bool checked);
+    void on_checkMas4_toggled(bool checked);
+    void on_btnAvanzada_clicked();
 };
 
 #endif // PANTALLAMODALIDAD_H
