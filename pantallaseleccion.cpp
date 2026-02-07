@@ -29,6 +29,7 @@ void PantallaSeleccion::on_btnRegreso_clicked()
 
 void PantallaSeleccion::on_btnDosJugadores_clicked()
 {
+
     emit solicitarModalidad(2,false);
 }
 
@@ -41,12 +42,12 @@ void PantallaSeleccion::on_btnTresJugadores_clicked()
 
 void PantallaSeleccion::on_btnCuatroJugadores_clicked()
 {
-    emit solicitarModalidad(3,false);
+    emit solicitarModalidad(4,false);
 }
 
 
 void PantallaSeleccion::on_btnMasJugadores_clicked()
 {
-    emit solicitarModalidad(0,true);
+    emit solicitarModalidad(5,true);
 }
 

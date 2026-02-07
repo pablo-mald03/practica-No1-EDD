@@ -14,6 +14,24 @@ PantallaModalidad::PantallaModalidad(int cantidadPersonas, bool personalizacion,
     this->setStyleSheet("QWidget#PantallaModalidad { "
                         "border-image: url(:/assets/layoutsGame/LayoutConfigInicial.png) 0 0 0 0 stretch stretch; "
                         "} ");
+
+    setSeleccion();
+}
+
+//Metodos setter publicos
+void PantallaModalidad::setCantidad(int valor){
+    this->cantidad = valor;
+}
+
+void PantallaModalidad::setPersonalizacion(bool flag){
+    this->personalizado = flag;
+}
+
+void PantallaModalidad::setSeleccion() {
+
+    this->ui->spinBox1->setEnabled(this->personalizado);
+    this->ui->spinBox1->setValue(this->cantidad);
+
 }
 
 PantallaModalidad::~PantallaModalidad()
@@ -23,6 +41,7 @@ PantallaModalidad::~PantallaModalidad()
 
 void PantallaModalidad::on_btnRetorno_clicked()
 {
+    this->ui->spinBox1->setEnabled(true);
     emit solicitarRegresoSeleccion();
 }
 

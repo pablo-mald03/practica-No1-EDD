@@ -13,70 +13,283 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="QWidget" name="widget" native="true">
        <property name="minimumSize">
         <size>
-         <width>260</width>
-         <height>700</height>
+         <width>200</width>
+         <height>620</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>620</height>
         </size>
        </property>
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <widget class="QWidget" name="widget_12" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>966</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QPushButton" name="btnDosJugadores">
+          <widget class="QLabel" name="labelJugadores">
            <property name="minimumSize">
             <size>
-             <width>300</width>
-             <height>150</height>
+             <width>900</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton#btnDosJugadores {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
-                        stop:0 rgb(255, 163, 72), 
-                        stop:1 rgb(220, 138, 221));
-    
-    border: 3px solid white;
-    border-radius: 20px;
-    
-    color: white;
-    font-family: &quot;Arial Black&quot;, Gadget, sans-serif;
-    font-size: 18px;
+            <string notr="true">QLabel#labelJugadores{
+    color: #FFFFFF;         
+    font-size: 16px;
     font-weight: bold;
-    text-transform: uppercase;
-    
-    padding: 10px 25px;
-}
-
-QPushButton#btnDosJugadores:hover {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
-                        stop:0 rgba(41, 128, 185, 255), 
-                        stop:1 rgba(142, 68, 173, 255));
-    border-color: #f1c40f;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    background: transparent;    
+    padding: 2px;
 }
 
 
-QPushButton#btnDosJugadores:pressed {
-    background-color: #2c3e50;
-    padding-top: 12px;
-    padding-left: 27px;
+QLabel#labelJugadores {
+    font-size: 24px;
+    color: rgb(136, 5, 29);            
+    margin-bottom: 10px;
 }</string>
            </property>
            <property name="text">
-            <string>2 Jugadores</string>
+            <string>Jugadores:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
            </property>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_2">
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>252</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="spinBox1">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>160</width>
+               <height>39</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">
+QSpinBox#spinBox1 {
+    border: 2px solid #555555;
+    border-radius: 6px;
+    background-color: rgb(205, 171, 143);
+    color: black;
+	font-weight: bold;
+    font-size: 18px;
+    min-height: 35px;
+    selection-background-color: rgb(237, 51, 59);
+	outline: none;
+}
+
+
+QSpinBox#spinBox1:hover, QSpinBox#spinBox1:focus {
+    border: 2px solid #3498db;
+}
+
+
+QSpinBox#spinBox1::up-button, QSpinBox#spinBox1::down-button {
+    background-color: rgb(255, 163, 72);
+    width: 25px;
+    border-left: 1px solid #555555;
+}
+
+
+QSpinBox#spinBox1::up-button {
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+    border-top-right-radius: 4px;
+}
+
+
+QSpinBox#spinBox1::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    border-bottom-right-radius: 4px;
+    border-top: 1px solid #555555; 
+}
+
+QSpinBox#spinBox1::up-button:hover, QSpinBox#spinBox1::down-button:hover {
+    background-color: #4D4D4D;
+}
+
+QSpinBox#spinBox1::up-button:pressed, QSpinBox#spinBox1::down-button:pressed {
+    background-color: #3498db;
+}
+
+
+QSpinBox#spinBox1::up-arrow, QSpinBox#spinBox1::down-arrow {
+    width: 7px;
+    height: 7px;
+}
+
+
+QSpinBox#spinBox1:disabled {
+    background-color: rgb(205, 171, 143);
+    color: black;
+    border-color: #333333;
+}
+
+QSpinBox#spinBox1::up-arrow {       
+    width: 0; 
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid black; 
+    margin-right: 2px;             
+}
+
+QSpinBox#spinBox1::down-arrow {
+    width: 0; 
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid black;    
+    margin-right: 2px;
+}
+
+
+QSpinBox#spinBox1::up-button:pressed QSpinBox#spinBox1::up-arrow {
+    border-bottom: 6px solid white;
+}
+
+QSpinBox#spinBox1::down-button:pressed QSpinBox#spinBox1::down-arrow {
+    border-top: 6px solid white;
+}</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelConfig">
+         <property name="minimumSize">
+          <size>
+           <width>900</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>900</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel#labelConfig{
+    color: #FFFFFF;         
+    font-size: 16px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    background: transparent;    
+    padding: 2px;
+}
+
+
+QLabel#labelConfig {
+    font-size: 24px;
+    color: rgb(255, 120, 0);            
+    margin-bottom: 10px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Configuraciones mas Populares:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_4" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>10</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer_7">
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
@@ -89,49 +302,233 @@ QPushButton#btnDosJugadores:pressed {
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btnTresJugadores">
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>150</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton#btnTresJugadores {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
-                        stop:0 rgb(50, 143, 42), 
-                        stop:1 rgb(246, 154, 86));
-    
-    border: 3px solid white;
-    border-radius: 20px;
-    
-    color: white;
-    font-family: &quot;Arial Black&quot;, Gadget, sans-serif;
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="labelAcomulacion">
+             <property name="minimumSize">
+              <size>
+               <width>230</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel#labelAcomulacion {
+    color: #FFFFFF;            
     font-size: 18px;
     font-weight: bold;
-    text-transform: uppercase;
-    
-    padding: 10px 25px;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    background: transparent;    
+    padding: 2px;
 }
 
-QPushButton#btnTresJugadores:hover {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
-                        stop:0 rgba(41, 128, 185, 255), 
-                        stop:1 rgba(142, 68, 173, 255));
-    border-color: #f1c40f;
-}
-
-
-QPushButton#btnTresJugadores:pressed {
-    background-color: #2c3e50;
-    padding-top: 12px;
-    padding-left: 27px;
+QLabel#labelAcomulacion {
+    font-size: 18px;
+    color: #3498db;        
+    margin-bottom: 10px;
 }</string>
+             </property>
+             <property name="text">
+              <string>Acumulacion:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox1">
+             <property name="minimumSize">
+              <size>
+               <width>230</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox#checkBox1 {
+    color: black;
+    font-size: 14px;
+	font-weight: bold;
+    spacing: 10px;           
+}
+
+
+QCheckBox#checkBox1::indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555555;
+    border-radius: 4px;       
+    background-color: #2D2D2D;
+}
+
+
+QCheckBox#checkBox1::indicator:hover {
+    border: 2px solid #3498db;
+    background-color: #3D3D3D;
+}
+
+
+QCheckBox#checkBox1::indicator:checked {
+    background-color: #3498db; 
+    border: 2px solid #3498db;
+
+}
+
+
+QCheckBox#checkBox1:disabled {
+    color: black;
+	font-weight: bold;
+}
+QCheckBox#checkBox1::indicator:disabled {
+    border: 2px solid #333333;
+    background-color: #222222;
+}</string>
+             </property>
+             <property name="text">
+              <string>Desactivado</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
-           <property name="text">
-            <string>3 Jugadores</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
            </property>
-          </widget>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="labelMasCuatro">
+             <property name="minimumSize">
+              <size>
+               <width>230</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel#labelMasCuatro {
+    color: #FFFFFF;            
+    font-size: 18px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    background: transparent;    
+    padding: 2px;
+}
+
+QLabel#labelMasCuatro {
+    font-size: 18px;
+    color: #3498db;        
+    margin-bottom: 10px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Reto del +4:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox2">
+             <property name="minimumSize">
+              <size>
+               <width>230</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox#checkBox2 {
+    color: black;
+    font-size: 14px;
+	font-weight: bold;
+    spacing: 10px;           
+}
+
+
+QCheckBox#checkBox2::indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555555;
+    border-radius: 4px;       
+    background-color: #2D2D2D;
+}
+
+
+QCheckBox#checkBox2::indicator:hover {
+    border: 2px solid #3498db;
+    background-color: #3D3D3D;
+}
+
+
+QCheckBox#checkBox2::indicator:checked {
+    background-color: #3498db; 
+    border: 2px solid #3498db;
+
+}
+
+
+QCheckBox#checkBox2:disabled {
+    color: black;
+	font-weight: bold;
+	
+}
+QCheckBox#checkBox2::indicator:disabled {
+    border: 2px solid #333333;
+    background-color: #222222;
+}</string>
+             </property>
+             <property name="text">
+              <string>Desactivado</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
@@ -139,37 +536,51 @@ QPushButton#btnTresJugadores:pressed {
         <widget class="QWidget" name="widget_3" native="true">
          <property name="minimumSize">
           <size>
-           <width>450</width>
-           <height>90</height>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
           </size>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Orientation::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnMasJugadores">
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton#btnMasJugadores {
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnMasJugadores">
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>250</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#btnMasJugadores {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
                         stop:0 rgb(21, 10, 154), 
                         stop:1 rgb(152, 163, 7));
@@ -199,24 +610,90 @@ QPushButton#btnMasJugadores:pressed {
     padding-top: 12px;
     padding-left: 27px;
 }</string>
-           </property>
-           <property name="text">
-            <string>Iniciar</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Orientation::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+             </property>
+             <property name="text">
+              <string>Iniciar</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnAvanzada">
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>250</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#btnAvanzada {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+                        stop:0 rgb(109, 31, 201), 
+                        stop:1 rgb(152, 163, 7));
+    
+    border: 3px solid white;
+    border-radius: 20px;
+    
+    color: white;
+    font-family: &quot;Arial Black&quot;, Gadget, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    
+    padding: 10px 25px;
+}
+
+QPushButton#btnAvanzada:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+                        stop:0 rgba(41, 128, 185, 255), 
+                        stop:1 rgba(142, 68, 173, 255));
+    border-color: #f1c40f;
+}
+
+
+QPushButton#btnAvanzada:pressed {
+    background-color: #2c3e50;
+    padding-top: 12px;
+    padding-left: 27px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Configuracion Avanzada</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -226,8 +703,14 @@ QPushButton#btnMasJugadores:pressed {
       <widget class="QWidget" name="widget_2" native="true">
        <property name="minimumSize">
         <size>
-         <width>260</width>
-         <height>700</height>
+         <width>200</width>
+         <height>620</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>620</height>
         </size>
        </property>
       </widget>
@@ -235,34 +718,30 @@ QPushButton#btnMasJugadores:pressed {
     </layout>
    </item>
    <item>
-    <widget class="QWidget" name="widget_5" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>1051</width>
-       <height>70</height>
-      </size>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <item>
-       <widget class="QWidget" name="widget_10" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>550</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnRetorno">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>41</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton#btnRetorno {
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <item>
+      <spacer name="horizontalSpacer_10">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnRetorno">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>41</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#btnRetorno {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
                         stop:0 rgb(186, 156, 104), 
                         stop:1 rgba(255, 255, 255, 40));
@@ -293,24 +772,26 @@ QPushButton#btnRetorno:pressed {
     padding-left: 27px;
 }
 </string>
-        </property>
-        <property name="text">
-         <string>Regresar</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget_11" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>550</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+       </property>
+       <property name="text">
+        <string>Regresar</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_11">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

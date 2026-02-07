@@ -15,13 +15,19 @@ public:
     explicit PantallaModalidad(int cantidadPersonas, bool personalizacion, QWidget *parent = nullptr);
     ~PantallaModalidad();
 
+    //Metodos para setear valores
+    void setCantidad(int valor);
+    void setPersonalizacion(bool flag);
+
+    //Metodo que se encarga de actualizar los datos en UI
+    void setSeleccion();
+
 private:
     Ui::PantallaModalidad *ui;
 
     //Apartado de atributos de la clase propios
     int cantidad;
     bool personalizado;
-
 
 signals:
     void solicitarRegresoSeleccion();

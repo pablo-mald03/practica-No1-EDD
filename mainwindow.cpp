@@ -47,7 +47,12 @@ void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
         connect(this->pantallaModal, &PantallaModalidad::solicitarRegresoSeleccion, this, [this](){
             ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
         });
+    }else{
+        this->pantallaModal->setCantidad(cantidadPersonas);
+        this->pantallaModal->setPersonalizacion(personalizacion);
+        this->pantallaModal->setSeleccion();
     }
+
     ui->gestorVentanas->setCurrentWidget(this->pantallaModal);
 }
 
