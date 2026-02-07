@@ -1,11 +1,34 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QScreen>
+#include <QGuiApplication>
+#include <QStyle>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //Instrucciones indicadas para poder abrir en mas de una pantalla
+    QList<QScreen *> screens = QGuiApplication::screens();
+
+    if (screens.size() > 1) {
+        QScreen *segundaPantalla = screens.at(1);
+        QRect geometria = segundaPantalla->availableGeometry();
+
+        this->setGeometry(
+            QStyle::alignedRect(
+                Qt::LeftToRight,
+                Qt::AlignCenter,
+                this->size(),
+                geometria
+                )
+            );
+    } else {
+        this->move(QGuiApplication::primaryScreen()->availableGeometry().center() - this->rect().center());
+    }
 
     setCentralWidget(ui->gestorVentanas);
 
@@ -38,7 +61,7 @@ void MainWindow::mostrarSeleccion() {
 void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
 
     if (!this->pantallaModal) { // Si no existe, la creamos
-        this->pantallaModal = new PantallaModalidad(cantidadPersonas,personalizacion, this);
+        this->pantallaModal = new PantallaModalidad(this->datosConfig, cantidadPersonas,personalizacion, this);
         ui->gestorVentanas->addWidget(this->pantallaModal);
 
         //Se conectan las signls para poder cambiar de pantallas
@@ -46,17 +69,28 @@ void MainWindow::mostrarModalidad(int cantidadPersonas, bool personalizacion) {
 
         connect(this->pantallaModal, &PantallaModalidad::solicitarRegresoSeleccion, this, [this](){
             ui->gestorVentanas->setCurrentWidget(this->pantallaSelect);
+            this->pantallaModal->setChekedOpciones(this->datosConfig);
+            vaciarPunteroDatos();
         });
     }else{
         this->pantallaModal->setCantidad(cantidadPersonas);
         this->pantallaModal->setPersonalizacion(personalizacion);
         this->pantallaModal->setSeleccion();
+        this->pantallaModal->setChekedOpciones(this->datosConfig);
     }
 
     ui->gestorVentanas->setCurrentWidget(this->pantallaModal);
 }
+//Metodo que se encarga de eliminar el puntero
+void MainWindow::vaciarPunteroDatos(){
+    if (this->datosConfig != nullptr) {
+        delete this->datosConfig;
+        this->datosConfig = nullptr;
+    }
+}
 
 MainWindow::~MainWindow()
 {
+    vaciarPunteroDatos();
     delete ui;
 }

@@ -7,6 +7,17 @@
 #include"pantallainicio.h"
 #include"pantallaseleccion.h"
 #include"pantallamodalidad.h"
+#include"pantallaconfiguraciones.h"
+
+
+struct DatosConfiguracion {
+    bool stacking;
+    bool retoMas4;
+    bool modoRobo;
+    bool gritoUno;
+    bool ganarNegra;
+    bool flip;
+};
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,10 +40,15 @@ private:
     PantallaInicio *inicio = nullptr;
     PantallaSeleccion * pantallaSelect = nullptr;
     PantallaModalidad * pantallaModal = nullptr;
+    PantallaConfiguraciones * pantallaConfiguracion = nullptr;
+    //Punteros de configuracion
+    DatosConfiguracion * datosConfig = nullptr;
 
     //Metodos de signals de hijos
     void mostrarSeleccion();
     void mostrarModalidad(int cantidadPersonas, bool personalizacion);
 
+    //VaciarPunteroDatos
+    void vaciarPunteroDatos();
 };
 #endif // MAINWINDOW_H

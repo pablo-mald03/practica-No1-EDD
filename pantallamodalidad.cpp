@@ -1,7 +1,8 @@
 #include "pantallamodalidad.h"
 #include "ui_pantallamodalidad.h"
+#include "mainwindow.h"
 
-PantallaModalidad::PantallaModalidad(int cantidadPersonas, bool personalizacion, QWidget *parent)
+PantallaModalidad::PantallaModalidad(DatosConfiguracion * &config,int cantidadPersonas, bool personalizacion, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PantallaModalidad ), cantidad(cantidadPersonas),personalizado(personalizacion)
 {
@@ -15,7 +16,7 @@ PantallaModalidad::PantallaModalidad(int cantidadPersonas, bool personalizacion,
                         "border-image: url(:/assets/layoutsGame/LayoutConfigInicial.png) 0 0 0 0 stretch stretch; "
                         "} ");
 
-    setSeleccion();
+    setChekedOpciones(config);
 }
 
 //Metodos setter publicos
@@ -32,6 +33,32 @@ void PantallaModalidad::setSeleccion() {
     this->ui->spinBox1->setEnabled(this->personalizado);
     this->ui->spinBox1->setValue(this->cantidad);
 
+}
+
+//metodo que setea por default todo lo de la UI
+void PantallaModalidad::setChekedOpciones(DatosConfiguracion * &config){
+
+    if (config == nullptr) {
+        config = new DatosConfiguracion();
+    }
+    this->m_config = config;
+
+    setSeleccion();
+
+    this->m_config->stacking = true;
+    this->m_config->retoMas4 = true;
+
+    if (m_config) {
+
+        ui->checkStacking->blockSignals(true);
+        ui->checkMas4->blockSignals(true);
+        //Se setean los valores de los checkbox
+        ui->checkStacking->setChecked(this->m_config->stacking);
+        ui->checkMas4->setChecked(this->m_config->retoMas4);
+
+        ui->checkStacking->blockSignals(false);
+        ui->checkMas4->blockSignals(false);
+    }
 }
 
 PantallaModalidad::~PantallaModalidad()

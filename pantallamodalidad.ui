@@ -342,7 +342,7 @@ QLabel#labelAcomulacion {
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox1">
+            <widget class="QCheckBox" name="checkStacking">
              <property name="minimumSize">
               <size>
                <width>230</width>
@@ -356,7 +356,7 @@ QLabel#labelAcomulacion {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox#checkBox1 {
+              <string notr="true">QCheckBox#checkStacking {
     color: black;
     font-size: 14px;
 	font-weight: bold;
@@ -364,7 +364,7 @@ QLabel#labelAcomulacion {
 }
 
 
-QCheckBox#checkBox1::indicator {
+QCheckBox#checkStacking::indicator {
     width: 20px;
     height: 20px;
     border: 2px solid #555555;
@@ -373,30 +373,30 @@ QCheckBox#checkBox1::indicator {
 }
 
 
-QCheckBox#checkBox1::indicator:hover {
+QCheckBox#checkStacking::indicator:hover {
     border: 2px solid #3498db;
     background-color: #3D3D3D;
 }
 
 
-QCheckBox#checkBox1::indicator:checked {
+QCheckBox#checkStacking::indicator:checked {
     background-color: #3498db; 
     border: 2px solid #3498db;
 
 }
 
 
-QCheckBox#checkBox1:disabled {
+QCheckBox#checkStacking:disabled {
     color: black;
 	font-weight: bold;
 }
-QCheckBox#checkBox1::indicator:disabled {
+QCheckBox#checkStacking::indicator:disabled {
     border: 2px solid #333333;
     background-color: #222222;
 }</string>
              </property>
              <property name="text">
-              <string>Desactivado</string>
+              <string>Activado</string>
              </property>
             </widget>
            </item>
@@ -456,7 +456,7 @@ QLabel#labelMasCuatro {
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox2">
+            <widget class="QCheckBox" name="checkMas4">
              <property name="minimumSize">
               <size>
                <width>230</width>
@@ -470,7 +470,7 @@ QLabel#labelMasCuatro {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox#checkBox2 {
+              <string notr="true">QCheckBox#checkMas4 {
     color: black;
     font-size: 14px;
 	font-weight: bold;
@@ -478,7 +478,7 @@ QLabel#labelMasCuatro {
 }
 
 
-QCheckBox#checkBox2::indicator {
+QCheckBox#checkMas4::indicator {
     width: 20px;
     height: 20px;
     border: 2px solid #555555;
@@ -487,31 +487,31 @@ QCheckBox#checkBox2::indicator {
 }
 
 
-QCheckBox#checkBox2::indicator:hover {
+QCheckBox#checkMas4::indicator:hover {
     border: 2px solid #3498db;
     background-color: #3D3D3D;
 }
 
 
-QCheckBox#checkBox2::indicator:checked {
+QCheckBox#checkMas4::indicator:checked {
     background-color: #3498db; 
     border: 2px solid #3498db;
 
 }
 
 
-QCheckBox#checkBox2:disabled {
+QCheckBox#checkMas4:disabled {
     color: black;
 	font-weight: bold;
 	
 }
-QCheckBox#checkBox2::indicator:disabled {
+QCheckBox#checkMas4::indicator:disabled {
     border: 2px solid #333333;
     background-color: #222222;
 }</string>
              </property>
              <property name="text">
-              <string>Desactivado</string>
+              <string>Activado</string>
              </property>
             </widget>
            </item>

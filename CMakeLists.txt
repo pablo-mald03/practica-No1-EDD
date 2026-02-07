@@ -16,6 +16,7 @@ qt_add_executable(PracticaNo1
     pantallainicio.h pantallainicio.cpp pantallainicio.ui
     pantallaseleccion.h pantallaseleccion.cpp pantallaseleccion.ui
     pantallamodalidad.h pantallamodalidad.cpp pantallamodalidad.ui
+    pantallaconfiguraciones.h pantallaconfiguraciones.cpp pantallaconfiguraciones.ui
 
 )
 
