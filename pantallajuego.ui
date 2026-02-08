@@ -20,8 +20,14 @@
       <widget class="QPushButton" name="btnRetorno">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>130</width>
          <height>41</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>130</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -35,25 +41,24 @@
     
     color: white;
     font-family: &quot;Arial Black&quot;, Gadget, sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     text-transform: uppercase;
-    
-    padding: 10px 25px;
+
 }
 
 QPushButton#btnRetorno:hover {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
-                        stop:0 rgb(255, 72, 72), 
-                        stop:1 rgba(142, 68, 173, 255));
+                        stop:0 rgb(220, 138, 221), 
+                        stop:1 rgb(119, 118, 123));
     border-color: #f1c40f;
 }
 
 
 QPushButton#btnRetorno:pressed {
     background-color: #2c3e50;
-    padding-top: 12px;
-    padding-left: 27px;
+  
+ 
 }
 </string>
        </property>
@@ -67,7 +72,13 @@ QPushButton#btnRetorno:pressed {
        <property name="minimumSize">
         <size>
          <width>200</width>
-         <height>0</height>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>60</height>
         </size>
        </property>
       </widget>
@@ -80,12 +91,18 @@ QPushButton#btnRetorno:pressed {
          <height>50</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>60</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">QLabel#labelVueltas {        
  
-    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #FF512F, stop:1 #DD2476);
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgb(99, 69, 44), stop:1 rgb(26, 10, 54));
 
-  	 font-size: 15px;
+  	 font-size: 20px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
     
@@ -97,7 +114,7 @@ QPushButton#btnRetorno:pressed {
 </string>
        </property>
        <property name="text">
-        <string>Vuelta</string>
+        <string>Direccion: Derecha </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -109,7 +126,13 @@ QPushButton#btnRetorno:pressed {
        <property name="minimumSize">
         <size>
          <width>150</width>
-         <height>50</height>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>60</height>
         </size>
        </property>
       </widget>
@@ -122,12 +145,18 @@ QPushButton#btnRetorno:pressed {
          <height>50</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>60</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">QLabel#labelNombreJugador {        
  
-    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #FF512F, stop:1 #DD2476);
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgb(39, 64, 28), stop:1 rgb(38, 90, 76));
 
-  	 font-size: 15px;
+  	 font-size: 20px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
     
@@ -139,7 +168,7 @@ QPushButton#btnRetorno:pressed {
 </string>
        </property>
        <property name="text">
-        <string>Jugador:</string>
+        <string>Jugador1</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -151,7 +180,13 @@ QPushButton#btnRetorno:pressed {
        <property name="minimumSize">
         <size>
          <width>200</width>
-         <height>0</height>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>60</height>
         </size>
        </property>
       </widget>
@@ -184,8 +219,8 @@ QPushButton#btnRetorno:pressed {
 
 QPushButton#btnPersonas:hover {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
-                        stop:0 rgb(255, 72, 72), 
-                        stop:1 rgba(142, 68, 173, 255));
+                        stop:0 rgb(192, 97, 203), 
+                        stop:1 rgb(9, 147, 29));
     border-color: #f1c40f;
 }
 
@@ -205,13 +240,29 @@ QPushButton#btnPersonas:pressed {
     </layout>
    </item>
    <item>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>300</width>
+       <height>120</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QWidget" name="widgetSpacer5_3" native="true">
        <property name="minimumSize">
         <size>
-         <width>30</width>
-         <height>280</height>
+         <width>50</width>
+         <height>320</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
         </size>
        </property>
       </widget>
@@ -222,8 +273,14 @@ QPushButton#btnPersonas:pressed {
         <widget class="QWidget" name="widgetSpacer4" native="true">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>50</height>
+           <width>170</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>170</width>
+           <height>20</height>
           </size>
          </property>
         </widget>
@@ -232,8 +289,14 @@ QPushButton#btnPersonas:pressed {
         <widget class="QWidget" name="widgetBaraja" native="true">
          <property name="minimumSize">
           <size>
-           <width>120</width>
-           <height>150</height>
+           <width>150</width>
+           <height>170</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>170</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -246,7 +309,13 @@ QPushButton#btnPersonas:pressed {
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>50</height>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>170</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -257,8 +326,8 @@ QPushButton#btnPersonas:pressed {
       <widget class="QWidget" name="widgetSpacer5" native="true">
        <property name="minimumSize">
         <size>
-         <width>300</width>
-         <height>280</height>
+         <width>350</width>
+         <height>320</height>
         </size>
        </property>
       </widget>
@@ -269,8 +338,14 @@ QPushButton#btnPersonas:pressed {
         <widget class="QWidget" name="widgetSpacer6" native="true">
          <property name="minimumSize">
           <size>
-           <width>120</width>
-           <height>50</height>
+           <width>170</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>170</width>
+           <height>20</height>
           </size>
          </property>
         </widget>
@@ -279,8 +354,14 @@ QPushButton#btnPersonas:pressed {
         <widget class="QWidget" name="widgetStacked" native="true">
          <property name="minimumSize">
           <size>
-           <width>120</width>
+           <width>170</width>
            <height>150</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>170</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -292,8 +373,14 @@ QPushButton#btnPersonas:pressed {
         <widget class="QWidget" name="widgetSpacer6_2" native="true">
          <property name="minimumSize">
           <size>
-           <width>120</width>
-           <height>50</height>
+           <width>170</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>170</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -304,8 +391,8 @@ QPushButton#btnPersonas:pressed {
       <widget class="QWidget" name="widgetSpacer5_2" native="true">
        <property name="minimumSize">
         <size>
-         <width>500</width>
-         <height>280</height>
+         <width>600</width>
+         <height>320</height>
         </size>
        </property>
       </widget>
@@ -318,6 +405,9 @@ QPushButton#btnPersonas:pressed {
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <widget class="QPushButton" name="btnRetar">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>130</width>
@@ -344,7 +434,7 @@ QPushButton#btnPersonas:pressed {
 
 QPushButton#btnRetar:hover {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
-                        stop:0 rgb(255, 72, 72), 
+                        stop:0 rgb(245, 194, 17), 
                         stop:1 rgba(142, 68, 173, 255));
     border-color: #f1c40f;
 }
@@ -355,7 +445,13 @@ QPushButton#btnRetar:pressed {
     padding-top: 12px;
     padding-left: 27px;
 }
-</string>
+
+QPushButton#btnRetar:disabled {
+    background: #2d2d2d; 
+    color: #555555;
+    border: 2px dashed #444444; 
+    border-radius: 10px;
+}</string>
          </property>
          <property name="text">
           <string>Retar</string>
@@ -366,8 +462,14 @@ QPushButton#btnRetar:pressed {
         <widget class="QWidget" name="widgetControles" native="true">
          <property name="minimumSize">
           <size>
-           <width>800</width>
-           <height>80</height>
+           <width>920</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
           </size>
          </property>
         </widget>
@@ -375,12 +477,43 @@ QPushButton#btnRetar:pressed {
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="textoUNO">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>130</width>
              <height>50</height>
             </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit#textoUNO {
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    padding: 5px 10px;
+    background-color: #f9f9f9;
+	font-size: bold;
+    color: black;
+    selection-background-color: #3498db;
+}
+
+QLineEdit#textoUNO:focus {
+    border: 2px solid #3498db;
+    background-color: #ffffff;
+}
+
+QLineEdit#textoUNO:disabled {
+    background-color: rgba(0, 0, 0, 50);
+    color: rgba(255, 255, 255, 60);      
+    border: 1px dashed rgba(255, 255, 255, 30); 
+}</string>
            </property>
           </widget>
          </item>
@@ -399,6 +532,9 @@ QPushButton#btnRetar:pressed {
          </item>
          <item>
           <widget class="QPushButton" name="btnUNO">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>130</width>
@@ -425,8 +561,8 @@ QPushButton#btnRetar:pressed {
 
 QPushButton#btnUNO:hover {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
-                        stop:0 rgb(255, 72, 72), 
-                        stop:1 rgba(142, 68, 173, 255));
+                        stop:0 rgb(9, 147, 29), 
+                        stop:1 rgb(94, 92, 100));
     border-color: #f1c40f;
 }
 
@@ -436,7 +572,13 @@ QPushButton#btnUNO:pressed {
     padding-top: 12px;
     padding-left: 27px;
 }
-</string>
+
+QPushButton#btnUNO:disabled {
+    background: #2d2d2d; 
+    color: #555555;
+    border: 2px dashed #444444; 
+    border-radius: 10px;
+}</string>
            </property>
            <property name="text">
             <string>UNO!</string>
@@ -452,7 +594,13 @@ QPushButton#btnUNO:pressed {
        <property name="minimumSize">
         <size>
          <width>900</width>
-         <height>30</height>
+         <height>10</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>10</height>
         </size>
        </property>
       </widget>
@@ -460,7 +608,20 @@ QPushButton#btnUNO:pressed {
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QWidget" name="widgetSpacer1_2" native="true"/>
+        <widget class="QWidget" name="widgetSpacer1_2" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>10</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>10</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -469,11 +630,17 @@ QPushButton#btnUNO:pressed {
            <property name="minimumSize">
             <size>
              <width>1241</width>
-             <height>200</height>
+             <height>240</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>240</height>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: red;</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -482,18 +649,37 @@ QPushButton#btnUNO:pressed {
            <property name="minimumSize">
             <size>
              <width>901</width>
-             <height>50</height>
+             <height>10</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>10</height>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: orange;</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item>
-        <widget class="QWidget" name="widgetSpacer1_3" native="true"/>
+        <widget class="QWidget" name="widgetSpacer1_3" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>18</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>18</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
