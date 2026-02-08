@@ -4,5 +4,6 @@
         <file>assets/layoutsGame/LayoutConfigInicial.png</file>
         <file>assets/layoutsGame/LayoutSeleccion.png</file>
         <file>assets/layoutsGame/LayoutConfiguracionP.png</file>
+        <file>assets/layoutsGame/LayoutJuego.png</file>
     </qresource>
 </RCC>

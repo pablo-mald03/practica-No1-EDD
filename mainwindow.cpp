@@ -115,12 +115,21 @@ void MainWindow::mostrarJuego() {
 
     /*CODIGO QUE INICIA EL JUEGO DEFINITIVAMENTE*/
 
-    qDebug() << "El valor de robo es: " << this->datosConfig->modoRobo;
-    qDebug() << "El valor de flip es: " << this->datosConfig->flip;
-    qDebug() << "El valor de mas 4 es: " << this->datosConfig->retoMas4;
-    qDebug() << "El valor de stacking es: " << this->datosConfig->stacking;
-    qDebug() << "El valor de ganar negra es: " << this->datosConfig->ganarNegra;
-    qDebug() << "El valor de grito uno es: " << this->datosConfig->gritoUno;
+    if (!this->juegoScreen) { // Si no existe, la creamos
+        this->juegoScreen = new PantallaJuego(this->estaConfigurando,this->datosConfig, this);
+        ui->gestorVentanas->addWidget(this->juegoScreen);
+
+        connect(this->juegoScreen, &PantallaJuego::solicitarSalida, this, [this](){
+            //this->juegoScreen->setChekedOpciones(this->datosConfig,this->estaConfigurando);
+            mostrarSeleccion();
+            delete this->juegoScreen;
+            this->juegoScreen = nullptr;
+        });
+    }else{
+        //this->juegoScreen->setChekedOpciones(this->datosConfig,this->estaConfigurando);
+    }
+
+    ui->gestorVentanas->setCurrentWidget(this->juegoScreen);
 
 }
 

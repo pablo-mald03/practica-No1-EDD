@@ -47,6 +47,10 @@ void PantallaModalidad::setChekedOpciones(DatosConfiguracion * &config){
 
     this->m_config->stacking = true;
     this->m_config->retoMas4 = true;
+    this->m_config->modoRobo = true;
+    this->m_config->gritoUno = true;
+    this->m_config->ganarNegra = false;
+    this->m_config->flip = false;
 
     if (m_config) {
 
@@ -95,6 +99,7 @@ void PantallaModalidad::on_btnAvanzada_clicked()
 
 void PantallaModalidad::on_btnMasJugadores_clicked()
 {
+    this->m_config = nullptr;
     emit solicitarIniciarJuego();
 }
 

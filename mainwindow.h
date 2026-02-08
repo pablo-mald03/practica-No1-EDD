@@ -9,6 +9,7 @@
 #include"pantallamodalidad.h"
 #include"pantallaconfiguraciones.h"
 #include"pantallaconfiguraciones.h"
+#include"pantallajuego.h"
 
 
 struct DatosConfiguracion {
@@ -46,6 +47,8 @@ private:
     PantallaSeleccion * pantallaSelect = nullptr;
     PantallaModalidad * pantallaModal = nullptr;
     PantallaConfiguraciones * pantallaConfiguracion = nullptr;
+    PantallaJuego * juegoScreen = nullptr;
+
     //Punteros de configuracion
     DatosConfiguracion * datosConfig = nullptr;
 

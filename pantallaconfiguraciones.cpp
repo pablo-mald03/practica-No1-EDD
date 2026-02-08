@@ -70,6 +70,7 @@ PantallaConfiguraciones::~PantallaConfiguraciones()
 
 void PantallaConfiguraciones::on_btnRetorno_clicked()
 {
+    this->a_config = nullptr;
     emit solicitarRegresoModalidad();
 }
 
