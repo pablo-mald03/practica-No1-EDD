@@ -115,19 +115,26 @@ void MainWindow::mostrarJuego() {
 
     /*CODIGO QUE INICIA EL JUEGO DEFINITIVAMENTE*/
 
-    if (!this->juegoScreen) { // Si no existe, la creamos
-        this->juegoScreen = new PantallaJuego(this->estaConfigurando,this->datosConfig, this);
-        ui->gestorVentanas->addWidget(this->juegoScreen);
-
-        connect(this->juegoScreen, &PantallaJuego::solicitarSalida, this, [this](){
-            //this->juegoScreen->setChekedOpciones(this->datosConfig,this->estaConfigurando);
-            mostrarSeleccion();
-            delete this->juegoScreen;
-            this->juegoScreen = nullptr;
-        });
-    }else{
-        //this->juegoScreen->setChekedOpciones(this->datosConfig,this->estaConfigurando);
+    //Se asegura de siempre matar al puntero por si esta null
+    if (this->juegoScreen) {
+        delete this->juegoScreen;
+        this->juegoScreen = nullptr;
     }
+
+    this->juegoScreen = new PantallaJuego(this->estaConfigurando,this->datosConfig, this);
+    ui->gestorVentanas->addWidget(this->juegoScreen);
+
+    connect(this->juegoScreen, &PantallaJuego::solicitarSalida, this, [this](){
+        mostrarSeleccion();
+
+        //Remueve el widget que se queda en el stacked
+        ui->gestorVentanas->removeWidget(this->juegoScreen);
+
+        this->juegoScreen->deleteLater();
+
+        this->juegoScreen = nullptr;
+    });
+
 
     ui->gestorVentanas->setCurrentWidget(this->juegoScreen);
 

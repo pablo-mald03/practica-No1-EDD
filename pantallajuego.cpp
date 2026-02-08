@@ -40,7 +40,7 @@ PantallaJuego::~PantallaJuego()
 
 void PantallaJuego::on_btnRetorno_clicked()
 {
-    auto respuesta = QMessageBox::question(this, "Salir", "¿Seguro que quieres salir de la partida?",
+    auto respuesta = QMessageBox::question(this, "Salir de la partida", "¿Seguro que quieres salir de la partida?",
                                            QMessageBox::Yes | QMessageBox::No);
     if (respuesta == QMessageBox::Yes) {
        emit solicitarSalida();
