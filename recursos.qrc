@@ -5,5 +5,62 @@
         <file>assets/layoutsGame/LayoutSeleccion.png</file>
         <file>assets/layoutsGame/LayoutConfiguracionP.png</file>
         <file>assets/layoutsGame/LayoutJuego.png</file>
+        <file>assets/mediaGame/CartaA0.png</file>
+        <file>assets/mediaGame/CartaA1.png</file>
+        <file>assets/mediaGame/CartaA2.png</file>
+        <file>assets/mediaGame/CartaA3.png</file>
+        <file>assets/mediaGame/CartaA4.png</file>
+        <file>assets/mediaGame/CartaA5.png</file>
+        <file>assets/mediaGame/CartaA6.png</file>
+        <file>assets/mediaGame/CartaA7.png</file>
+        <file>assets/mediaGame/CartaA8.png</file>
+        <file>assets/mediaGame/CartaA9.png</file>
+        <file>assets/mediaGame/CartaABlock.png</file>
+        <file>assets/mediaGame/CartaAMas2.png</file>
+        <file>assets/mediaGame/CartaARE.png</file>
+        <file>assets/mediaGame/CartaEcplipse.png</file>
+        <file>assets/mediaGame/CartaEspia.png</file>
+        <file>assets/mediaGame/CartaMas4.png</file>
+        <file>assets/mediaGame/CartaR0.png</file>
+        <file>assets/mediaGame/CartaR1.png</file>
+        <file>assets/mediaGame/CartaR2.png</file>
+        <file>assets/mediaGame/CartaR3.png</file>
+        <file>assets/mediaGame/CartaR4.png</file>
+        <file>assets/mediaGame/CartaR5.png</file>
+        <file>assets/mediaGame/CartaR6.png</file>
+        <file>assets/mediaGame/CartaR7.png</file>
+        <file>assets/mediaGame/CartaR8.png</file>
+        <file>assets/mediaGame/CartaR9.png</file>
+        <file>assets/mediaGame/CartaRBlock.png</file>
+        <file>assets/mediaGame/CartaRMas2.png</file>
+        <file>assets/mediaGame/CartaRRE.png</file>
+        <file>assets/mediaGame/CartaSeleccion.png</file>
+        <file>assets/mediaGame/CartaV0.png</file>
+        <file>assets/mediaGame/CartaV1.png</file>
+        <file>assets/mediaGame/CartaV2.png</file>
+        <file>assets/mediaGame/CartaV3.png</file>
+        <file>assets/mediaGame/CartaV4.png</file>
+        <file>assets/mediaGame/CartaV5.png</file>
+        <file>assets/mediaGame/CartaV6.png</file>
+        <file>assets/mediaGame/CartaV7.png</file>
+        <file>assets/mediaGame/CartaV8.png</file>
+        <file>assets/mediaGame/CartaV9.png</file>
+        <file>assets/mediaGame/CartaVBlock.png</file>
+        <file>assets/mediaGame/CartaVMas2.png</file>
+        <file>assets/mediaGame/CartaVRE.png</file>
+        <file>assets/mediaGame/CartaY0.png</file>
+        <file>assets/mediaGame/CartaY1.png</file>
+        <file>assets/mediaGame/CartaY2.png</file>
+        <file>assets/mediaGame/CartaY3.png</file>
+        <file>assets/mediaGame/CartaY4.png</file>
+        <file>assets/mediaGame/CartaY5.png</file>
+        <file>assets/mediaGame/CartaY6.png</file>
+        <file>assets/mediaGame/CartaY7.png</file>
+        <file>assets/mediaGame/CartaY8.png</file>
+        <file>assets/mediaGame/CartaY9.png</file>
+        <file>assets/mediaGame/CartaYBlock.png</file>
+        <file>assets/mediaGame/CartaYMas2.png</file>
+        <file>assets/mediaGame/CartaYRE.png</file>
+        <file>assets/mediaGame/ReversoCarta.png</file>
     </qresource>
 </RCC>
