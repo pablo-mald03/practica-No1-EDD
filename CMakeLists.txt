@@ -20,6 +20,10 @@ qt_add_executable(PracticaNo1
     pantallajuego.h pantallajuego.cpp pantallajuego.ui
     modelo.h modelo.cpp
     colorcarta.h colorcarta.cpp
+    numerica.h numerica.cpp
+    multicolorsuma.h multicolorsuma.cpp
+    coloreterno.h coloreterno.cpp
+    sumacantidad.h sumacantidad.cpp
 
 )
 
