@@ -18,6 +18,8 @@ qt_add_executable(PracticaNo1
     pantallamodalidad.h pantallamodalidad.cpp pantallamodalidad.ui
     pantallaconfiguraciones.h pantallaconfiguraciones.cpp pantallaconfiguraciones.ui
     pantallajuego.h pantallajuego.cpp pantallajuego.ui
+    modelo.h modelo.cpp
+    colorcarta.h colorcarta.cpp
 
 )
 
