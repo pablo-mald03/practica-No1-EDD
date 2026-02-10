@@ -24,6 +24,13 @@ qt_add_executable(PracticaNo1
     multicolorsuma.h multicolorsuma.cpp
     coloreterno.h coloreterno.cpp
     sumacantidad.h sumacantidad.cpp
+    cambiodireccion.h cambiodireccion.cpp
+    comodincolor.h comodincolor.cpp
+    bloqueo.h bloqueo.cpp
+    espia.h espia.cpp
+    eclipse.h eclipse.cpp
+    reversa.h reversa.cpp
+
 
 )
 
