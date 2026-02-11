@@ -1,7 +1,7 @@
 #include "modelo.h"
 
-Modelo::Modelo(const ColorCarta&_colorRef, const std::string &_nombre, const std::string &_lado)
-    : color(_colorRef),nombre(_nombre),lado(_lado)
+Modelo::Modelo(const ColorCarta&_colorRef, const std::string &_nombre, const std::string &_lado, TipoCarta _tipo)
+    : color(_colorRef),nombre(_nombre),lado(_lado), tipo(_tipo)
 {
 
 }
@@ -10,10 +10,10 @@ Modelo::Modelo(const ColorCarta&_colorRef, const std::string &_nombre, const std
 void Modelo::setColor(const ColorCarta &_color){
     this->color = _color;
 }
-void Modelo::setNombre(std::string _nombre){
+void Modelo::setNombre(const std::string &_nombre){
     this->nombre = _nombre;
 }
-void Modelo::setLado(std::string _lado){
+void Modelo::setLado(const std::string &_lado){
     this->lado = _lado;
 }
 std::string Modelo::getNombre()const{

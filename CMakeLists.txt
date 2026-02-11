@@ -32,6 +32,7 @@ qt_add_executable(PracticaNo1
     reversa.h reversa.cpp
 
 
+
 )
 
 target_link_libraries(PracticaNo1
