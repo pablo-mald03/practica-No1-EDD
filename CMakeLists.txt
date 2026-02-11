@@ -30,6 +30,8 @@ qt_add_executable(PracticaNo1
     espia.h espia.cpp
     eclipse.h eclipse.cpp
     reversa.h reversa.cpp
+    nodo.h nodo.tpp
+    listaenlazada.h listaenlazada.tpp
 
 
 
