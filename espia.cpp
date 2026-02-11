@@ -8,7 +8,6 @@ Espia::Espia(const ColorCarta&_colorRef, const std::string &_nombre,const std::s
 
 //Metodo de revelacion
 void Espia::revelarMazo(){
-
 }
 
 Espia::~Espia(){

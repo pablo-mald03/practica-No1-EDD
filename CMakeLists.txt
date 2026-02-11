@@ -32,6 +32,9 @@ qt_add_executable(PracticaNo1
     reversa.h reversa.cpp
     nodo.h nodo.tpp
     listaenlazada.h listaenlazada.tpp
+    jugador.h jugador.cpp
+    configuracionpartida.h configuracionpartida.cpp
+    partida.h partida.cpp
 
 
 

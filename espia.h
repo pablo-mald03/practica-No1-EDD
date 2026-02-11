@@ -7,8 +7,7 @@ class Espia:public Modelo
 {
 public:
     Espia(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado);
-    ~Espia();
-
+    ~Espia(); 
     //Metodo de revelacion
     void revelarMazo();
 };
