@@ -3,7 +3,7 @@
 #include"carta.h"
 
 //instancia posible de nodo
-template class ListaEnlazada<Carta*>;
+template class ListaEnlazada<Carta>;
 
 template<typename T>
 ListaEnlazada<T>::ListaEnlazada(): cabeza(nullptr),cola(nullptr), longitud(0)
@@ -224,27 +224,6 @@ const T& ListaEnlazada<T>::verValor(int indice) const
 {
     return getNodo(indice)->getDato();
 }
-
-//Metodo que sirve para buscar el indice donde esta ubicado un nodo
-template<typename T>
-int ListaEnlazada<T>::buscarIndice(const T& valor) const
-{
-    Nodo<T>* actual = cabeza;
-    int indice = 0;
-
-    while (actual != nullptr)
-    {
-        if (actual->getDato() == valor){
-             return indice;
-        }
-
-        actual = actual->getSiguiente();
-        indice++;
-    }
-    //retorna -1 si no existe
-    return -1;
-}
-
 
 //====================FIN DE LA REGION DE METODOS ESPECIALES DE LA LISTA=================================
 

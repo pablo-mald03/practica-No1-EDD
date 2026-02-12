@@ -12,6 +12,7 @@ private:
 
 public:
     Nodo(const T&valor);
+    ~Nodo();
 
     T& getDato();
 

@@ -1,11 +1,12 @@
 #include "configuracionpartida.h"
 #include"mainwindow.h"
 
-ConfiguracionPartida::ConfiguracionPartida(const DatosConfiguracion* &config)
+ConfiguracionPartida::ConfiguracionPartida(DatosConfiguracion* &config)
     :stacking(config->stacking), retoMas4(config->retoMas4),modoRobo(config->modoRobo), gritoUno(config->gritoUno), ganarNegra(config->ganarNegra), flip(config->flip)
 {
-
     delete config;
+    config = nullptr;
+    qDebug() << "Se ha eliminado la configuracion ";
 }
 
 //Metodos getter para saber los estados de configuracion

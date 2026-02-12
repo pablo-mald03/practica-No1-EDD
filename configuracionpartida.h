@@ -18,7 +18,7 @@ private:
 
 public:
 
-    ConfiguracionPartida(const DatosConfiguracion* &config);
+    ConfiguracionPartida(DatosConfiguracion* &config);
     ~ConfiguracionPartida();
 
     //Metodos getters para saber la partida

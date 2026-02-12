@@ -1,14 +1,18 @@
 #include"nodo.h"
 #include "jugador.h"
-#include"modelo.h"
+#include"carta.h"
 
 //instancia posible de nodo
 template class Nodo<Jugador*>;
-template class Nodo<Modelo*>;
+template class Nodo<Carta>;
 
 template<typename T>
 Nodo<T>::Nodo(const T &valor): dato(valor), siguiente(nullptr), anterior(nullptr)
 {
+
+}
+template<typename T>
+Nodo<T>::~Nodo(){
 
 }
 
@@ -16,7 +20,6 @@ template<typename T>
 T& Nodo<T>::getDato(){
     return dato;
 }
-
 
 /*Metodos getters y setters para reutilizar nodo*/
 template<typename T>

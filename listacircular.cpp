@@ -148,10 +148,14 @@ ListaCircular<T>::~ListaCircular()
     {
         Nodo<T>* temp = actual;
         actual = actual->getSiguiente();
+
+        delete temp->getDato();
         delete temp;
     }
 
+    delete cabeza->getDato();
     delete cabeza;
+
     cabeza = nullptr;
 }
 

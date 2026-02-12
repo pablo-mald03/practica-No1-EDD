@@ -16,7 +16,7 @@ private:
     ConfiguracionPartida configuracion;
 
 public:
-    Partida(const DatosConfiguracion* &config);
+    Partida(DatosConfiguracion* &config);
     ~Partida();
 };
 

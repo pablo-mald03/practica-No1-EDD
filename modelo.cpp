@@ -26,14 +26,6 @@ std::string Modelo::getLado()const{
     return this->lado;
 }
 
-//Sobrecarga de operador ==
-
-bool Modelo::operator==(const Modelo& otro) const {
-    return this->nombre == otro.nombre && this->lado== otro.lado && this->tipo == otro.tipo &&
-        this->color == otro.color;
-}
-
-
 Modelo::~Modelo(){
 
 }

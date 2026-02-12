@@ -1,8 +1,8 @@
 #include "jugador.h"
 
-Jugador::Jugador(const std::string _nombre): nombre(_nombre)
+Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codigo(_codigo)
 {
-    this->mazo = new ListaEnlazada<Modelo*>();
+    this->mazo = new ListaEnlazada<Carta>();
 }
 
 //Apartado de acciones que puede hacer el jugador
@@ -10,8 +10,17 @@ Jugador::Jugador(const std::string _nombre): nombre(_nombre)
 
 //Sobrecarga del operador igual
 bool Jugador::operator==(const Jugador& otro) const{
-    return this->nombre == otro.nombre;
+    return this->nombre == otro.nombre && this->codigo == otro.codigo;
 }
+
+//Metodos getters y setters
+int Jugador::getCodigo()const{
+    return this->codigo;
+}
+std::string Jugador::getNombre()const{
+    return this->nombre;
+}
+
 
 //Destructor del objeto
 Jugador::~Jugador(){

@@ -22,6 +22,8 @@ public:
 private:
     Ui::PantallaJuego *ui;
 
+    Partida * partida = nullptr;
+
 signals:
     void solicitarSalida();
 private slots:

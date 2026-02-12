@@ -44,9 +44,6 @@ public:
     std::string getLado()const;
     TipoCarta getTipo()const;
 
-    //Operadores sobrecargados de comparacion
-    bool operator==(const Modelo& otro) const;
-
     //Metodos sobrecargados
 
 

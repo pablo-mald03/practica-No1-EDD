@@ -121,6 +121,7 @@ void MainWindow::mostrarJuego() {
         this->juegoScreen = nullptr;
     }
 
+    //PENDIENTE
     this->juegoScreen = new PantallaJuego(this->estaConfigurando,this->datosConfig, this);
     ui->gestorVentanas->addWidget(this->juegoScreen);
 

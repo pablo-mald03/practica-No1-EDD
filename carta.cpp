@@ -6,3 +6,7 @@ Carta::Carta(const Modelo &_reverso, const Modelo &_anverso,int _indice)
 
 }
 
+Carta::~Carta(){
+
+}
+

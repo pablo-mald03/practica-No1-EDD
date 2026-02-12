@@ -35,8 +35,6 @@ public:
     T& getValor(int pos);
     const T& verValor(int indice) const;
 
-    int buscarIndice(const T& valor) const;
-
 private:
     //Metodo especial para hallar los nodos
      Nodo<T>* getNodo(int pos) const;
