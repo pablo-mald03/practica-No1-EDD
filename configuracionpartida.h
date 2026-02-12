@@ -1,6 +1,10 @@
 #ifndef CONFIGURACIONPARTIDA_H
 #define CONFIGURACIONPARTIDA_H
 
+
+struct DatosConfiguracion;
+
+
 class ConfiguracionPartida
 {
 
@@ -14,7 +18,7 @@ private:
 
 public:
 
-    ConfiguracionPartida(bool _stacking, bool _reto4, bool _modoRobo, bool _gritoUno, bool _ganarNegra, bool _esFlip);
+    ConfiguracionPartida(const DatosConfiguracion* &config);
     ~ConfiguracionPartida();
 
     //Metodos getters para saber la partida

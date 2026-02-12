@@ -2,6 +2,7 @@
 #include"mainwindow.h"
 
 Partida::Partida(const DatosConfiguracion* &config)
+    :listaJugadores(), configuracion(config)
 {
-    //this->configuracion = new ConfiguracionPartida();
+
 }

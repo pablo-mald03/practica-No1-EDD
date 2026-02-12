@@ -1,5 +1,10 @@
-#include "listaenlazada.h"
+#include"listaenlazada.h"
 #include <stdexcept>
+#include"carta.h"
+
+//instancia posible de nodo
+template class ListaEnlazada<Carta*>;
+
 template<typename T>
 ListaEnlazada<T>::ListaEnlazada(): cabeza(nullptr),cola(nullptr), longitud(0)
 {

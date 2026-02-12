@@ -13,7 +13,7 @@ private:
 public:
     Nodo(const T&valor);
 
-    T getDato()const;
+    T& getDato();
 
     /*Metodos getters y setters para reutilizar nodo*/
     Nodo<T>* getSiguiente() const;

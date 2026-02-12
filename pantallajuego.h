@@ -2,6 +2,10 @@
 #define PANTALLAJUEGO_H
 
 #include <QWidget>
+
+//Include de la partida (INTEGRACION DE BACKEND)
+#include"partida.h"
+
 struct DatosConfiguracion;
 namespace Ui {
 class PantallaJuego;

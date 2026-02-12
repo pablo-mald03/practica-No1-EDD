@@ -14,6 +14,10 @@ std::string ColorCarta::getColor(){
     return this->color;
 }
 
+//sobrecarga de operador ==
+bool ColorCarta::operator==(const ColorCarta& otro) const{
+    return this->color == otro.color;
+}
 
 ColorCarta::~ColorCarta(){
 

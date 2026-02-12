@@ -17,6 +17,9 @@ public:
     void setColor(const std::string &_color);
     std::string getColor();
 
+    //sobrecarga de operador igual
+    bool operator==(const ColorCarta& otro) const;
+
 };
 
 #endif // COLORCARTA_H

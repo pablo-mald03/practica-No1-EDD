@@ -1,4 +1,10 @@
-#include "nodo.h"
+#include"nodo.h"
+#include "jugador.h"
+#include"modelo.h"
+
+//instancia posible de nodo
+template class Nodo<Jugador*>;
+template class Nodo<Modelo*>;
 
 template<typename T>
 Nodo<T>::Nodo(const T &valor): dato(valor), siguiente(nullptr), anterior(nullptr)
@@ -7,7 +13,7 @@ Nodo<T>::Nodo(const T &valor): dato(valor), siguiente(nullptr), anterior(nullptr
 }
 
 template<typename T>
-T Nodo<T>::getDato() const{
+T& Nodo<T>::getDato(){
     return dato;
 }
 
@@ -28,5 +34,7 @@ void Nodo<T>::setSiguiente(Nodo<T>* sig){
 }
 template<typename T>
 void Nodo<T>::setAnterior(Nodo<T>* ant){
-    this->siguiente = ant;
+    this->anterior = ant;
 }
+
+

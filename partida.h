@@ -5,16 +5,15 @@
 struct DatosConfiguracion;
 
 //Includes de las clases propias
-#include"listaenlazada.h"
-#include"modelo.h"
+#include"listacircular.h"
 #include"jugador.h"
 #include"configuracionpartida.h"
 
 class Partida
 {
 private:
-    ListaEnlazada<Jugador*> *listaJugadores;
-    ConfiguracionPartida *configuracion;
+    ListaCircular<Jugador*> listaJugadores;
+    ConfiguracionPartida configuracion;
 
 public:
     Partida(const DatosConfiguracion* &config);

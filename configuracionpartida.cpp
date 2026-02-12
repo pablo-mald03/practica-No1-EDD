@@ -1,9 +1,11 @@
 #include "configuracionpartida.h"
+#include"mainwindow.h"
 
-ConfiguracionPartida::ConfiguracionPartida(bool _stacking, bool _reto4, bool _modoRobo, bool _gritoUno, bool _ganarNegra, bool _esFlip)
-    :stacking(_stacking), retoMas4(_reto4),modoRobo(_modoRobo), gritoUno(_gritoUno), ganarNegra(_ganarNegra), flip(_esFlip)
+ConfiguracionPartida::ConfiguracionPartida(const DatosConfiguracion* &config)
+    :stacking(config->stacking), retoMas4(config->retoMas4),modoRobo(config->modoRobo), gritoUno(config->gritoUno), ganarNegra(config->ganarNegra), flip(config->flip)
 {
 
+    delete config;
 }
 
 //Metodos getter para saber los estados de configuracion

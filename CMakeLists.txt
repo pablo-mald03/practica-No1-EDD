@@ -30,11 +30,13 @@ qt_add_executable(PracticaNo1
     espia.h espia.cpp
     eclipse.h eclipse.cpp
     reversa.h reversa.cpp
-    nodo.h nodo.tpp
-    listaenlazada.h listaenlazada.tpp
+    nodo.h nodo.cpp
+    listaenlazada.h listaenlazada.cpp
     jugador.h jugador.cpp
     configuracionpartida.h configuracionpartida.cpp
     partida.h partida.cpp
+    listacircular.h listacircular.cpp
+    carta.h carta.cpp
 
 
 

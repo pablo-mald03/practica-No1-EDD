@@ -6,7 +6,7 @@
 
 //Includes de clases propias
 #include"listaenlazada.h"
-#include"modelo.h"
+#include"carta.h".h"
 
 class Jugador
 {
@@ -14,13 +14,14 @@ class Jugador
 private:
 
     std::string nombre;
-    ListaEnlazada<Modelo*> *mazo;
-
+    ListaEnlazada<Carta*> *mazo;
 
 public:
     Jugador(const std::string _nombre);
     ~Jugador();
 
+    //Sobrecarga del operador igual
+    bool operator==(const Jugador& otro) const;
 
 
 };
