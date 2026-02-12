@@ -56,7 +56,7 @@ private:
     void mostrarSeleccion();
     void mostrarModalidad(int cantidadPersonas, bool personalizacion);
     void mostrarConfiguraciones();
-    void mostrarJuego();
+    void mostrarJuego(int _cantidadPersonas);
 
     //VaciarPunteroDatos
     void vaciarPunteroDatos();

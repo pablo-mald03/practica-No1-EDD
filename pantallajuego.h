@@ -4,7 +4,7 @@
 #include <QWidget>
 
 //Include de la partida (INTEGRACION DE BACKEND)
-#include"partida.h"
+#include"partidacontroller.h"
 
 struct DatosConfiguracion;
 namespace Ui {
@@ -16,13 +16,14 @@ class PantallaJuego : public QWidget
     Q_OBJECT
 
 public:
-    explicit PantallaJuego(bool &estaConfigurando, DatosConfiguracion * &config,QWidget *parent = nullptr);
+    explicit PantallaJuego(int _cantidad,bool &estaConfigurando, DatosConfiguracion * &config,QWidget *parent = nullptr);
     ~PantallaJuego();
 
 private:
     Ui::PantallaJuego *ui;
 
-    Partida * partida = nullptr;
+    PartidaController * controladorPartida = nullptr;
+    int cantidadJugadores;
 
 signals:
     void solicitarSalida();

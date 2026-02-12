@@ -1,17 +1,15 @@
 #include "partida.h"
 #include"mainwindow.h"
 
-Partida::Partida(DatosConfiguracion* &config)
-    :listaJugadores(), configuracion(config)
+Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
+    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config)
 {
-
-    this->listaJugadores.insertar(new Jugador("Pedro1", 1));
-    this->listaJugadores.insertar(new Jugador("Pedro2", 2));
+    generarJugadores();
 
     Jugador* j1 = nullptr;
 
     try{
-        for (int var = 0; var < 5; ++var) {
+        for (int var = 0; var <= this->listaJugadores.getLongitud(); ++var) {
 
             j1 = this->listaJugadores.getActual();
 
@@ -25,6 +23,14 @@ Partida::Partida(DatosConfiguracion* &config)
 
     }catch(const std::runtime_error & ex){
         qDebug() << "La lista esta vacia...\n";
+    }
+
+    delete config;
+    config = nullptr;
+}
+void Partida::generarJugadores(){
+    for (int i = 0; i < this->cantidadJugadores; ++i) {
+        this->listaJugadores.insertar(new Jugador("Jugador " + std::to_string(i + 1), i));
     }
 }
 

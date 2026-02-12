@@ -207,6 +207,9 @@ QSpinBox#spinBox1::down-button:pressed QSpinBox#spinBox1::down-arrow {
     border-top: 6px solid white;
 }</string>
              </property>
+             <property name="maximum">
+              <number>9999</number>
+             </property>
             </widget>
            </item>
            <item>

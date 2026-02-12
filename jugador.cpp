@@ -15,8 +15,13 @@ bool Jugador::operator==(const Jugador& otro) const{
 
 //Metodos getters y setters
 int Jugador::getCodigo()const{
+    return this->codigo + 1;
+}
+
+int Jugador::getIndice()const{
     return this->codigo;
 }
+
 std::string Jugador::getNombre()const{
     return this->nombre;
 }

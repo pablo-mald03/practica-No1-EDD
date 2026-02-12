@@ -3,7 +3,7 @@
 #include <QMessageBox>
 #include"mainwindow.h"
 
-PantallaJuego::PantallaJuego(bool &estaConfigurando,DatosConfiguracion * &config,QWidget *parent)
+PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfiguracion * &config,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PantallaJuego)
 {
@@ -17,13 +17,12 @@ PantallaJuego::PantallaJuego(bool &estaConfigurando,DatosConfiguracion * &config
                         "border-image: url(:/assets/layoutsGame/LayoutJuego.png) 0 0 0 0 stretch stretch; "
                         "} ");
 
-    this->partida = new Partida(config);
-    estaConfigurando = false;
+    this->controladorPartida = new PartidaController(_cantidad,estaConfigurando,config,this);
 }
 
 PantallaJuego::~PantallaJuego()
 {
-    delete this->partida;
+    delete this->controladorPartida;
     delete ui;
 }
 

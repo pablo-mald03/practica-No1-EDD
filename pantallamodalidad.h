@@ -39,7 +39,7 @@ private:
 signals:
     void solicitarRegresoSeleccion();
     void solicitarConfiguraciones();
-    void solicitarIniciarJuego();
+    void solicitarIniciarJuego(int _cantidadPersonas);
 
 private slots:
     void on_btnRetorno_clicked();

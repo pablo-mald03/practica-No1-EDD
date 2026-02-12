@@ -25,6 +25,7 @@ public:
     bool operator==(const Jugador& otro) const;
 
     int getCodigo()const;
+    int getIndice()const;
     std::string getNombre()const;
 
 };

@@ -14,10 +14,20 @@ class Partida
 private:
     ListaCircular<Jugador*> listaJugadores;
     ConfiguracionPartida configuracion;
+    int cantidadJugadores;
+
+    //Metodos propios de la clase para hacer funcionar la partida
+    void generarJugadores();
 
 public:
-    Partida(DatosConfiguracion* &config);
+    Partida(int _cantidadJugadores,DatosConfiguracion* &config);
     ~Partida();
+
+
+    //Apartado de comunicacion de backend con las acciones que deba ejecutar frontend
+   // void inicarPartida();
+
+
 };
 
 #endif // PARTIDA_H

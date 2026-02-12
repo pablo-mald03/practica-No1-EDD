@@ -111,7 +111,7 @@ void MainWindow::mostrarConfiguraciones() {
 
 
 //Metodo para iniciar el juego
-void MainWindow::mostrarJuego() {
+void MainWindow::mostrarJuego(int _cantidadPersonas) {
 
     /*CODIGO QUE INICIA EL JUEGO DEFINITIVAMENTE*/
 
@@ -121,8 +121,7 @@ void MainWindow::mostrarJuego() {
         this->juegoScreen = nullptr;
     }
 
-    //PENDIENTE
-    this->juegoScreen = new PantallaJuego(this->estaConfigurando,this->datosConfig, this);
+    this->juegoScreen = new PantallaJuego(_cantidadPersonas,this->estaConfigurando,this->datosConfig, this);
     ui->gestorVentanas->addWidget(this->juegoScreen);
 
     connect(this->juegoScreen, &PantallaJuego::solicitarSalida, this, [this](){

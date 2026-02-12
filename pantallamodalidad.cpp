@@ -100,6 +100,6 @@ void PantallaModalidad::on_btnAvanzada_clicked()
 void PantallaModalidad::on_btnMasJugadores_clicked()
 {
     this->m_config = nullptr;
-    emit solicitarIniciarJuego();
+    emit solicitarIniciarJuego(this->ui->spinBox1->value());
 }
 
