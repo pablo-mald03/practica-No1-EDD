@@ -4,6 +4,7 @@
 #include <QString>
 #include"cartadeckui.h"
 #include"mainwindow.h"
+#include"carta.h"
 
 PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfiguracion * &config,QWidget *parent)
     : QWidget(parent)
@@ -48,7 +49,6 @@ void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual, std::string d
 
     this->ui->labelNombreJugador->setText(QString::fromStdString( jugadorActual->getNombre()));
     this->ui->labelVueltas->setText(QString::fromStdString(direccion));
-     qDebug()<<"llego a la presentacion";
     dibujarMazo(jugadorActual);
 }
 
@@ -57,7 +57,6 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
 
     this->escena->clear(); // Limpia cartas anteriores
 
-    qDebug()<<"llega a limpiar";
     int total = jugadorActual->getMazo()->getLongitud();
     if (total == 0) return;
 
@@ -75,7 +74,11 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
     for (int i = 0; i < total; ++i) {
 
        //CartaDeckUI* visual = new CartaDeckUI(jugadorActual->getMazo()->getValor(i).getIndice(), jugadorActual->getMazo()->getValor(i).getAnverso());
-        CartaDeckUI* visual = new CartaDeckUI(jugadorActual->getMazo()->getValor(i).getIndice(), ":/assets/mediaGame/CartaA0.png");
+
+        Carta & cartaDeck = jugadorActual->getMazo()->getValor(i);
+        Modelo * cartaActual = &cartaDeck.getAnverso();
+        qDebug() << "direccion retornada:" <<cartaActual->getPathImagen();
+        CartaDeckUI* visual = new CartaDeckUI(cartaDeck.getIndice(), QString::fromStdString( cartaDeck.getAnverso().getPathImagen()));
 
         // Conectas la carta al slot de esta pantalla
         connect(visual, &CartaDeckUI::cartaClickeda, this, &PantallaJuego::onCartaPresionada);

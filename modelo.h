@@ -44,6 +44,12 @@ public:
     std::string getLado()const;
     TipoCarta getTipo()const;
 
+    //Metodo para obtener el reverso
+    std::string getReversoModelo()const;
+
+    //Metodos virtuales
+    virtual std::string getPathImagen() const = 0;
+
     //Metodos sobrecargados
 
 

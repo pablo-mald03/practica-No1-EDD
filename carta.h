@@ -6,17 +6,17 @@ class Carta
 {
 
 private:
-    Modelo reverso;
-    Modelo anverso;
+    Modelo* reverso;
+    Modelo* anverso;
     int indice;
 
 public:
-    Carta(const Modelo &_reverso, const Modelo &_anverso,int _indice);
-    ~Carta();
+    Carta(Modelo *_reverso,  Modelo * _anverso,int _indice);
+    ~Carta() = default;
 
     //Metodos getters
-    Modelo& getReverso();
-    Modelo& getAnverso();
+    Modelo& getReverso() const;
+    Modelo& getAnverso() const;
     int getIndice()const;
 
 };

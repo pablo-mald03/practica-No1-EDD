@@ -1,21 +1,32 @@
 #ifndef COLORCARTA_H
 #define COLORCARTA_H
 
-#include<string>
+//Enums utilizados para poder verificar el color de la carta
+enum class TipoColor {
+    ROSA,
+    VIOLETA,
+    TURQUESA,
+    NARANJA,
+    AZUL,
+    ROJO,
+    AMARILLO,
+    VERDE,
+};
+
 
 class ColorCarta
 {
 
 private:
-    std::string color;
+    TipoColor color;
 
 public:
-    ColorCarta(const std::string &_color);
+    ColorCarta(const TipoColor &_color);
     ~ColorCarta();
 
     //Metodos getter y setter
-    void setColor(const std::string &_color);
-    std::string getColor();
+    void setColor(const TipoColor &_color);
+    TipoColor getColorCarta();
 
     //sobrecarga de operador igual
     bool operator==(const ColorCarta& otro) const;

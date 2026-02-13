@@ -13,7 +13,7 @@ private:
 
 public:
     // idBackend para que sepas qué nodo de tu lista enlazada es
-    CartaDeckUI(int _idCarta, QString _rutaImg, QGraphicsItem *parent = nullptr);
+    CartaDeckUI(int _idCarta, const QString _rutaImg, QGraphicsItem *parent = nullptr);
     ~CartaDeckUI();
 
 signals:

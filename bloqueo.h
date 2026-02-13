@@ -11,6 +11,7 @@ public:
 
     //Metodo de bloqueo
     void bloquearJugador();
+    std::string getPathImagen() const override;
 };
 
 #endif // BLOQUEO_H

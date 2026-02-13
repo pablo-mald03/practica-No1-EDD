@@ -26,6 +26,17 @@ std::string Modelo::getLado()const{
     return this->lado;
 }
 
+//Metodo que devuelve el reverso
+std::string Modelo::getReversoModelo()const{
+    //PENDIENTE
+    return ":/assets/mediaGame/CartaA0.png";
+}
+
+std::string Modelo::getPathImagen() const {
+    //PENDIENTE
+    return ":/assets/mediaGame/CartaAVolteo.png";
+}
+
 Modelo::~Modelo(){
 
 }

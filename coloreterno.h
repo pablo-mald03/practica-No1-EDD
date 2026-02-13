@@ -10,6 +10,9 @@ public:
     ~ColorEterno();
 
     void saltoTotal();
+
+    //Metodo sobreescrito de imagen
+    std::string getPathImagen() const override;
 };
 
 #endif // COLORETERNO_H

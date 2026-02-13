@@ -10,7 +10,7 @@ Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codig
     int indice = this->mazo->getLongitud();
 
     this->mazo->insertar(indice,Carta(
-                                      Bloqueo(ColorCarta("rojo"),"Bloqueo","atras"), Bloqueo(ColorCarta("rojo"),"Bloqueo","frente"), indice));
+                                      new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::VERDE),"Bloqueo","claro"), indice));
 }
 
 //Apartado de acciones que puede hacer el jugador
