@@ -1,4 +1,5 @@
 #include "partidacontroller.h"
+#include <qdebug.h>
 
 PartidaController::PartidaController(int _cantidad,bool &estaConfigurando, DatosConfiguracion * &config, QObject* parent)
     :QObject(parent)
@@ -14,6 +15,7 @@ PartidaController::~PartidaController(){
     this->gestorPartida = nullptr;
 }
 
-void PartidaController::iniciar(){
-
+//Metodo que se encarga de retornar la informacion principal al iniciar la partida
+void PartidaController::iniciarPartida(){
+    emit partidaIniciada(this->gestorPartida->getJugadorActual());
 }

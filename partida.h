@@ -25,9 +25,7 @@ public:
 
 
     //Apartado de comunicacion de backend con las acciones que deba ejecutar frontend
-   // void inicarPartida();
-
-
+    Jugador* & getJugadorActual();
 };
 
 #endif // PARTIDA_H

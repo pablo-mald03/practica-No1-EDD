@@ -17,10 +17,13 @@ public:
     explicit PartidaController(int _cantidad,bool &estaConfigurando, DatosConfiguracion * &config, QObject* parent = nullptr);
     ~PartidaController();
 
+    //Metodos que comunican a la UI con el backend
+
+
 public slots:
-    void iniciar();
+    void iniciarPartida();
 signals:
-    void partidaIniciada();
+    void partidaIniciada(Jugador* &jugador);
 
 };
 

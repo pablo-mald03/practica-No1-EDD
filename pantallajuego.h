@@ -5,6 +5,7 @@
 
 //Include de la partida (INTEGRACION DE BACKEND)
 #include"partidacontroller.h"
+#include"jugador.h"
 
 struct DatosConfiguracion;
 namespace Ui {
@@ -24,6 +25,9 @@ private:
 
     PartidaController * controladorPartida = nullptr;
     int cantidadJugadores;
+
+    //Metodos que comunican a la UI sus acciones
+    void mostrarDatosPantalla(Jugador* & jugadorActual);
 
 signals:
     void solicitarSalida();

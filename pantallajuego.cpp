@@ -1,6 +1,7 @@
 #include "pantallajuego.h"
 #include "ui_pantallajuego.h"
 #include <QMessageBox>
+#include <QString>
 #include"mainwindow.h"
 
 PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfiguracion * &config,QWidget *parent)
@@ -18,11 +19,24 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
                         "} ");
 
     this->controladorPartida = new PartidaController(_cantidad,estaConfigurando,config,this);
+    //Apartado donde se conectan los componentes a los metodos
+    connect(this->controladorPartida, &PartidaController::partidaIniciada, this,&PantallaJuego::mostrarDatosPantalla);
+
+    this->controladorPartida->iniciarPartida();
+}
+
+void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual){
+
+    qDebug()<<"senial recibida";
+    qDebug()<<"Dato recibido"<<jugadorActual->getNombre();
+
+    this->ui->labelNombreJugador->setText(QString::fromStdString( jugadorActual->getNombre()));
 }
 
 PantallaJuego::~PantallaJuego()
 {
     delete this->controladorPartida;
+    this->controladorPartida = nullptr;
     delete ui;
 }
 
