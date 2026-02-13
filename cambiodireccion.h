@@ -11,6 +11,8 @@ public:
 
     //Metodo de cambio
     void cambiarDireccion();
+    //Metodo sobreescrito de imagen
+    std::string getPathImagen() const override;
 };
 
 #endif // CAMBIODIRECCION_H

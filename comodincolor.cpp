@@ -11,6 +11,16 @@ void ComodinColor::cambiarDireccion(){
 
 }
 
+//Metodo que retorna el valor de imagen de la carta
+std::string ComodinColor::getPathImagen() const{
+
+    if(Modelo::getLado() == "claro"){
+        return ":/assets/mediaGame/CartaSeleccion.png";
+    }
+
+    return ":/assets/mediaGame/ReversoCarta.png";
+}
+
 
 ComodinColor::~ComodinColor(){
 

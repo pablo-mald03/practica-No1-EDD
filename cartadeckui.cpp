@@ -6,7 +6,7 @@ CartaDeckUI::CartaDeckUI(int _indice, QString _rutaImg, QGraphicsItem *parent)
     : QObject(), QGraphicsPixmapItem(parent), indice(_indice)
 {
     QPixmap pix(_rutaImg);
-    setPixmap(pix.scaled(140, 197, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    setPixmap(pix.scaled(135, 197, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     setAcceptHoverEvents(true);
     setCursor(Qt::PointingHandCursor);
 }

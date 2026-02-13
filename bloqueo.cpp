@@ -11,6 +11,7 @@ void Bloqueo::bloquearJugador(){
 
 }
 
+//Metodo que retorna el valor de imagen de la carta
 std::string Bloqueo::getPathImagen() const{
 
     if(Modelo::getColor().getColorCarta() == TipoColor::AMARILLO){
@@ -26,8 +27,7 @@ std::string Bloqueo::getPathImagen() const{
         return ":/assets/mediaGame/CartaVBlock.png";
     }
 
-    //PENDIENTE
-    return ":/assets/mediaGame/CartaVBlock.png";
+    return ":/assets/mediaGame/ReversoCarta.png";
 }
 
 Bloqueo::~Bloqueo(){

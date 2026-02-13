@@ -10,6 +10,9 @@ public:
     ~Espia(); 
     //Metodo de revelacion
     void revelarMazo();
+
+    //Metodo sobreescrito de imagen
+    std::string getPathImagen() const override;
 };
 
 #endif // ESPIA_H

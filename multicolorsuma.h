@@ -15,7 +15,8 @@ public:
     //Metodos
     int getValorSuma();
     void setValorSuma(int _valor);
-
+    //Metodo sobreescrito de imagen
+    std::string getPathImagen() const override;
 
 };
 

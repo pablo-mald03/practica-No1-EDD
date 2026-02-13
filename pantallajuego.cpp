@@ -65,19 +65,14 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
     double anchoContenedor = this->vista->viewport()->width()-30;
 
     // Se solapan (20px min). Si hay pocas, se separan (140px max)
-    double separacion = qMin(140.0, anchoContenedor / total);
+    double separacion = qMin(160.0, anchoContenedor / total);
 
     double anchoTotalCartas = (total - 1) * separacion;
     double xActual = (anchoContenedor - anchoTotalCartas) / 2;
 
 
     for (int i = 0; i < total; ++i) {
-
-       //CartaDeckUI* visual = new CartaDeckUI(jugadorActual->getMazo()->getValor(i).getIndice(), jugadorActual->getMazo()->getValor(i).getAnverso());
-
         Carta & cartaDeck = jugadorActual->getMazo()->getValor(i);
-        Modelo * cartaActual = &cartaDeck.getAnverso();
-        qDebug() << "direccion retornada:" <<cartaActual->getPathImagen();
         CartaDeckUI* visual = new CartaDeckUI(cartaDeck.getIndice(), QString::fromStdString( cartaDeck.getAnverso().getPathImagen()));
 
         // Conectas la carta al slot de esta pantalla

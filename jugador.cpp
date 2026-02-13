@@ -11,6 +11,15 @@ Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codig
 
     this->mazo->insertar(indice,Carta(
                                       new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::VERDE),"Bloqueo","claro"), indice));
+
+    this->mazo->insertar(indice,Carta(
+                                     new Bloqueo(ColorCarta(TipoColor::VERDE),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::ROJO),"Bloqueo","claro"), indice));
+
+    this->mazo->insertar(indice,Carta(
+                                     new Bloqueo(ColorCarta(TipoColor::AMARILLO),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::AMARILLO),"Bloqueo","claro"), indice));
+
+    this->mazo->insertar(indice,Carta(
+                                     new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","claro"), indice));
 }
 
 //Apartado de acciones que puede hacer el jugador

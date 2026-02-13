@@ -11,6 +11,9 @@ public:
 
     //Metodo para esconder mazo
     void esconderMazo();
+
+    //Metodo sobreescrito de imagen
+    std::string getPathImagen() const override;
 };
 
 #endif // ECLIPSE_H

@@ -9,17 +9,14 @@ void ColorEterno::saltoTotal(){
 
 }
 
+//Metodo que retorna el valor de imagen de la carta
 std::string ColorEterno::getPathImagen() const{
 
-    if(Modelo::getLado() == "claro"){
-        return ":/assets/mediaGame/CartaEcplipse.png";
-    }
-    else if(Modelo::getLado() == "oscuro"){
-        return ":/assets/mediaGame/CartaEcplipseNegra.png";
+    if(Modelo::getLado() == "oscuro"){
+        return ":/assets/mediaGame/CartaColorEterno.png";
     }
 
-    //PENDIENTE
-    return ":/assets/mediaGame/CartaVBlock.png";
+    return ":/assets/mediaGame/ReversoCarta.png";
 }
 
 ColorEterno::~ColorEterno(){
