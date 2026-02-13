@@ -14,6 +14,10 @@ public:
     Carta(const Modelo &_reverso, const Modelo &_anverso,int _indice);
     ~Carta();
 
+    //Metodos getters
+    Modelo& getReverso();
+    Modelo& getAnverso();
+    int getIndice()const;
 
 };
 

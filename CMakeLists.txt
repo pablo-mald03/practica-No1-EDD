@@ -38,6 +38,7 @@ qt_add_executable(PracticaNo1
     listacircular.h listacircular.cpp
     carta.h carta.cpp
     partidacontroller.h partidacontroller.cpp
+    cartadeckui.h cartadeckui.cpp
 
 
 

@@ -28,6 +28,9 @@ public:
     int getIndice()const;
     std::string getNombre()const;
 
+    //Metodo que permite obtener el mazo
+    ListaEnlazada<Carta> * getMazo();
+
 };
 
 #endif // JUGADOR_H

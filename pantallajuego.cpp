@@ -2,6 +2,7 @@
 #include "ui_pantallajuego.h"
 #include <QMessageBox>
 #include <QString>
+#include"cartadeckui.h"
 #include"mainwindow.h"
 
 PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfiguracion * &config,QWidget *parent)
@@ -18,12 +19,14 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
                         "border-image: url(:/assets/layoutsGame/LayoutJuego.png) 0 0 0 0 stretch stretch; "
                         "} ");
 
+    inicializarVistaMazo();
+
     this->controladorPartida = new PartidaController(_cantidad,estaConfigurando,config,this);
     //Apartado donde se conectan los componentes a los metodos
     connect(this->controladorPartida, &PartidaController::datosPartida, this,&PantallaJuego::mostrarDatosPantalla);
 
     this->controladorPartida->obtenerDatosPartida();
-    inicializarVistaMazo();
+
 }
 //Metodo que permite inicializar el widget del mazo
 void PantallaJuego::inicializarVistaMazo(){
@@ -45,11 +48,49 @@ void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual, std::string d
 
     this->ui->labelNombreJugador->setText(QString::fromStdString( jugadorActual->getNombre()));
     this->ui->labelVueltas->setText(QString::fromStdString(direccion));
+     qDebug()<<"llego a la presentacion";
     dibujarMazo(jugadorActual);
 }
 
+//Metodo que permite dibujar el mazo
 void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
 
+    this->escena->clear(); // Limpia cartas anteriores
+
+    qDebug()<<"llega a limpiar";
+    int total = jugadorActual->getMazo()->getLongitud();
+    if (total == 0) return;
+
+
+    //Se configura el layout dinamico
+    double anchoContenedor = this->vista->viewport()->width()-30;
+
+    // Se solapan (20px min). Si hay pocas, se separan (140px max)
+    double separacion = qMin(140.0, anchoContenedor / total);
+
+    double anchoTotalCartas = (total - 1) * separacion;
+    double xActual = (anchoContenedor - anchoTotalCartas) / 2;
+
+
+    for (int i = 0; i < total; ++i) {
+
+       //CartaDeckUI* visual = new CartaDeckUI(jugadorActual->getMazo()->getValor(i).getIndice(), jugadorActual->getMazo()->getValor(i).getAnverso());
+        CartaDeckUI* visual = new CartaDeckUI(jugadorActual->getMazo()->getValor(i).getIndice(), ":/assets/mediaGame/CartaA0.png");
+
+        // Conectas la carta al slot de esta pantalla
+        connect(visual, &CartaDeckUI::cartaClickeda, this, &PantallaJuego::onCartaPresionada);
+
+        escena->addItem(visual);
+        visual->setPos(xActual + (i * separacion), 300);
+        visual->setZValue(i);
+    }
+}
+
+//Metodo que permite que la carta envie su signal apra que sea eliminada del deck
+void PantallaJuego::onCartaPresionada(int indice) {
+    qDebug() << "Carta tocada con ID backend:" << indice;
+    // 1. Aquí llamas a tu lista enlazada: lista.eliminar(id)
+    // 2. Vuelves a llamar a dibujarMazo() con la lista actualizada
 }
 
 PantallaJuego::~PantallaJuego()

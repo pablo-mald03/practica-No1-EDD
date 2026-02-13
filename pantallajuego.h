@@ -24,6 +24,9 @@ public:
     explicit PantallaJuego(int _cantidad,bool &estaConfigurando, DatosConfiguracion * &config,QWidget *parent = nullptr);
     ~PantallaJuego();
 
+    //Metodo que permite que la carta genera una accion
+    void onCartaPresionada(int indice);
+
 private:
     Ui::PantallaJuego *ui;
     QGraphicsScene *escena;
@@ -38,6 +41,8 @@ private:
     void inicializarVistaMazo();
 
     void dibujarMazo(Jugador* & jugadorActual);
+
+
 
 signals:
     void solicitarSalida();

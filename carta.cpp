@@ -10,3 +10,15 @@ Carta::~Carta(){
 
 }
 
+//Metodo que permite retornar el reverso de la carta
+Modelo& Carta::getReverso(){
+    return this->reverso;
+}
+//Metodo que permite retornar el anverso de la carta
+Modelo& Carta::getAnverso(){
+    return this->anverso;
+}
+//Metodo que permite obtener el indice de la carta
+int Carta::getIndice()const{
+    return this->indice;
+}

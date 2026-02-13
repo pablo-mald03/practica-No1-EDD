@@ -6,9 +6,6 @@ Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
     :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha")
 {
     generarJugadores();
-
-    Jugador* j1 = nullptr;
-
     delete config;
     config = nullptr;
 
