@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+//Includes de C++
+#include <QGraphicsScene>
+#include <QGraphicsView>
+
 //Include de la partida (INTEGRACION DE BACKEND)
 #include"partidacontroller.h"
 #include"jugador.h"
@@ -22,12 +26,18 @@ public:
 
 private:
     Ui::PantallaJuego *ui;
+    QGraphicsScene *escena;
+    QGraphicsView *vista;
 
     PartidaController * controladorPartida = nullptr;
     int cantidadJugadores;
 
     //Metodos que comunican a la UI sus acciones
-    void mostrarDatosPantalla(Jugador* & jugadorActual);
+    void mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion);
+
+    void inicializarVistaMazo();
+
+    void dibujarMazo(Jugador* & jugadorActual);
 
 signals:
     void solicitarSalida();

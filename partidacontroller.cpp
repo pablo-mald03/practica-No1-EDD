@@ -16,6 +16,6 @@ PartidaController::~PartidaController(){
 }
 
 //Metodo que se encarga de retornar la informacion principal al iniciar la partida
-void PartidaController::iniciarPartida(){
-    emit partidaIniciada(this->gestorPartida->getJugadorActual());
+void PartidaController::obtenerDatosPartida(){
+    emit datosPartida(this->gestorPartida->getJugadorActual(),this->gestorPartida->getDireccion());
 }

@@ -20,21 +20,44 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
 
     this->controladorPartida = new PartidaController(_cantidad,estaConfigurando,config,this);
     //Apartado donde se conectan los componentes a los metodos
-    connect(this->controladorPartida, &PartidaController::partidaIniciada, this,&PantallaJuego::mostrarDatosPantalla);
+    connect(this->controladorPartida, &PartidaController::datosPartida, this,&PantallaJuego::mostrarDatosPantalla);
 
-    this->controladorPartida->iniciarPartida();
+    this->controladorPartida->obtenerDatosPartida();
+    inicializarVistaMazo();
+}
+//Metodo que permite inicializar el widget del mazo
+void PantallaJuego::inicializarVistaMazo(){
+    escena = new QGraphicsScene(this);
+    vista = new QGraphicsView(escena, this);
+    vista->setStyleSheet("background: transparent; border: none;");
+    vista->setRenderHint(QPainter::Antialiasing);
+
+    if (this->ui->widgetMazo->layout()) {
+        this->ui->widgetMazo->layout()->addWidget(vista);
+    } else {
+        QVBoxLayout *layoutInterno = new QVBoxLayout(this->ui->widgetMazo);
+        layoutInterno->addWidget(vista);
+    }
 }
 
-void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual){
-
-    qDebug()<<"senial recibida";
-    qDebug()<<"Dato recibido"<<jugadorActual->getNombre();
+//Metodo que muestra los datos del jugador en pantalla
+void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion){
 
     this->ui->labelNombreJugador->setText(QString::fromStdString( jugadorActual->getNombre()));
+    this->ui->labelVueltas->setText(QString::fromStdString(direccion));
+    dibujarMazo(jugadorActual);
+}
+
+void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
+
 }
 
 PantallaJuego::~PantallaJuego()
 {
+    delete this->escena;
+    this->escena = nullptr;
+    delete this->vista;
+    this->vista = nullptr;
     delete this->controladorPartida;
     this->controladorPartida = nullptr;
     delete ui;

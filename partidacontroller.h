@@ -21,9 +21,9 @@ public:
 
 
 public slots:
-    void iniciarPartida();
+    void obtenerDatosPartida();
 signals:
-    void partidaIniciada(Jugador* &jugador);
+    void datosPartida(Jugador* &jugador,std::string direccion);
 
 };
 
