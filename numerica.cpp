@@ -1,7 +1,7 @@
 #include "numerica.h"
 
 Numerica::Numerica(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado, int _valor)
-    :Modelo(_colorRef,_nombre,_lado,TipoCarta::CartaNumerica),valor(_valor)
+    :Modelo(_colorRef,_nombre,_lado,TipoCarta::CARTANUMERICA),valor(_valor)
 {}
 
 //Metodos getters y setters

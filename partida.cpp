@@ -1,6 +1,7 @@
 #include "partida.h"
 #include "bloqueo.h"
 #include "cambiodireccion.h"
+#include "coloreterno.h"
 #include "comodincolor.h"
 #include "eclipse.h"
 #include "espia.h"
@@ -8,6 +9,7 @@
 #include "modelo.h"
 #include "multicolorsuma.h"
 #include"numerica.h"
+#include "saltotodos.h"
 #include "sumacantidad.h"
 #include <QRandomGenerator>
 
@@ -146,13 +148,74 @@ void Partida::generarCartasClaras(){
     this->modelosClaros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","claro");
 
 }
+
+//Metodo que permite generar las cartas negras cuando se requieren
 void Partida::generarCartasOscuras(){
 
     if(!this->configuracion.esFlip()){
         return;
     }
 
+    std::string arregloNombres [] = {"cero","uno","dos","tres","cuatro","cinco","seis","siete","ocho","nueve"};
 
+    int j = 0;
+    //=======INICIALIZACION CARTAS NUMERICAS=====
+    //Inicializacion de cartas numericas rojas
+
+    for (int i = 0; i < 10; ++i) {
+        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::ROSA),arregloNombres[j],"oscuro",j);
+        j++;
+    }
+
+    j = 0;
+    //Inicializacion de cartas numericas amarillas
+    for (int i = 10; i < 20; ++i) {
+        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::NARANJA),arregloNombres[j],"oscuro",j);
+    }
+
+    j = 0;
+    //Inicializacion de cartas numericas verdes
+    for (int i = 20; i < 30; ++i) {
+        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::TURQUESA),arregloNombres[j],"oscuro",j);
+    }
+    j = 0;
+    //Inicializacion de cartas numericas azules
+    for (int i = 30; i < 40; ++i) {
+        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::VIOLETA),arregloNombres[j],"oscuro",j);
+    }
+
+    //=======FIN INICIALIZACION CARTAS NUMERICAS=====
+
+
+    //Generacion de las cartas oscuras +3
+    this->modelosOscuros[40] = new SumaCantidad(ColorCarta(TipoColor::ROSA),"Mas tres Rosa","oscuro",3);
+    this->modelosOscuros[41] = new SumaCantidad(ColorCarta(TipoColor::NARANJA),"Mas tres Naranja","oscuro",3);
+    this->modelosOscuros[42] = new SumaCantidad(ColorCarta(TipoColor::VIOLETA),"Mas tres Violeta","oscuro",3);
+    this->modelosOscuros[43] = new SumaCantidad(ColorCarta(TipoColor::TURQUESA),"Mas tres Turquesa","oscuro",3);
+
+    //Generacion de cartas de cambio de direccion
+    this->modelosOscuros[44] = new CambioDireccion(ColorCarta(TipoColor::ROSA),"Cambio direccion Rosa","oscuro");
+    this->modelosOscuros[45] = new CambioDireccion(ColorCarta(TipoColor::NARANJA),"Cambio direccion Naranja","oscuro");
+    this->modelosOscuros[46] = new CambioDireccion(ColorCarta(TipoColor::VIOLETA),"Cambio direccion Violeta","oscuro");
+    this->modelosOscuros[47] = new CambioDireccion(ColorCarta(TipoColor::TURQUESA),"Cambio direccion Turquesa","oscuro");
+
+    //Modelo de salto a todos
+    this->modelosOscuros[48] = new SaltoTodos(ColorCarta(TipoColor::ROSA),"Salto Todos Rosa","oscuro");
+    this->modelosOscuros[49] = new SaltoTodos(ColorCarta(TipoColor::NARANJA),"Salto Todos Naranja","oscuro");
+    this->modelosOscuros[50] = new SaltoTodos(ColorCarta(TipoColor::VIOLETA),"Salto Todos Violeta","oscuro");
+    this->modelosOscuros[51] = new SaltoTodos(ColorCarta(TipoColor::TURQUESA),"Salto Todos Turquesa","oscuro");
+
+    //Modelo de comodin +6
+    this->modelosOscuros[52] = new MultiColorSuma(ColorCarta(TipoColor::MULTICOLOR),"Multicolor mas 6","oscuro",6);
+
+    //Modelo de comodin Color eterno
+    this->modelosOscuros[53] = new ColorEterno(ColorCarta(TipoColor::PREDETERMINADO),"Color Eterno","oscuro");
+
+    //Carta eclipse MIA (P)
+    this->modelosOscuros[54] = new Eclipse(ColorCarta(TipoColor::PREDETERMINADO),"Eclipse","oscuro");
+
+    //Carta eclipse ESPIA (P)
+    this->modelosOscuros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","oscuro");
 }
 
 //==============FIN DEL APARTADO DE METODOS DE GENERACION DE CARTAS DEL JUEGO===================
@@ -161,4 +224,6 @@ void Partida::generarCartasOscuras(){
 Partida::~Partida(){
 
 }
+
+//CREATED BY (P.M)
 

@@ -39,6 +39,7 @@ qt_add_executable(PracticaNo1
     carta.h carta.cpp
     partidacontroller.h partidacontroller.cpp
     cartadeckui.h cartadeckui.cpp
+    saltotodos.h saltotodos.cpp
 
 
 

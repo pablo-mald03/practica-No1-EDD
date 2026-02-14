@@ -1,7 +1,7 @@
 #include "multicolorsuma.h"
 
 MultiColorSuma::MultiColorSuma(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado, int _valor)
-    :Modelo(_colorRef,_nombre,_lado,TipoCarta::SumaMulticolor),valorSuma(_valor)  {}
+    :Modelo(_colorRef,_nombre,_lado,TipoCarta::SUMAMULTICOLOR),valorSuma(_valor)  {}
 
 int MultiColorSuma::getValorSuma(){
     return this->valorSuma;

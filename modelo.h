@@ -16,16 +16,17 @@ class ListaCircular;
 //Enums utilizados para poder evitar el casteo dinamico
 enum class TipoCarta {
     Predeterminado,
-    CartaNumerica,
-    CartaBloqueo,
-    Eterna,
-    SumaMulticolor,
-    SumarCantidad,
-    CambiarDireccion,
-    ColorComodin,
-    CartaEspia,
-    CartaEclipse,
-    Reverse
+    CARTANUMERICA,
+    CARTABLOQUEO,
+    ETERNA,
+    SUMAMULTICOLOR,
+    SUMARCANTIDAD,
+    CAMBIARDIRECCION,
+    COLORCOMODIN,
+    CARTAESPIA,
+    CARTAECLIPSE,
+    REVERSE,
+    SALTOTOTAL
 
 };
 
