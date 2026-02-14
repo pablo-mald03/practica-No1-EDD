@@ -11,6 +11,9 @@ public:
 
     //Metodo que sirve para poder voltear el modo flip
     void voltearMazos();
+
+    //Metodo sobreescrito de imagen
+    std::string getPathImagen() const override;
 };
 
 #endif // REVERSA_H

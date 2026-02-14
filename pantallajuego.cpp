@@ -64,12 +64,23 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
     //Se configura el layout dinamico
     double anchoContenedor = this->vista->viewport()->width()-30;
 
-    // Se solapan (20px min). Si hay pocas, se separan (140px max)
-    double separacion = qMin(160.0, anchoContenedor / total);
 
-    double anchoTotalCartas = (total - 1) * separacion;
+    double anchoCarta = 135.0;
+    double espacioDisponible = anchoContenedor - anchoCarta;
+
+    double separacion;
+
+    if (total == 1) {
+        separacion = 0;
+    } else {
+        separacion = espacioDisponible / (total - 1);
+
+        double solapamientoMaximo = 60.0; // ajusta esto a tu gusto
+        separacion = qMax(anchoCarta - solapamientoMaximo, separacion);
+    }
+
+    double anchoTotalCartas = anchoCarta + (total - 1) * separacion;
     double xActual = (anchoContenedor - anchoTotalCartas) / 2;
-
 
     for (int i = 0; i < total; ++i) {
         Carta & cartaDeck = jugadorActual->getMazo()->getValor(i);

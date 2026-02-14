@@ -19,6 +19,9 @@ public:
     void setValorSuma(int _valor);
     void sumarCantidad();
 
+    //Metodo sobreescrito de imagen
+    std::string getPathImagen() const override;
+
 };
 
 #endif // SUMACANTIDAD_H
