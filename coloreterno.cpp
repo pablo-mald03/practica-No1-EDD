@@ -4,11 +4,6 @@ ColorEterno::ColorEterno(const ColorCarta&_colorRef, const std::string &_nombre,
     :Modelo(_colorRef,_nombre,_lado,TipoCarta::Eterna) {}
 
 
-void ColorEterno::saltoTotal(){
-
-
-}
-
 //Metodo que retorna el valor de imagen de la carta
 std::string ColorEterno::getPathImagen() const{
 
@@ -18,6 +13,28 @@ std::string ColorEterno::getPathImagen() const{
 
     return ":/assets/mediaGame/ReversoCarta.png";
 }
+
+//=================APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
+//Metodo donde se requiera mover a la lista de jugadores
+void ColorEterno::lanzarCarta(ListaCircular<Jugador*> & jugador){
+
+}
+
+//Caso donde la carta debe interactuar con la partida
+void ColorEterno::lanzarCarta(Partida & partidaActual) {
+
+}
+
+//Caso donde la carta debe interactuar con la partida y un jugador x
+void ColorEterno::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+}
+
+
+//=================FIN DEL APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
 
 ColorEterno::~ColorEterno(){
 

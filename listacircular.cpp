@@ -1,7 +1,6 @@
 #include"listacircular.h"
-#include"jugador.h"
 #include <stdexcept>
-
+#include"jugador.h"
 //instancia posible de nodo
 template class ListaCircular<Jugador*>;
 

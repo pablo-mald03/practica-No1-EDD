@@ -75,7 +75,7 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
     } else {
         separacion = espacioDisponible / (total - 1);
 
-        double solapamientoMaximo = 60.0; // ajusta esto a tu gusto
+        double solapamientoMaximo = 70.0;
         separacion = qMax(anchoCarta - solapamientoMaximo, separacion);
     }
 
@@ -98,8 +98,6 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
 //Metodo que permite que la carta envie su signal apra que sea eliminada del deck
 void PantallaJuego::onCartaPresionada(int indice) {
     qDebug() << "Carta tocada con ID backend:" << indice;
-    // 1. Aquí llamas a tu lista enlazada: lista.eliminar(id)
-    // 2. Vuelves a llamar a dibujarMazo() con la lista actualizada
 }
 
 PantallaJuego::~PantallaJuego()

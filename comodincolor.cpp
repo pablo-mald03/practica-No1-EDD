@@ -6,11 +6,6 @@ ComodinColor::ComodinColor(const ColorCarta&_colorRef, const std::string &_nombr
 
 }
 
-//Metodo de cambio
-void ComodinColor::cambiarDireccion(){
-
-}
-
 //Metodo que retorna el valor de imagen de la carta
 std::string ComodinColor::getPathImagen() const{
 
@@ -20,6 +15,28 @@ std::string ComodinColor::getPathImagen() const{
 
     return ":/assets/mediaGame/ReversoCarta.png";
 }
+
+//=================APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
+//Metodo donde se requiera mover a la lista de jugadores
+void ComodinColor::lanzarCarta(ListaCircular<Jugador*> & jugador){
+
+}
+
+//Caso donde la carta debe interactuar con la partida
+void ComodinColor::lanzarCarta(Partida & partidaActual) {
+
+}
+
+//Caso donde la carta debe interactuar con la partida y un jugador x
+void ComodinColor::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+}
+
+
+//=================FIN DEL APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
 
 
 ComodinColor::~ComodinColor(){

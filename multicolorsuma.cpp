@@ -7,10 +7,6 @@ int MultiColorSuma::getValorSuma(){
     return this->valorSuma;
 }
 
-void MultiColorSuma::setValorSuma(int _valor){
-    this->valorSuma = _valor;
-}
-
 //Metodo que retorna el valor de imagen de la carta
 std::string MultiColorSuma::getPathImagen() const{
 
@@ -26,6 +22,28 @@ std::string MultiColorSuma::getPathImagen() const{
 
     return ":/assets/mediaGame/ReversoCarta.png";
 }
+
+//=================APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
+//Metodo donde se requiera mover a la lista de jugadores
+void MultiColorSuma::lanzarCarta(ListaCircular<Jugador*> & jugador){
+
+}
+
+//Caso donde la carta debe interactuar con la partida
+void MultiColorSuma::lanzarCarta(Partida & partidaActual) {
+
+}
+
+//Caso donde la carta debe interactuar con la partida y un jugador x
+void MultiColorSuma::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+}
+
+
+//=================FIN DEL APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
 
 MultiColorSuma::~MultiColorSuma(){
 

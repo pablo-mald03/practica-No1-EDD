@@ -6,10 +6,28 @@ Reversa::Reversa(const ColorCarta&_colorRef, const std::string &_nombre,const st
 
 }
 
-//Metodo que sirve para poder voltear el modo flip
-void Reversa::voltearMazos(){
+
+//=================APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
+//Metodo donde se requiera mover a la lista de jugadores
+void Reversa::lanzarCarta(ListaCircular<Jugador*> & jugador){
 
 }
+
+//Caso donde la carta debe interactuar con la partida
+void Reversa::lanzarCarta(Partida & partidaActual) {
+
+}
+
+//Caso donde la carta debe interactuar con la partida y un jugador x
+void Reversa::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+}
+
+
+//=================FIN DEL APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
 
 //Metodo que retorna el valor de imagen de la carta
 std::string Reversa::getPathImagen() const{

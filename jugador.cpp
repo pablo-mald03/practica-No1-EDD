@@ -7,7 +7,7 @@ Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codig
 {
     this->mazo = new ListaEnlazada<Carta>();
 
-
+/*
     this->mazo->insertar(this->mazo->getLongitud(),Carta(
                                       new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::VERDE),"Bloqueo","claro"), this->mazo->getLongitud()));
 
@@ -18,7 +18,7 @@ Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codig
                                      new Bloqueo(ColorCarta(TipoColor::AMARILLO),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::AMARILLO),"Bloqueo","claro"), this->mazo->getLongitud()));
 
     this->mazo->insertar(this->mazo->getLongitud(),Carta(
-                                     new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","claro"), this->mazo->getLongitud()));
+                                     new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","oscuro"), new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo","claro"), this->mazo->getLongitud()));*/
 }
 
 //Apartado de acciones que puede hacer el jugador

@@ -6,10 +6,6 @@ Bloqueo::Bloqueo(const ColorCarta&_colorRef, const std::string &_nombre,const st
 
 }
 
-//Metodo de bloqueo
-void Bloqueo::bloquearJugador(){
-
-}
 
 //Metodo que retorna el valor de imagen de la carta
 std::string Bloqueo::getPathImagen() const{
@@ -29,6 +25,27 @@ std::string Bloqueo::getPathImagen() const{
 
     return ":/assets/mediaGame/ReversoCarta.png";
 }
+
+//=================APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
+//Metodo donde se requiera mover a la lista de jugadores
+void Bloqueo::lanzarCarta(ListaCircular<Jugador*> & jugador){
+
+}
+
+//Caso donde la carta debe interactuar con la partida
+void Bloqueo::lanzarCarta(Partida & partidaActual) {
+
+}
+
+//Caso donde la carta debe interactuar con la partida y un jugador x
+void Bloqueo::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+}
+
+
+//=================FIN DEL APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
 
 Bloqueo::~Bloqueo(){
 

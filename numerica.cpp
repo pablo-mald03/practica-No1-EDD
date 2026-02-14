@@ -9,9 +9,29 @@ int Numerica::getValor()const {
     return this->valor;
 }
 
-void Numerica::setValor(int _valor){
-     this->valor = _valor;
+
+//=================APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
+//Metodo donde se requiera mover a la lista de jugadores
+void Numerica::lanzarCarta(ListaCircular<Jugador*> & jugador){
+
 }
+
+//Caso donde la carta debe interactuar con la partida
+void Numerica::lanzarCarta(Partida & partidaActual) {
+
+}
+
+//Caso donde la carta debe interactuar con la partida y un jugador x
+void Numerica::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+}
+
+
+//=================FIN DEL APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
 
 //Metodo que retorna el valor de imagen de la carta
 std::string Numerica::getPathImagen() const{

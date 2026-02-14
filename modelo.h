@@ -5,6 +5,13 @@
 
 //includes de clases
 #include"colorcarta.h"
+//Forward declaration
+class Partida;
+class Jugador;
+template<typename T>
+class ListaEnlazada;
+template<typename T>
+class ListaCircular;
 
 //Enums utilizados para poder evitar el casteo dinamico
 enum class TipoCarta {
@@ -49,9 +56,14 @@ public:
 
     //Metodos virtuales
     virtual std::string getPathImagen() const = 0;
-
     //Metodos sobrecargados
 
+    //Metodo base cuando una carta tiene que interactuar con un jugador x
+    virtual void lanzarCarta(ListaCircular<Jugador*> & jugador) = 0;
+    //Caso donde la carta debe interactuar con la partida
+    virtual void lanzarCarta(Partida & partidaActual) = 0;
+    //Caso donde la carta debe interactuar con la partida y un jugador x
+    virtual void lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) = 0;
 
 };
 

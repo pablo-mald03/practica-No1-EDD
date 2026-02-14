@@ -11,13 +11,29 @@ int SumaCantidad::getValorSuma(){
     return this->valorSuma;
 }
 
-void SumaCantidad::setValorSuma(int _valor){
-    this->valorSuma = _valor;
+
+//=================APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
+//Metodo donde se requiera mover a la lista de jugadores
+void SumaCantidad::lanzarCarta(ListaCircular<Jugador*> & jugador){
+
 }
 
-void SumaCantidad::sumarCantidad(){
+//Caso donde la carta debe interactuar con la partida
+void SumaCantidad::lanzarCarta(Partida & partidaActual) {
 
 }
+
+//Caso donde la carta debe interactuar con la partida y un jugador x
+void SumaCantidad::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+}
+
+
+//=================FIN DEL APARTADO DONDE SE USAN LOS METODOS SOBREESCRITOS DE LAS ACCIONES DE LAS CARTAS========
+
+
 
 //Metodo que retorna el valor de imagen de la carta
 std::string SumaCantidad::getPathImagen() const{
