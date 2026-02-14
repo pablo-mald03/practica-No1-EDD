@@ -6,6 +6,7 @@ Modelo::Modelo(const ColorCarta&_colorRef, const std::string &_nombre, const std
 
 }
 
+
 //Metodos getter y setter
 void Modelo::setColor(const ColorCarta &_color){
     this->color = _color;

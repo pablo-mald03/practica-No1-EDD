@@ -20,6 +20,10 @@ private:
     int cantidadJugadores;
     std::string direccion;
 
+    //Arreglos modelo de cartas
+    Modelo * modelosClaros[56];
+    Modelo * modelosOscuros[56];
+
     //Metodos propios de la clase para hacer funcionar la partida
     void generarJugadores();
     int generarIndiceRandom(int limiteSuperior);
@@ -28,6 +32,10 @@ private:
 
     //Metodo de una sola utilidad
     void generarDireccionInicial();
+
+    //Metodos que permiten generar los modelos de cartas base
+    void generarCartasClaras();
+    void generarCartasOscuras();
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
@@ -40,5 +48,7 @@ public:
     //Metodo que permite obtener la direccion
     std::string getDireccion();
 };
+
+/*CREATED BY PABLO M*/
 
 #endif // PARTIDA_H

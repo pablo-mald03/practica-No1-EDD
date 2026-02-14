@@ -15,6 +15,7 @@ class ListaCircular;
 
 //Enums utilizados para poder evitar el casteo dinamico
 enum class TipoCarta {
+    Predeterminado,
     CartaNumerica,
     CartaBloqueo,
     Eterna,
@@ -40,6 +41,7 @@ protected:
 public:
     Modelo(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,
     TipoCarta _tipo);
+   // Modelo();
     virtual ~Modelo();
 
     //Metodos getter y setter

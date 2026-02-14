@@ -3,6 +3,7 @@
 
 //Enums utilizados para poder verificar el color de la carta
 enum class TipoColor {
+    PREDETERMINADO,
     ROSA,
     VIOLETA,
     TURQUESA,
@@ -11,6 +12,7 @@ enum class TipoColor {
     ROJO,
     AMARILLO,
     VERDE,
+    MULTICOLOR
 };
 
 
