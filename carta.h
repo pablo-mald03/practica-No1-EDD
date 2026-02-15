@@ -12,11 +12,12 @@ private:
 
 public:
     Carta(Modelo *_reverso,  Modelo * _anverso,int _indice);
+    Carta();
     ~Carta() = default;
 
     //Metodos getters
-    Modelo& getReverso() const;
-    Modelo& getAnverso() const;
+    Modelo* getReverso() const;
+    Modelo* getAnverso() const;
     int getIndice()const;
 
 };

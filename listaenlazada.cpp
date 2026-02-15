@@ -11,6 +11,12 @@ ListaEnlazada<T>::ListaEnlazada(): cabeza(nullptr),cola(nullptr), longitud(0)
 
 }
 
+//Metodo que obtiene la cabeza de la lista enlazada para poder recorrerla sin mayor complejidad
+template<typename T>
+Nodo<T>* ListaEnlazada<T>::getCabeza() const {
+    return this->cabeza;
+}
+
 template<typename T>
 ListaEnlazada<T>::~ListaEnlazada()
 {

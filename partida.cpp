@@ -93,17 +93,20 @@ void Partida::generarCartasClaras(){
     //Inicializacion de cartas numericas amarillas
     for (int i = 10; i < 20; i++) {
         this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::AMARILLO),arregloNombres[j],"claro",j);
+        j++;
     }
 
     j = 0;
     //Inicializacion de cartas numericas verdes
     for (int i = 20; i < 30; i++) {
         this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::VERDE),arregloNombres[j],"claro",j);
+        j++;
     }
     j = 0;
     //Inicializacion de cartas numericas azules
     for (int i = 30; i < 40; i++) {
         this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::AZUL),arregloNombres[j],"claro",j);
+        j++;
     }
 
     //=======FIN INICIALIZACION CARTAS NUMERICAS=====
@@ -233,6 +236,8 @@ void Partida::armarCartas(){
         armarCartasFlip();
     }
 
+    barajarCartas();
+
 }
 
 //Metodo que permite armar las cartas del UNO Normal
@@ -249,10 +254,12 @@ void Partida::armarCartasNormal(){
     int j = 0;
     do{
         if(j % 10 != 0){
-            this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[iterador], iterador));
+            this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[j], iterador));
             iterador++;
         }
+
         j++;
+
     }while(j < 40);
 
     //Generacion de las cartas +2
@@ -315,6 +322,55 @@ void Partida::armarCartasNormal(){
 //Metodo que permite armar las cartas del UNO FLIP
 void Partida::armarCartasFlip(){
 
+}
+
+//Metodos que sirven para poder barajear y mezclar las cartas (DE LOS MAS IMPORTANTES)
+void Partida::barajarCartas(){
+
+    if (!this->listadoCartas) return;
+
+    int n = this->listadoCartas->getLongitud();
+    if (n <= 1) return;
+
+    //Se inicializa la semilla una zola vez
+    static bool semillaInicializada = false;
+    if (!semillaInicializada) {
+        std::srand(std::time(nullptr));
+        semillaInicializada = true;
+    }
+
+    //Arreglo estatico con el maximo tamanio posible
+    Carta buffer[116];
+
+    //Copiar la lista tal cual al arreglo (basandose en puro recorrido de getsiguiente)
+    Nodo<Carta>* actual = this->listadoCartas->getCabeza();
+    int i = 0;
+
+    while (actual != nullptr && i < n) {
+        buffer[i] = actual->getDato();
+        actual = actual->getSiguiente();
+        i++;
+    }
+
+    //Metodo Fisher–Yates manual algoritmo base para poder barajar de forma uniforme
+    for (int i = n - 1; i > 0; i--) {
+        int j = std::rand() % (i + 1);
+
+
+        Carta temp = buffer[i];
+        buffer[i] = buffer[j];
+        buffer[j] = temp;
+    }
+
+    //Se reescriben los datos en la lista
+    actual = this->listadoCartas->getCabeza();
+    i = 0;
+
+    while (actual != nullptr && i < n) {
+        actual->getDato() = buffer[i];
+        actual = actual->getSiguiente();
+        i++;
+    }
 }
 
 //---------------------FIN DE LA SUBREGION DE METODOS QUE GENERAN LA LISTA INICIAL DE CARTAS PARA PODERLAS REVOLVER-------------

@@ -34,6 +34,8 @@ public:
 
     T& getValor(int pos);
     const T& verValor(int indice) const;
+    //Metodo para obtener la cabeza
+    Nodo<T>* getCabeza() const;
 
 private:
     //Metodo especial para hallar los nodos
