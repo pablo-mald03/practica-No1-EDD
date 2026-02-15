@@ -31,6 +31,14 @@ public:
     //Metodo que permite obtener el mazo
     ListaEnlazada<Carta> * getMazo();
 
+    //Metodo para ordenar cartas
+    void ordenarCartas();
+
+    //Metodos de ordenamiento de datos (propios del jugador CASO REAL)
+    int prioridadColor(const Carta& carta);
+    bool menorQue(const Carta& a, const Carta& b);
+    int prioridadJerarquia(const Carta& carta);
+
 };
 
 #endif // JUGADOR_H

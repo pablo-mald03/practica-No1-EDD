@@ -70,6 +70,9 @@ private:
 
     //Metodo que permite repartir a cada jugador las cartas YA REVUELTAS
     void repartirCartas();
+    //Metodo que le dice a todos los jugadores que ordenen sus cartas
+    void ordenCartas();
+
 
 
 public:

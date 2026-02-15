@@ -29,36 +29,36 @@ Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
     armarCartas();
 
     repartirCartas();
-
+    ordenCartas();
 
 }
 
 
 //==============APARTADO DE METODOS PARA REPARTIR LAS CARTAS A LOS JUGADORES===================
-//Metodo encargado de repartir las cartas
+//Metodo encargado de repartir las cartas complejidad O(n)
 void Partida::repartirCartas(){
 
     this->inicioRonda = this->listaJugadores.getActual();
-    int cantidadJugadores = this->listaJugadores.getLongitud();
+    int totalCartasRepartir = this->listaJugadores.getLongitud() * 8;
 
-    int contadorPosiciones = 0;
+    for (int j = 0; j < totalCartasRepartir; j++) {
 
-    for (int i = 0; i < cantidadJugadores*8; i++) {
-
-        if(contadorPosiciones == 8){
-            this->listaJugadores.avanzar();
-            contadorPosiciones = 0;
+        if (!this->pilaLateralCartas->estaVacia()) {
+            this->listaJugadores.getActual()->getMazo()->insertarFrente(this->pilaLateralCartas->verTop());
+            this->pilaLateralCartas->pop();
         }
 
-        this->listaJugadores.getActual()->getMazo()->insertarFrente( this->pilaLateralCartas->verTop());
-        this->pilaLateralCartas->pop();
-        contadorPosiciones++;
+        this->listaJugadores.avanzar();
     }
+}
 
-    for (int i = 0; i < cantidadJugadores; i++) {
-        qDebug()<<"tamanio del deck j: "<<this->listaJugadores.getActual()->getMazo()->getLongitud();
+//Metodo que avisa a cada jugador que ordene sus propias cartas (METODOS DELEGADOS)
+void Partida::ordenCartas(){
+    int totalJugadores = this->listaJugadores.getLongitud();
+    for (int i = 0; i < totalJugadores; i++) {
+        this->listaJugadores.getActual()->ordenarCartas();
+        this->listaJugadores.avanzar();
     }
-
 }
 
 
@@ -302,79 +302,79 @@ void Partida::armarCartas(){
 //Metodo que permite armar las cartas del UNO Normal
 void Partida::armarCartasNormal(ListaEnlazada<Carta>*& lista){
 
-    int iterador = 0;
+    int modeloIndex = 0;
 
     //Generacion de cartas numericas
-    do{
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[iterador], iterador));
-        iterador++;
-    }while(iterador < 40);
+    for (int i = 0; i < 40; i++) {
+
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[i], modeloIndex));
+
+        modeloIndex++;
+        if(modeloIndex >= 10){
+            modeloIndex = 0;
+        }
+    }
 
     int j = 0;
-    do{
-        if(j % 10 != 0){
-            lista->insertarFrente(Carta(nullptr, this->modelosClaros[j], iterador));
-            iterador++;
+
+    modeloIndex = 1;
+
+    do {
+        //Evita enumerar el cero
+        if (j % 10 != 0) {
+            lista->insertarFrente(Carta(nullptr, this->modelosClaros[j], modeloIndex));
+            modeloIndex++;
+        }
+
+        if (modeloIndex >= 10) {
+            modeloIndex = 1;
         }
 
         j++;
-
-    }while(j < 40);
+    } while (j < 40);
 
     //Generacion de las cartas +2
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[40], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[41], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[42], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[43], iterador));
-        iterador++;
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[40], 12));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[41], 12));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[42], 12));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[43], 12));
     }
 
     //Generacion de las cartas cambio de direccion
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[44], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[45], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[46], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[47], iterador));
-        iterador++;
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[44], 11));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[45], 11));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[46], 11));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[47], 11));
     }
 
     //Generacion de las cartas cambio de bloqueo
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[48], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[49], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[50], iterador));
-        iterador++;
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[51], iterador));
-        iterador++;
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[48], 10));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[49], 10));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[50], 10));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[51], 10));
     }
 
+    //Generar carta multicolor suma
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[52], iterador));
-        iterador++;
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[52], 13));
     }
 
+    //Generar Carta comodin color
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[53], iterador));
-        iterador++;
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[53], 14));
     }
 
+    //Generar carta eclipse MIA (P)
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[54], iterador));
-        iterador++;
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[54], 15));
     }
 
+    //Generar carta espia MIA (P)
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta(nullptr, this->modelosClaros[55], iterador));
-        iterador++;
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[55], 16));
     }
 }
 

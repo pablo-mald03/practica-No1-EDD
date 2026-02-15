@@ -85,7 +85,7 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
     for (int i = 0; i < total; ++i) {
         Carta cartaDeck = jugadorActual->getMazo()->getValor(i);
 
-        CartaDeckUI* visual = new CartaDeckUI(cartaDeck.getIndice(), QString::fromStdString( cartaDeck.getAnverso()->getPathImagen()));
+        CartaDeckUI* visual = new CartaDeckUI(i, QString::fromStdString( cartaDeck.getAnverso()->getPathImagen()));
 
         // Conectas la carta al slot de esta pantalla
         connect(visual, &CartaDeckUI::cartaClickeda, this, &PantallaJuego::onCartaPresionada);
