@@ -152,6 +152,27 @@ Nodo<T>* ListaEnlazada<T>::getNodo(int indice) const{
     return actual;
 }
 
+//Metodo que retorna y elimina datos desde el frente
+template<typename T>
+T ListaEnlazada<T>::popFront() {
+    if (!cabeza) throw std::runtime_error("Lista vacía");
+
+    Nodo<T>* temp = cabeza;
+    T dato = temp->getDato();
+
+    cabeza = cabeza->getSiguiente();
+
+    if (cabeza)
+        cabeza->setAnterior(nullptr);
+    else
+        cola = nullptr;
+
+    delete temp;
+    this->longitud--;
+
+    return dato;
+}
+
 //Metodo que sirve para insertar en cualquier indice
 template<typename T>
 void ListaEnlazada<T>::insertar(int indice, const T& valor)

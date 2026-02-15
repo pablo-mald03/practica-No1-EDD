@@ -6,7 +6,6 @@ ConfiguracionPartida::ConfiguracionPartida(DatosConfiguracion* &config)
 {
     delete config;
     config = nullptr;
-    qDebug() << "Se ha eliminado la configuracion ";
 }
 
 //Metodos getter para saber los estados de configuracion

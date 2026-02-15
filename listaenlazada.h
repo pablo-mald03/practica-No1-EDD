@@ -37,6 +37,9 @@ public:
     //Metodo para obtener la cabeza
     Nodo<T>* getCabeza() const;
 
+    //Metodo que permite eliminar y retornar el dato
+    T popFront();
+
 private:
     //Metodo especial para hallar los nodos
      Nodo<T>* getNodo(int pos) const;

@@ -146,10 +146,10 @@ void Partida::generarCartasClaras(){
     //Generacion de la carta comodin
     this->modelosClaros[53] = new ComodinColor(ColorCarta(TipoColor::MULTICOLOR),"Comodin","claro");
 
-    //Carta eclipse MIA
+    //Carta ECLIPSE MIA (P)
     this->modelosClaros[54] = new Eclipse(ColorCarta(TipoColor::PREDETERMINADO),"Eclipse","claro");
 
-    //Carta eclipse ESPIA
+    //Carta ESPIA MIA (P)
     this->modelosClaros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","claro");
 
 }
@@ -165,7 +165,7 @@ void Partida::generarCartasOscuras(){
 
     int j = 0;
     //=======INICIALIZACION CARTAS NUMERICAS=====
-    //Inicializacion de cartas numericas rojas
+    //Inicializacion de cartas numericas rosas
 
     for (int i = 0; i < 10; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::ROSA),arregloNombres[j],"oscuro",j);
@@ -173,18 +173,18 @@ void Partida::generarCartasOscuras(){
     }
 
     j = 0;
-    //Inicializacion de cartas numericas amarillas
+    //Inicializacion de cartas numericas naranjas
     for (int i = 10; i < 20; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::NARANJA),arregloNombres[j],"oscuro",j);
     }
 
     j = 0;
-    //Inicializacion de cartas numericas verdes
+    //Inicializacion de cartas numericas turquesas
     for (int i = 20; i < 30; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::TURQUESA),arregloNombres[j],"oscuro",j);
     }
     j = 0;
-    //Inicializacion de cartas numericas azules
+    //Inicializacion de cartas numericas violetas
     for (int i = 30; i < 40; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::VIOLETA),arregloNombres[j],"oscuro",j);
     }
@@ -216,11 +216,12 @@ void Partida::generarCartasOscuras(){
     //Modelo de comodin Color eterno
     this->modelosOscuros[53] = new ColorEterno(ColorCarta(TipoColor::PREDETERMINADO),"Color Eterno","oscuro");
 
-    //Carta eclipse MIA (P)
+    //Carta ECLIPSE MIA (P)
     this->modelosOscuros[54] = new Eclipse(ColorCarta(TipoColor::PREDETERMINADO),"Eclipse","oscuro");
 
-    //Carta eclipse ESPIA (P)
+    //Carta ESPIA MIA (P)
     this->modelosOscuros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","oscuro");
+
 }
 
 //---------------------SUBREGION DE METODOS QUE GENERAN LA LISTA INICIAL DE CARTAS PARA PODERLAS REVOLVER-------------
@@ -230,31 +231,49 @@ void Partida::armarCartas(){
 
     this->listadoCartas = new ListaEnlazada<Carta>();
 
-    if(!this->configuracion.esFlip()){
-        armarCartasNormal();
-    }else{
-        armarCartasFlip();
+    int cantidadMazos = ((this->cantidadJugadores-1)/6+1);
+
+    qDebug()<<"cantidad de mazos: "<<cantidadMazos;
+
+    for (int i = 0; i < cantidadMazos; i++) {
+        if(!this->configuracion.esFlip()){
+            armarCartasNormal(this->listadoCartas);
+        }else{
+            armarCartasFlip(this->listadoCartas);
+        }
     }
 
-    barajarCartas();
 
+    barajarCartas(this->listadoCartas);
+
+    //Se agrega todo a la pila lateral de cartas
+    this->pilaLateralCartas = new Pila<Carta>();
+
+    while (this->listadoCartas->getLongitud() > 0) {
+        pilaLateralCartas->push(
+            listadoCartas->popFront()
+            );
+    }
+
+    delete this->listadoCartas;
+    this->listadoCartas = nullptr;
 }
 
 //Metodo que permite armar las cartas del UNO Normal
-void Partida::armarCartasNormal(){
+void Partida::armarCartasNormal(ListaEnlazada<Carta>*& lista){
 
     int iterador = 0;
 
     //Generacion de cartas numericas
     do{
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[iterador], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[iterador], iterador));
         iterador++;
     }while(iterador < 40);
 
     int j = 0;
     do{
         if(j % 10 != 0){
-            this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[j], iterador));
+            lista->insertarFrente(Carta(nullptr, this->modelosClaros[j], iterador));
             iterador++;
         }
 
@@ -264,72 +283,178 @@ void Partida::armarCartasNormal(){
 
     //Generacion de las cartas +2
     for (int i = 0; i < 2; i++) {
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[40], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[40], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[41], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[41], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[42], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[42], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[43], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[43], iterador));
         iterador++;
     }
 
     //Generacion de las cartas cambio de direccion
     for (int i = 0; i < 2; i++) {
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[44], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[44], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[45], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[45], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[46], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[46], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[47], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[47], iterador));
         iterador++;
     }
 
     //Generacion de las cartas cambio de bloqueo
     for (int i = 0; i < 2; i++) {
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[48], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[48], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[49], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[49], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[50], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[50], iterador));
         iterador++;
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[51], iterador));
-        iterador++;
-    }
-
-    for (int i = 0; i < 4; i++) {
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[52], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[51], iterador));
         iterador++;
     }
 
     for (int i = 0; i < 4; i++) {
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[53], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[52], iterador));
         iterador++;
     }
 
     for (int i = 0; i < 4; i++) {
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[54], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[53], iterador));
         iterador++;
     }
 
     for (int i = 0; i < 4; i++) {
-        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[55], iterador));
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[54], iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        lista->insertarFrente(Carta(nullptr, this->modelosClaros[55], iterador));
         iterador++;
     }
 }
 
 //Metodo que permite armar las cartas del UNO FLIP
-void Partida::armarCartasFlip(){
+void Partida::armarCartasFlip(ListaEnlazada<Carta>*& lista){
+
+    if(!this->configuracion.esFlip()) return;
+
+    this->listaCartasBlancas= new ListaEnlazada<Carta>();
+    this->armarCartasNormal(this->listaCartasBlancas);
+
+    this->listadoCartasOscuras = new ListaEnlazada<Carta>();
+    this->armarCartasOscuras(this->listadoCartasOscuras);
+
+    barajarCartas(this->listaCartasBlancas);
+    barajarCartas(this->listadoCartasOscuras);
+
+    for (int i = 0; i < this->listadoCartasOscuras->getLongitud(); i++) {
+
+        Modelo* clara = this->listaCartasBlancas->popFront().getAnverso();
+        Modelo* oscura = this->listadoCartasOscuras->popFront().getReverso();
+        this->listadoCartas->insertarFrente(Carta(oscura, clara, i));
+    }
+
+    //SE LIBERA LA MEMORIA OCUPADA
+    delete this->listaCartasBlancas;
+    delete this->listadoCartasOscuras;
+    this->listadoCartasOscuras = nullptr;
+    this->listaCartasBlancas = nullptr;
+
+}
+
+//METODO QUE SIRVE PARA REPARTIR LAS REFERENCIAS DE LAS CARTAS OSCURAS
+void Partida::armarCartasOscuras(ListaEnlazada<Carta>*& lista){
+
+    if(!this->configuracion.esFlip()) return;
+
+    int iterador = 0;
+
+    //Generacion de cartas numericas
+    do{
+        lista->insertarFrente(Carta( this->modelosOscuros[iterador],nullptr, iterador));
+        iterador++;
+    }while(iterador < 40);
+
+    int j = 0;
+    do{
+        if(j % 10 != 0){
+            lista->insertarFrente(Carta( this->modelosOscuros[j],nullptr, iterador));
+            iterador++;
+        }
+
+        j++;
+
+    }while(j < 40);
+
+    //Generacion de las cartas +2
+    for (int i = 0; i < 2; i++) {
+        lista->insertarFrente(Carta( this->modelosOscuros[40],nullptr, iterador));
+        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[41], nullptr,iterador));
+        iterador++;
+        lista->insertarFrente(Carta(this->modelosOscuros[42], nullptr, iterador));
+        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[43], nullptr,iterador));
+        iterador++;
+    }
+
+    //Generacion de las cartas cambio de direccion
+    for (int i = 0; i < 2; i++) {
+        lista->insertarFrente(Carta( this->modelosOscuros[44],nullptr, iterador));
+        iterador++;
+        lista->insertarFrente(Carta(this->modelosOscuros[45], nullptr,iterador));
+        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[46],nullptr, iterador));
+        iterador++;
+        lista->insertarFrente(Carta(this->modelosOscuros[47],nullptr, iterador));
+        iterador++;
+    }
+
+    //Generacion de las cartas cambio de salto total
+    for (int i = 0; i < 2; i++) {
+        lista->insertarFrente(Carta( this->modelosOscuros[48],nullptr, iterador));
+        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[49],nullptr, iterador));
+        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[50],nullptr, iterador));
+        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[51],nullptr, iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        lista->insertarFrente(Carta( this->modelosOscuros[52],nullptr, iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        lista->insertarFrente(Carta( this->modelosOscuros[53],nullptr, iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        lista->insertarFrente(Carta( this->modelosOscuros[54],nullptr, iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        lista->insertarFrente(Carta( this->modelosOscuros[55],nullptr, iterador));
+        iterador++;
+    }
 
 }
 
 //Metodos que sirven para poder barajear y mezclar las cartas (DE LOS MAS IMPORTANTES)
-void Partida::barajarCartas(){
+void Partida::barajarCartas(ListaEnlazada<Carta>*& lista){
 
-    if (!this->listadoCartas) return;
+    if (!lista) return;
 
-    int n = this->listadoCartas->getLongitud();
+    int n = lista->getLongitud();
     if (n <= 1) return;
 
     //Se inicializa la semilla una zola vez
@@ -340,10 +465,10 @@ void Partida::barajarCartas(){
     }
 
     //Arreglo estatico con el maximo tamanio posible
-    Carta buffer[116];
+    Carta* buffer = new Carta[n];
 
     //Copiar la lista tal cual al arreglo (basandose en puro recorrido de getsiguiente)
-    Nodo<Carta>* actual = this->listadoCartas->getCabeza();
+    Nodo<Carta>* actual = lista->getCabeza();
     int i = 0;
 
     while (actual != nullptr && i < n) {
@@ -363,7 +488,7 @@ void Partida::barajarCartas(){
     }
 
     //Se reescriben los datos en la lista
-    actual = this->listadoCartas->getCabeza();
+    actual = lista->getCabeza();
     i = 0;
 
     while (actual != nullptr && i < n) {
@@ -371,16 +496,23 @@ void Partida::barajarCartas(){
         actual = actual->getSiguiente();
         i++;
     }
+    delete[] buffer;
 }
 
 //---------------------FIN DE LA SUBREGION DE METODOS QUE GENERAN LA LISTA INICIAL DE CARTAS PARA PODERLAS REVOLVER-------------
 
 //==============FIN DEL APARTADO DE METODOS DE GENERACION DE CARTAS DEL JUEGO===================
 
+//Metodo para limpiar las cosas en el destructor
+void Partida::limpiarReferencias(){
+    for(int i = 0; i < 56; i++)
+        delete modelosClaros[i];
+}
 
 Partida::~Partida(){
 
-    //PENDIENTE DESTRUCTOR
+    limpiarReferencias();
+
 }
 
 //CREATED BY (P.M)

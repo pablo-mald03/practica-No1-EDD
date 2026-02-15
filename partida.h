@@ -11,6 +11,7 @@ struct DatosConfiguracion;
 #include"listacircular.h"
 #include"jugador.h"
 #include"configuracionpartida.h"
+#include"pila.h"
 
 class Partida
 {
@@ -26,6 +27,16 @@ private:
 
     //Lista provisional (UTIL SOLO DURANTE EL TIEMPO DE REVOLVER CARTAS Y AGREGAR)
     ListaEnlazada<Carta> * listadoCartas;
+
+    //LISTADOS TEMPORALES PARA ARMAR LAS INSTANCIAS DEL FLIP
+    ListaEnlazada<Carta> * listaCartasBlancas;
+    ListaEnlazada<Carta> * listadoCartasOscuras;
+
+    //Pila de las cartas laterales
+    Pila<Carta> *pilaLateralCartas;
+
+    //Pila de las cartas laterales
+    Pila<Carta> *pilaCentralCartas;
 
     //Metodos propios de la clase para hacer funcionar la partida
     void generarJugadores();
@@ -43,11 +54,21 @@ private:
 
     //Metodos que sirven para armar los modelos de cartas
     void armarCartas();
-    void armarCartasNormal();
-    void armarCartasFlip();
+    void armarCartasNormal(ListaEnlazada<Carta>*& lista);
+    void armarCartasFlip(ListaEnlazada<Carta>*& lista);
+    //METODOS UNICAMENTE ESPECIALES PARA ARMAR LAS INSTANICAS  DE CADA UNO DE LOS LADOS DEL FLIP
+    void armarCartasOscuras(ListaEnlazada<Carta>*& lista);
 
     //Metodos que sirven para poder barajear y mezclar las cartas
-    void barajarCartas();
+    void barajarCartas(ListaEnlazada<Carta> *& lista);
+
+
+    //Metodo para limpiar las cosas en el destructor
+    void limpiarReferencias();
+
+    //Metodo que permite repartir a cada jugador las cartas YA REVUELTAS
+
+
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
