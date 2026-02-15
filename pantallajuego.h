@@ -36,7 +36,7 @@ private:
     int cantidadJugadores;
 
     //Metodos que comunican a la UI sus acciones
-    void mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion);
+    void mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion, int cartasPila, int vueltas);
 
     void inicializarVistaMazo();
 

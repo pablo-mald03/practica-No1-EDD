@@ -23,7 +23,7 @@ public:
 public slots:
     void obtenerDatosPartida();
 signals:
-    void datosPartida(Jugador* &jugador,std::string direccion);
+    void datosPartida(Jugador* &jugador,std::string direccion, int cartasPila, int vueltas);
 
 };
 

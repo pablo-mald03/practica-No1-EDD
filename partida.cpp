@@ -16,7 +16,7 @@
 /*CREATED BY PABLO M*/
 
 Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
-    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha")
+    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0)
 {
     generarJugadores();
     delete config;
@@ -69,6 +69,13 @@ void Partida::ordenCartas(){
 
 
 //==============APARTADO DE METODOS GETTER DE LA CLASE===================
+
+int Partida::getCantidadPila(){
+    return this->pilaLateralCartas->getLongitud();
+}
+int Partida::getCantidadVueltas(){
+    return this->cantidadVueltas;
+}
 
 std::string Partida::getDireccion(){
     return this->direccion;

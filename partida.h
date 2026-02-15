@@ -20,6 +20,7 @@ private:
     ConfiguracionPartida configuracion;
     int cantidadJugadores;
     std::string direccion;
+    int cantidadVueltas;
 
     //Arreglos modelo de cartas
     Modelo * modelosClaros[56];
@@ -53,7 +54,6 @@ private:
     void generarCartasClaras();
     void generarCartasOscuras();
 
-
     //Metodos que sirven para armar los modelos de cartas
     void armarCartas();
     void armarCartasNormal(ListaEnlazada<Carta>*& lista);
@@ -85,6 +85,9 @@ public:
 
     //Metodo que permite obtener la direccion
     std::string getDireccion();
+    //Metodos que permiten mostrar en la UI los datos de vuelta y de cantidad de cartas en la pila
+    int getCantidadPila();
+    int getCantidadVueltas();
 };
 
 /*CREATED BY PABLO M*/
