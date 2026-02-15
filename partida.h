@@ -24,6 +24,9 @@ private:
     Modelo * modelosClaros[56];
     Modelo * modelosOscuros[56];
 
+    //Lista provisional (UTIL SOLO DURANTE EL TIEMPO DE REVOLVER CARTAS Y AGREGAR)
+    ListaEnlazada<Carta> * listadoCartas;
+
     //Metodos propios de la clase para hacer funcionar la partida
     void generarJugadores();
     int generarIndiceRandom(int limiteSuperior);
@@ -36,6 +39,15 @@ private:
     //Metodos que permiten generar los modelos de cartas base
     void generarCartasClaras();
     void generarCartasOscuras();
+
+
+    //Metodos que sirven para armar los modelos de cartas
+    void armarCartas();
+    void armarCartasNormal();
+    void armarCartasFlip();
+
+    //Metodos que sirven para poder barajear y mezclar las cartas
+    void barajarCartas();
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);

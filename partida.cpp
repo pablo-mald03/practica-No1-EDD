@@ -26,6 +26,8 @@ Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
     generarDireccionInicial();
     generarCartasClaras();
     generarCartasOscuras();
+
+    armarCartas();
 }
 
 
@@ -82,25 +84,25 @@ void Partida::generarCartasClaras(){
     //=======INICIALIZACION CARTAS NUMERICAS=====
     //Inicializacion de cartas numericas rojas
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; i++) {
         this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::ROJO),arregloNombres[j],"claro",j);
         j++;
     }
 
     j = 0;
     //Inicializacion de cartas numericas amarillas
-    for (int i = 10; i < 20; ++i) {
+    for (int i = 10; i < 20; i++) {
         this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::AMARILLO),arregloNombres[j],"claro",j);
     }
 
     j = 0;
     //Inicializacion de cartas numericas verdes
-    for (int i = 20; i < 30; ++i) {
+    for (int i = 20; i < 30; i++) {
         this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::VERDE),arregloNombres[j],"claro",j);
     }
     j = 0;
     //Inicializacion de cartas numericas azules
-    for (int i = 30; i < 40; ++i) {
+    for (int i = 30; i < 40; i++) {
         this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::AZUL),arregloNombres[j],"claro",j);
     }
 
@@ -162,25 +164,25 @@ void Partida::generarCartasOscuras(){
     //=======INICIALIZACION CARTAS NUMERICAS=====
     //Inicializacion de cartas numericas rojas
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::ROSA),arregloNombres[j],"oscuro",j);
         j++;
     }
 
     j = 0;
     //Inicializacion de cartas numericas amarillas
-    for (int i = 10; i < 20; ++i) {
+    for (int i = 10; i < 20; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::NARANJA),arregloNombres[j],"oscuro",j);
     }
 
     j = 0;
     //Inicializacion de cartas numericas verdes
-    for (int i = 20; i < 30; ++i) {
+    for (int i = 20; i < 30; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::TURQUESA),arregloNombres[j],"oscuro",j);
     }
     j = 0;
     //Inicializacion de cartas numericas azules
-    for (int i = 30; i < 40; ++i) {
+    for (int i = 30; i < 40; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::VIOLETA),arregloNombres[j],"oscuro",j);
     }
 
@@ -218,11 +220,111 @@ void Partida::generarCartasOscuras(){
     this->modelosOscuros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","oscuro");
 }
 
+//---------------------SUBREGION DE METODOS QUE GENERAN LA LISTA INICIAL DE CARTAS PARA PODERLAS REVOLVER-------------
+
+//Metodo delegado para hacer todo lo requerido con las cartas
+void Partida::armarCartas(){
+
+    this->listadoCartas = new ListaEnlazada<Carta>();
+
+    if(!this->configuracion.esFlip()){
+        armarCartasNormal();
+    }else{
+        armarCartasFlip();
+    }
+
+}
+
+//Metodo que permite armar las cartas del UNO Normal
+void Partida::armarCartasNormal(){
+
+    int iterador = 0;
+
+    //Generacion de cartas numericas
+    do{
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[iterador], iterador));
+        iterador++;
+    }while(iterador < 40);
+
+    int j = 0;
+    do{
+        if(j % 10 != 0){
+            this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[iterador], iterador));
+            iterador++;
+        }
+        j++;
+    }while(j < 40);
+
+    //Generacion de las cartas +2
+    for (int i = 0; i < 2; i++) {
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[40], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[41], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[42], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[43], iterador));
+        iterador++;
+    }
+
+    //Generacion de las cartas cambio de direccion
+    for (int i = 0; i < 2; i++) {
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[44], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[45], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[46], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[47], iterador));
+        iterador++;
+    }
+
+    //Generacion de las cartas cambio de bloqueo
+    for (int i = 0; i < 2; i++) {
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[48], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[49], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[50], iterador));
+        iterador++;
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[51], iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[52], iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[53], iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[54], iterador));
+        iterador++;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        this->listadoCartas->insertarFrente(Carta(nullptr, this->modelosClaros[55], iterador));
+        iterador++;
+    }
+}
+
+//Metodo que permite armar las cartas del UNO FLIP
+void Partida::armarCartasFlip(){
+
+}
+
+//---------------------FIN DE LA SUBREGION DE METODOS QUE GENERAN LA LISTA INICIAL DE CARTAS PARA PODERLAS REVOLVER-------------
+
 //==============FIN DEL APARTADO DE METODOS DE GENERACION DE CARTAS DEL JUEGO===================
 
 
 Partida::~Partida(){
 
+    //PENDIENTE DESTRUCTOR
 }
 
 //CREATED BY (P.M)

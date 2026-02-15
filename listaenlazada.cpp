@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include"carta.h"
 
-//instancia posible de nodo
+//instancia posible de lista
 template class ListaEnlazada<Carta>;
 
 template<typename T>
