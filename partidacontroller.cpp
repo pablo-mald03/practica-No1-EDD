@@ -18,4 +18,7 @@ PartidaController::~PartidaController(){
 //Metodo que se encarga de retornar la informacion principal al iniciar la partida
 void PartidaController::obtenerDatosPartida(){
     emit datosPartida(this->gestorPartida->getJugadorActual(),this->gestorPartida->getDireccion(), this->gestorPartida->getCantidadPila(), this->gestorPartida->getCantidadVueltas());
+    emit datosPilaCentral(this->gestorPartida->imagenPilaCentral());
+    emit datosPilaLateral(this->gestorPartida->imagenPilaLateral(), this->gestorPartida->getCantidadPila());
+
 }

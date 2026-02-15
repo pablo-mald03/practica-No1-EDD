@@ -15,7 +15,7 @@ struct DatosConfiguracion;
 namespace Ui {
 class PantallaJuego;
 }
-
+//CREATED BY PABLO M
 class PantallaJuego : public QWidget
 {
     Q_OBJECT
@@ -40,14 +40,23 @@ private:
 
     void inicializarVistaMazo();
 
+    //Metodo para ilustrar el mazo del jugador
     void dibujarMazo(Jugador* & jugadorActual);
 
+    //Metodo para preparar a la UI
+    void prepararInterfazCartas();
+
+    //Metodo para poder dibujar las cartas en los stacks centrales
+    void actualizarPilaCentral(std::string rutaImagen);
+    void actualizarBarajaLateral(std::string rutaImagenPila, int longitudPila);
 
 
 signals:
     void solicitarSalida();
 private slots:
     void on_btnRetorno_clicked();
+
+    void on_btnPilaLateral_clicked();
 };
 
 #endif // PANTALLAJUEGO_H

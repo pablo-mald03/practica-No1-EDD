@@ -22,6 +22,9 @@ private:
     std::string direccion;
     int cantidadVueltas;
 
+    //Flag que permite saber si se cambio al lado flip
+    bool estaFlip;
+
     //Arreglos modelo de cartas
     Modelo * modelosClaros[56];
     Modelo * modelosOscuros[56];
@@ -88,6 +91,8 @@ public:
     //Metodos que permiten mostrar en la UI los datos de vuelta y de cantidad de cartas en la pila
     int getCantidadPila();
     int getCantidadVueltas();
+    std::string imagenPilaCentral();
+    std::string imagenPilaLateral();
 };
 
 /*CREATED BY PABLO M*/

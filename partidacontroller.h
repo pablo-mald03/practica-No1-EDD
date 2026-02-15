@@ -25,6 +25,10 @@ public slots:
 signals:
     void datosPartida(Jugador* &jugador,std::string direccion, int cartasPila, int vueltas);
 
+    void datosPilaCentral(std::string direccion);
+
+    void datosPilaLateral(std::string direccion, int cartasPila);
+
 };
 
 #endif // PARTIDACONTROLLER_H

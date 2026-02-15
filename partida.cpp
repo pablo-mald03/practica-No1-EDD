@@ -16,7 +16,7 @@
 /*CREATED BY PABLO M*/
 
 Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
-    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0)
+    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false)
 {
     generarJugadores();
     delete config;
@@ -59,6 +59,12 @@ void Partida::ordenCartas(){
         this->listaJugadores.getActual()->ordenarCartas();
         this->listaJugadores.avanzar();
     }
+
+    //Saca la primera carta
+
+    Carta cartaInicial = this->pilaLateralCartas->verTop();
+    this->pilaCentralCartas->push(cartaInicial);
+    this->pilaLateralCartas->pop();
 }
 
 
@@ -79,6 +85,26 @@ int Partida::getCantidadVueltas(){
 
 std::string Partida::getDireccion(){
     return this->direccion;
+}
+
+//Retorna la pila central
+std::string  Partida::imagenPilaCentral(){
+
+    if(!this->estaFlip){
+        return this->pilaCentralCartas->verTop().getAnverso()->getPathImagen();
+    }else{
+        return this->pilaCentralCartas->verTop().getReverso()->getPathImagen();
+    }
+}
+
+//Retorna la pila lateral
+std::string  Partida::imagenPilaLateral(){
+
+    if(!this->estaFlip){
+        return this->pilaCentralCartas->verTop().getAnverso()->getReversoModelo();
+    }else{
+        return this->pilaCentralCartas->verTop().getReverso()->getPathImagen();
+    }
 }
 
 //==============FIN DEL APARTADO DE METODOS GETTER DE LA CLASE===================
