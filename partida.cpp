@@ -26,11 +26,49 @@ Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
     generarDireccionInicial();
     generarCartasClaras();
     generarCartasOscuras();
-
     armarCartas();
+
+    repartirCartas();
+
+
 }
 
 
+//==============APARTADO DE METODOS PARA REPARTIR LAS CARTAS A LOS JUGADORES===================
+//Metodo encargado de repartir las cartas
+void Partida::repartirCartas(){
+
+    this->inicioRonda = this->listaJugadores.getActual();
+    int cantidadJugadores = this->listaJugadores.getLongitud();
+
+    int contadorPosiciones = 0;
+
+    for (int i = 0; i < cantidadJugadores*8; i++) {
+
+        if(contadorPosiciones == 8){
+            this->listaJugadores.avanzar();
+            contadorPosiciones = 0;
+        }
+
+        this->listaJugadores.getActual()->getMazo()->insertarFrente( this->pilaLateralCartas->verTop());
+        this->pilaLateralCartas->pop();
+        contadorPosiciones++;
+    }
+
+    for (int i = 0; i < cantidadJugadores; i++) {
+        qDebug()<<"tamanio del deck j: "<<this->listaJugadores.getActual()->getMazo()->getLongitud();
+    }
+
+}
+
+
+//==============APARTADO DE METODOS QUE PERMITEN RESPONDER A LAS ACCIONES DEL JUGADOR===================
+
+
+//==============FIN DEL APARTADO DE METODOS QUE PERMITEN RESPONDER A LAS ACCIONES DEL JUGADOR===================
+
+
+//==============APARTADO DE METODOS GETTER DE LA CLASE===================
 
 std::string Partida::getDireccion(){
     return this->direccion;
@@ -257,6 +295,8 @@ void Partida::armarCartas(){
 
     delete this->listadoCartas;
     this->listadoCartas = nullptr;
+
+    this->pilaCentralCartas = new Pila<Carta>();
 }
 
 //Metodo que permite armar las cartas del UNO Normal
@@ -507,12 +547,18 @@ void Partida::barajarCartas(ListaEnlazada<Carta>*& lista){
 void Partida::limpiarReferencias(){
     for(int i = 0; i < 56; i++)
         delete modelosClaros[i];
+
+    if(this->configuracion.esFlip()){
+        for(int i = 0; i < 56; i++)
+            delete modelosOscuros[i];
+    }
+
+    delete this->pilaCentralCartas;
+    delete this->pilaLateralCartas;
 }
 
 Partida::~Partida(){
-
     limpiarReferencias();
-
 }
 
 //CREATED BY (P.M)

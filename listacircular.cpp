@@ -128,11 +128,53 @@ template<typename T>
 T& ListaCircular<T>::getActual()
 {
     if (esVacia())
-        throw std::runtime_error("Lista vacía");
+        throw std::runtime_error("La lista esta vacía");
 
     return actualTurno->getDato();
 }
 
+//Metodo que permite echar un vistazo al siguiente del nodo actual (NO MUEVE EL INDICE)
+template<typename T>
+T& ListaCircular<T>::pickSiguiente()
+{
+    if (esVacia())
+        throw std::runtime_error("La lista esta vacía");
+
+    return actualTurno->getSiguiente()->getDato();
+}
+
+//Metodo que permite echar un vistazo al anterior del nodo actual (NO MUEVE EL INDICE)
+template<typename T>
+T& ListaCircular<T>::pickAnterior()
+{
+    if (esVacia())
+        throw std::runtime_error("La lista esta vacía");
+
+    return actualTurno->getAnterior()->getDato();
+}
+
+//Metodo que permite dar vueltas en la lista a gusto (Util para la carta de salto total)
+template<typename T>
+void ListaCircular<T>::darVuelta(int pasos)
+{
+    if (esVacia())
+        throw std::runtime_error("La lista esta vacía");
+
+    if (longitud == 0)
+        return;
+
+    // Normalizar pasos para no dar vueltas innecesarias
+    pasos = pasos % longitud;
+
+    if (pasos > 0) {
+        for (int i = 0; i < pasos; i++)
+            actualTurno = actualTurno->getSiguiente();
+    }
+    else {
+        for (int i = 0; i < -pasos; i++)
+            actualTurno = actualTurno->getAnterior();
+    }
+}
 
 //Destructor de todos los nodos
 template<typename T>

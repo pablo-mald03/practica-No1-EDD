@@ -38,11 +38,13 @@ private:
     //Pila de las cartas laterales
     Pila<Carta> *pilaCentralCartas;
 
+    //Referencia al puntero para contabilizar una vuelta dada
+    Nodo<Jugador*> inicioRonda = nullptr;
+
     //Metodos propios de la clase para hacer funcionar la partida
     void generarJugadores();
     int generarIndiceRandom(int limiteSuperior);
     void correrIndices();
-
 
     //Metodo de una sola utilidad
     void generarDireccionInicial();
@@ -67,7 +69,7 @@ private:
     void limpiarReferencias();
 
     //Metodo que permite repartir a cada jugador las cartas YA REVUELTAS
-
+    void repartirCartas();
 
 
 public:

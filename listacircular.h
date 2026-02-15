@@ -35,6 +35,12 @@ public:
     //Metodo que permite saber el jugador actual para iniciar partida
     T& getActual();
 
+    //Metodos de pick para echar vistazos al siguiente y al anterior
+    T& pickSiguiente();
+    T& pickAnterior();
+
+    //Metodo para dar vuelta (integracion directa)
+    void darVuelta(int pasos);
 
 };
 
