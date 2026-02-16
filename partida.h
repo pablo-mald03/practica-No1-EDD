@@ -140,6 +140,11 @@ public:
     //Metodo ejecutado cuando un jugador toma una carta y la agrega a su mazo
     bool tomarCarta();
 
+    //Metodo que sirve para cambiar la direccion (reversa)
+    void cambiarDireccion();
+
+    //Metodo que permite avanzar en la direccion indicada
+    void moverJugador();
 };
 
 /*CREATED BY PABLO M*/

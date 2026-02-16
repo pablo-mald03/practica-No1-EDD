@@ -44,12 +44,7 @@ void Bloqueo::lanzarCarta(Partida & partidaActual) {
 
 //Caso donde la carta debe interactuar con la partida y un jugador x
 void Bloqueo::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
-
-    if(partidaActual.getDireccion() == "Derecha"){
-        jugador.avanzar();
-    }else if (partidaActual.getDireccion() == "Izquierda"){
-        jugador.retroceder();
-    }
+    partidaActual.moverJugador();
 }
 
 

@@ -35,7 +35,9 @@ ResultadoJugada PartidaController::tirarCarta(int indice){
 
             this->gestorPartida->ejecutarMovimiento();
 
-            if(!this->gestorPartida->getPuedeMoverse()){
+            bool puedeMoverse =this->gestorPartida->getPuedeMoverse();
+
+            if(!puedeMoverse){
                 this->gestorPartida->setPuedeMoverse(true);
             }
 

@@ -2,6 +2,8 @@
 #define CAMBIODIRECCION_H
 
 #include"modelo.h"
+#include"jugador.h"
+#include"partida.h"
 
 class CambioDireccion:public Modelo
 {

@@ -71,6 +71,26 @@ void Partida::ordenCartas(){
 //==============APARTADO DE METODOS QUE PERMITEN RESPONDER A LAS ACCIONES DEL JUGADOR===================
 
 
+//Metodo que sirve para cambiar la direccion (reversa)
+void Partida::cambiarDireccion(){
+
+    if(this->getDireccion() == "Derecha"){
+        this->direccion = "Izquierda";
+    }else if (this->getDireccion() == "Izquierda"){
+        this->direccion = "Derecha";
+    }
+}
+
+//Metodo que permite avanzar en la direccion indicada
+void Partida::moverJugador(){
+    if(this->getDireccion() == "Derecha"){
+        this->listaJugadores.avanzar();
+    }else if (this->getDireccion() == "Izquierda"){
+        this->listaJugadores.retroceder();
+    }
+}
+
+
 bool Partida::tomarCarta(){
 
     try{
@@ -191,6 +211,24 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
         return resultadoTirada;
     }
 
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CAMBIARDIRECCION && cartaElegida.getAnverso()->getJerarquia() == 11){
+
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 3000;
+
+        resultadoTirada.mensajeJugador = std::string("El ")+ this->listaJugadores.getActual()->getNombre() + std::string(" tiro la carta ") + cartaElegida.getAnverso()->getNombre() ;
+
+        cartaElegida.getAnverso()->lanzarCarta(*this,this->listaJugadores);
+        this->pilaCentralCartas->push(cartaElegida);
+        this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+        this->setPuedeMoverse(false);
+
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = true;
+
+        return resultadoTirada;
+    }
+
 
     resultadoTirada.jugadaValida = false;
     return resultadoTirada;
@@ -217,6 +255,25 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
         return resultadoTirada;
     }
+
+    if(cartaElegida.getReverso()->getTipo() == TipoCarta::CAMBIARDIRECCION && cartaElegida.getReverso()->getJerarquia() == 11){
+
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 3000;
+
+        resultadoTirada.mensajeJugador = std::string("El ")+ this->listaJugadores.getActual()->getNombre() + std::string(" tiro la carta ") + cartaElegida.getReverso()->getNombre() ;
+
+        cartaElegida.getReverso()->lanzarCarta(*this,this->listaJugadores);
+        this->pilaCentralCartas->push(cartaElegida);
+        this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+        this->setPuedeMoverse(false);
+
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = true;
+
+        return resultadoTirada;
+    }
+
 
     resultadoTirada.jugadaValida = false;
     return resultadoTirada;
