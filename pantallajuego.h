@@ -32,6 +32,12 @@ private:
     QGraphicsScene *escena;
     QGraphicsView *vista;
 
+    //Atributo para poder controlar el tiempo
+    QTimer* timerMensaje;
+
+    //widget que bloquea acciones
+    QWidget * capaBloqueo;
+
     PartidaController * controladorPartida = nullptr;
     int cantidadJugadores;
 
@@ -49,6 +55,11 @@ private:
     //Metodo para poder dibujar las cartas en los stacks centrales
     void actualizarPilaCentral(std::string rutaImagen);
     void actualizarBarajaLateral(std::string rutaImagenPila, int longitudPila);
+
+    void darMensajeJugador(std::string mensaje);
+
+    //metodo para generar la instancia del timer
+    void instanciarTimer();
 
 
 signals:

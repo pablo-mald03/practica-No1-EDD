@@ -317,16 +317,70 @@ QPushButton#btnPersonas:pressed {
        </layout>
       </item>
       <item>
-       <widget class="QWidget" name="widgetH1_2" native="true">
+       <widget class="QWidget" name="widget_3" native="true">
         <property name="minimumSize">
          <size>
-          <width>870</width>
+          <width>150</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>880</width>
+          <width>150</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelMensajes">
+        <property name="minimumSize">
+         <size>
+          <width>600</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>600</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel#labelMensajes {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgb(136, 5, 29), stop:1 rgb(136, 5, 29));
+
+  	 font-size: 20px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+        </property>
+        <property name="text">
+         <string>adsfasdf fsldfjsdf fnasdlfnsdaflk sdafjlkasdf sad</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widgetH1_2" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
           <height>16777215</height>
          </size>
         </property>

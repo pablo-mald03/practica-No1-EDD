@@ -18,16 +18,21 @@ public:
     ~PartidaController();
 
     //Metodos que comunican a la UI con el backend
-
+    void tirarCarta(int indice);
 
 public slots:
+
     void obtenerDatosPartida();
+    void reportarMensaje(std::string mensaje);
+
 signals:
     void datosPartida(Jugador* &jugador,std::string direccion, int cartasPila, int vueltas);
 
     void datosPilaCentral(std::string direccion);
 
     void datosPilaLateral(std::string direccion, int cartasPila);
+
+    void darMensaje(std::string mensaje);
 
 };
 
