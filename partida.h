@@ -79,6 +79,9 @@ private:
     //Metodo que le dice a todos los jugadores que ordenen sus cartas
     void ordenCartas();
 
+    //Metodos privados que permiten verificar colores y numeros en base a la jerarquia
+    bool tieneEnClaras();
+    bool tieneEnOscuras();
 
 
 public:
@@ -110,6 +113,9 @@ public:
 
     bool getEstaFlip();
     void setEstaFlip(bool accion);
+
+    //Metodo de verificacion para saber si tiene carta del mismo color o mismo numero
+    bool tieneCartaNecesaria();
 
 };
 

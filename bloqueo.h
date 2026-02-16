@@ -6,7 +6,7 @@
 class Bloqueo:public Modelo
 {
 public:
-    Bloqueo(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado);
+    Bloqueo(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia);
     ~Bloqueo();
 
     //Metodo para obtener el directorio de la imagen de la carta

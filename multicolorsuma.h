@@ -12,7 +12,7 @@ private:
     int getValorSuma();
 
 public:
-    MultiColorSuma(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado, int _valor);
+    MultiColorSuma(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia, int _valor);
     ~MultiColorSuma();
 
     //Metodo sobreescrito de imagen

@@ -6,7 +6,7 @@
 class Eclipse:public Modelo
 {
 public:
-    Eclipse(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado);
+    Eclipse(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia);
     ~Eclipse();
 
     //Metodo sobreescrito de imagen

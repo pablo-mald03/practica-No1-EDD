@@ -56,7 +56,7 @@ void Partida::repartirCartas(){
 void Partida::ordenCartas(){
     int totalJugadores = this->listaJugadores.getLongitud();
     for (int i = 0; i < totalJugadores; i++) {
-        this->listaJugadores.getActual()->ordenarCartas();
+        this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
         this->listaJugadores.avanzar();
     }
 
@@ -69,13 +69,62 @@ void Partida::ordenCartas(){
 
 
 //==============APARTADO DE METODOS QUE PERMITEN RESPONDER A LAS ACCIONES DEL JUGADOR===================
-
+//Metodo que permite ejecutar la tirada
 bool Partida::ejecutarTirada(int indice){
+
+
 
 
 
     return true;
 }
+
+//Metodo que le permite saber al programa si el usuario tiene la carta con el color necesario
+bool Partida::tieneCartaNecesaria(){
+
+    if(!this->estaFlip){
+        return tieneEnClaras();
+    }else{
+        return tieneEnOscuras();
+    }
+}
+
+//Metodo que permite verificar si tiene las cartas claras
+bool Partida::tieneEnClaras(){
+
+    Carta cartaActualCentral = this->pilaCentralCartas->verTop();
+
+    int cantidadCartasJugador = this->listaJugadores.getLongitud();
+
+    ListaEnlazada<Carta> * mazoJugadorActual = this->listaJugadores.getActual()->getMazo();
+
+    int contadorCartas = 0;
+
+    for (int i = 0; i < cantidadCartasJugador; i++) {
+        if(mazoJugadorActual->verValor(i).getAnverso()->getColor().getColorCarta() == cartaActualCentral.getAnverso()->getColor().getColorCarta()){
+            contadorCartas++;
+        }
+
+    }
+
+    /*for (int i = 0; i < cantidadCartasJugador; i++) {
+        if(mazoJugadorActual->verValor(i).getAnverso() == cartaActualCentral.getAnverso()->getColor().getColorCarta()){
+            contadorCartas++;
+        }
+
+    }*/
+
+    return contadorCartas > 0;
+}
+
+//Metodo que permite verificar si tiene las cartas oscuras
+bool Partida::tieneEnOscuras(){
+
+    int contadorCartas = 0;
+
+    return contadorCartas > 0;
+}
+
 
 //Metodo que permite ejecutar la tirada
 void Partida::ejecutarMovimiento(){
@@ -192,27 +241,27 @@ void Partida::generarCartasClaras(){
     //Inicializacion de cartas numericas rojas
 
     for (int i = 0; i < 10; i++) {
-        this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::ROJO),arregloNombres[j],"claro",j);
+        this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::ROJO),arregloNombres[j],"claro",j,j);
         j++;
     }
 
     j = 0;
     //Inicializacion de cartas numericas amarillas
     for (int i = 10; i < 20; i++) {
-        this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::AMARILLO),arregloNombres[j],"claro",j);
+        this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::AMARILLO),arregloNombres[j],"claro",j,j);
         j++;
     }
 
     j = 0;
     //Inicializacion de cartas numericas verdes
     for (int i = 20; i < 30; i++) {
-        this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::VERDE),arregloNombres[j],"claro",j);
+        this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::VERDE),arregloNombres[j],"claro",j,j);
         j++;
     }
     j = 0;
     //Inicializacion de cartas numericas azules
     for (int i = 30; i < 40; i++) {
-        this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::AZUL),arregloNombres[j],"claro",j);
+        this->modelosClaros[i] = new Numerica(ColorCarta(TipoColor::AZUL),arregloNombres[j],"claro",j,j);
         j++;
     }
 
@@ -220,44 +269,44 @@ void Partida::generarCartasClaras(){
 
     //Generacion de cartas de sumar cantidad
     if(!this->configuracion.esFlip()){
-        this->modelosClaros[40] = new SumaCantidad(ColorCarta(TipoColor::AZUL),"Mas dos Azul","claro",2);
-        this->modelosClaros[41] = new SumaCantidad(ColorCarta(TipoColor::AMARILLO),"Mas dos Amarillo","claro",2);
-        this->modelosClaros[42] = new SumaCantidad(ColorCarta(TipoColor::ROJO),"Mas dos Rojo","claro",2);
-        this->modelosClaros[43] = new SumaCantidad(ColorCarta(TipoColor::VERDE),"Mas dos Verde","claro",2);
+        this->modelosClaros[40] = new SumaCantidad(ColorCarta(TipoColor::AZUL),"Mas dos Azul","claro",12,2);
+        this->modelosClaros[41] = new SumaCantidad(ColorCarta(TipoColor::AMARILLO),"Mas dos Amarillo","claro",12,2);
+        this->modelosClaros[42] = new SumaCantidad(ColorCarta(TipoColor::ROJO),"Mas dos Rojo","claro",12,2);
+        this->modelosClaros[43] = new SumaCantidad(ColorCarta(TipoColor::VERDE),"Mas dos Verde","claro",12,2);
     }else{
-        this->modelosClaros[40] = new SumaCantidad(ColorCarta(TipoColor::AZUL),"Mas dos Azul","claro",1);
-        this->modelosClaros[41] = new SumaCantidad(ColorCarta(TipoColor::AMARILLO),"Mas dos Amarillo","claro",1);
-        this->modelosClaros[42] = new SumaCantidad(ColorCarta(TipoColor::ROJO),"Mas dos Rojo","claro",1);
-        this->modelosClaros[43] = new SumaCantidad(ColorCarta(TipoColor::VERDE),"Mas dos Verde","claro",1);
+        this->modelosClaros[40] = new SumaCantidad(ColorCarta(TipoColor::AZUL),"Mas uno Azul","claro",12,1);
+        this->modelosClaros[41] = new SumaCantidad(ColorCarta(TipoColor::AMARILLO),"Mas uno Amarillo","claro",12,1);
+        this->modelosClaros[42] = new SumaCantidad(ColorCarta(TipoColor::ROJO),"Mas uno Rojo","claro",12,1);
+        this->modelosClaros[43] = new SumaCantidad(ColorCarta(TipoColor::VERDE),"Mas uno Verde","claro",12,1);
     }
 
     //Generacion de cartas de cambio de direccion
-    this->modelosClaros[44] = new CambioDireccion(ColorCarta(TipoColor::AZUL),"Cambio direccion Azul","claro");
-    this->modelosClaros[45] = new CambioDireccion(ColorCarta(TipoColor::AMARILLO),"Cambio direccion Amarillo","claro");
-    this->modelosClaros[46] = new CambioDireccion(ColorCarta(TipoColor::ROJO),"Cambio direccion Rojo","claro");
-    this->modelosClaros[47] = new CambioDireccion(ColorCarta(TipoColor::VERDE),"Cambio direccion Verde","claro");
+    this->modelosClaros[44] = new CambioDireccion(ColorCarta(TipoColor::AZUL),"Cambio direccion Azul","claro",11);
+    this->modelosClaros[45] = new CambioDireccion(ColorCarta(TipoColor::AMARILLO),"Cambio direccion Amarillo","claro",11);
+    this->modelosClaros[46] = new CambioDireccion(ColorCarta(TipoColor::ROJO),"Cambio direccion Rojo","claro",11);
+    this->modelosClaros[47] = new CambioDireccion(ColorCarta(TipoColor::VERDE),"Cambio direccion Verde","claro",11);
 
     //Generacion de cartas de bloqueo
-    this->modelosClaros[48] = new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo Azul","claro");
-    this->modelosClaros[49] = new Bloqueo(ColorCarta(TipoColor::AMARILLO),"Bloqueo Amarillo","claro");
-    this->modelosClaros[50] = new Bloqueo(ColorCarta(TipoColor::ROJO),"Bloqueo Rojo","claro");
-    this->modelosClaros[51] = new Bloqueo(ColorCarta(TipoColor::VERDE),"Bloqueo Verde","claro");
+    this->modelosClaros[48] = new Bloqueo(ColorCarta(TipoColor::AZUL),"Bloqueo Azul","claro",10);
+    this->modelosClaros[49] = new Bloqueo(ColorCarta(TipoColor::AMARILLO),"Bloqueo Amarillo","claro",10);
+    this->modelosClaros[50] = new Bloqueo(ColorCarta(TipoColor::ROJO),"Bloqueo Rojo","claro",10);
+    this->modelosClaros[51] = new Bloqueo(ColorCarta(TipoColor::VERDE),"Bloqueo Verde","claro",10);
 
     //Generacion de cartas multicolor comodin suma
     if(!this->configuracion.esFlip()){
-        this->modelosClaros[52] = new MultiColorSuma(ColorCarta(TipoColor::MULTICOLOR),"Multicolor mas 4","claro",4);
+        this->modelosClaros[52] = new MultiColorSuma(ColorCarta(TipoColor::MULTICOLOR),"Multicolor mas 4","claro",13,4);
     }else{
-        this->modelosClaros[52] = new MultiColorSuma(ColorCarta(TipoColor::MULTICOLOR),"Multicolor mas 2","claro",2);
+        this->modelosClaros[52] = new MultiColorSuma(ColorCarta(TipoColor::MULTICOLOR),"Multicolor mas 2","claro",13,2);
     }
 
     //Generacion de la carta comodin
-    this->modelosClaros[53] = new ComodinColor(ColorCarta(TipoColor::MULTICOLOR),"Comodin","claro");
+    this->modelosClaros[53] = new ComodinColor(ColorCarta(TipoColor::MULTICOLOR),"Comodin","claro",14);
 
     //Carta ECLIPSE MIA (P)
-    this->modelosClaros[54] = new Eclipse(ColorCarta(TipoColor::PREDETERMINADO),"Eclipse","claro");
+    this->modelosClaros[54] = new Eclipse(ColorCarta(TipoColor::PREDETERMINADO),"Eclipse","claro",15);
 
     //Carta ESPIA MIA (P)
-    this->modelosClaros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","claro");
+    this->modelosClaros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","claro",16);
 
 }
 
@@ -275,59 +324,59 @@ void Partida::generarCartasOscuras(){
     //Inicializacion de cartas numericas rosas
 
     for (int i = 0; i < 10; i++) {
-        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::ROSA),arregloNombres[j],"oscuro",j);
+        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::ROSA),arregloNombres[j],"oscuro",j,j);
         j++;
     }
 
     j = 0;
     //Inicializacion de cartas numericas naranjas
     for (int i = 10; i < 20; i++) {
-        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::NARANJA),arregloNombres[j],"oscuro",j);
+        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::NARANJA),arregloNombres[j],"oscuro",j,j);
     }
 
     j = 0;
     //Inicializacion de cartas numericas turquesas
     for (int i = 20; i < 30; i++) {
-        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::TURQUESA),arregloNombres[j],"oscuro",j);
+        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::TURQUESA),arregloNombres[j],"oscuro",j,j);
     }
     j = 0;
     //Inicializacion de cartas numericas violetas
     for (int i = 30; i < 40; i++) {
-        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::VIOLETA),arregloNombres[j],"oscuro",j);
+        this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::VIOLETA),arregloNombres[j],"oscuro",j,j);
     }
 
     //=======FIN INICIALIZACION CARTAS NUMERICAS=====
 
 
     //Generacion de las cartas oscuras +3
-    this->modelosOscuros[40] = new SumaCantidad(ColorCarta(TipoColor::ROSA),"Mas tres Rosa","oscuro",3);
-    this->modelosOscuros[41] = new SumaCantidad(ColorCarta(TipoColor::NARANJA),"Mas tres Naranja","oscuro",3);
-    this->modelosOscuros[42] = new SumaCantidad(ColorCarta(TipoColor::VIOLETA),"Mas tres Violeta","oscuro",3);
-    this->modelosOscuros[43] = new SumaCantidad(ColorCarta(TipoColor::TURQUESA),"Mas tres Turquesa","oscuro",3);
+    this->modelosOscuros[40] = new SumaCantidad(ColorCarta(TipoColor::ROSA),"Mas tres Rosa","oscuro",12,3);
+    this->modelosOscuros[41] = new SumaCantidad(ColorCarta(TipoColor::NARANJA),"Mas tres Naranja","oscuro",12,3);
+    this->modelosOscuros[42] = new SumaCantidad(ColorCarta(TipoColor::VIOLETA),"Mas tres Violeta","oscuro",12,3);
+    this->modelosOscuros[43] = new SumaCantidad(ColorCarta(TipoColor::TURQUESA),"Mas tres Turquesa","oscuro",12,3);
 
     //Generacion de cartas de cambio de direccion
-    this->modelosOscuros[44] = new CambioDireccion(ColorCarta(TipoColor::ROSA),"Cambio direccion Rosa","oscuro");
-    this->modelosOscuros[45] = new CambioDireccion(ColorCarta(TipoColor::NARANJA),"Cambio direccion Naranja","oscuro");
-    this->modelosOscuros[46] = new CambioDireccion(ColorCarta(TipoColor::VIOLETA),"Cambio direccion Violeta","oscuro");
-    this->modelosOscuros[47] = new CambioDireccion(ColorCarta(TipoColor::TURQUESA),"Cambio direccion Turquesa","oscuro");
+    this->modelosOscuros[44] = new CambioDireccion(ColorCarta(TipoColor::ROSA),"Cambio direccion Rosa","oscuro",11);
+    this->modelosOscuros[45] = new CambioDireccion(ColorCarta(TipoColor::NARANJA),"Cambio direccion Naranja","oscuro",11);
+    this->modelosOscuros[46] = new CambioDireccion(ColorCarta(TipoColor::VIOLETA),"Cambio direccion Violeta","oscuro",11);
+    this->modelosOscuros[47] = new CambioDireccion(ColorCarta(TipoColor::TURQUESA),"Cambio direccion Turquesa","oscuro",11);
 
     //Modelo de salto a todos
-    this->modelosOscuros[48] = new SaltoTodos(ColorCarta(TipoColor::ROSA),"Salto Todos Rosa","oscuro");
-    this->modelosOscuros[49] = new SaltoTodos(ColorCarta(TipoColor::NARANJA),"Salto Todos Naranja","oscuro");
-    this->modelosOscuros[50] = new SaltoTodos(ColorCarta(TipoColor::VIOLETA),"Salto Todos Violeta","oscuro");
-    this->modelosOscuros[51] = new SaltoTodos(ColorCarta(TipoColor::TURQUESA),"Salto Todos Turquesa","oscuro");
+    this->modelosOscuros[48] = new SaltoTodos(ColorCarta(TipoColor::ROSA),"Salto Todos Rosa","oscuro",10);
+    this->modelosOscuros[49] = new SaltoTodos(ColorCarta(TipoColor::NARANJA),"Salto Todos Naranja","oscuro",10);
+    this->modelosOscuros[50] = new SaltoTodos(ColorCarta(TipoColor::VIOLETA),"Salto Todos Violeta","oscuro",10);
+    this->modelosOscuros[51] = new SaltoTodos(ColorCarta(TipoColor::TURQUESA),"Salto Todos Turquesa","oscuro",10);
 
     //Modelo de comodin +6
-    this->modelosOscuros[52] = new MultiColorSuma(ColorCarta(TipoColor::MULTICOLOR),"Multicolor mas 6","oscuro",6);
+    this->modelosOscuros[52] = new MultiColorSuma(ColorCarta(TipoColor::MULTICOLOR),"Multicolor mas 6","oscuro",13,6);
 
     //Modelo de comodin Color eterno
-    this->modelosOscuros[53] = new ColorEterno(ColorCarta(TipoColor::PREDETERMINADO),"Color Eterno","oscuro");
+    this->modelosOscuros[53] = new ColorEterno(ColorCarta(TipoColor::PREDETERMINADO),"Color Eterno","oscuro",14);
 
     //Carta ECLIPSE MIA (P)
-    this->modelosOscuros[54] = new Eclipse(ColorCarta(TipoColor::PREDETERMINADO),"Eclipse","oscuro");
+    this->modelosOscuros[54] = new Eclipse(ColorCarta(TipoColor::PREDETERMINADO),"Eclipse","oscuro",15);
 
     //Carta ESPIA MIA (P)
-    this->modelosOscuros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","oscuro");
+    this->modelosOscuros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","oscuro",16);
 
 }
 

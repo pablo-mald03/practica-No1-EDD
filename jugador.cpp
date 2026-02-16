@@ -9,7 +9,7 @@ Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codig
 
 //Metodo utilizado para odenar las cartas de cada jugador (ordenamiento burbuja normal) O(n cuadrado)
 //El metodo se basa en el indice interno de la jerarquia interna de mis cartas
-void Jugador::ordenarCartas(){
+void Jugador::ordenarCartas(bool estaEnFlip){
 
     int longitudLista = this->mazo->getLongitud();
 
@@ -26,7 +26,7 @@ void Jugador::ordenarCartas(){
 
             Nodo<Carta>* siguiente = actual->getSiguiente();
 
-            if(menorQue(siguiente->getDato(), actual->getDato())) {
+            if(menorQue(siguiente->getDato(), actual->getDato(),estaEnFlip)) {
 
                 Carta temp = actual->getDato();
                 actual->getDato() = siguiente->getDato();
@@ -43,15 +43,30 @@ void Jugador::ordenarCartas(){
 }
 
 //Metodo para definir la prioridad de cartas
-int Jugador::prioridadColor(const Carta& carta) {
+int Jugador::prioridadColor(const Carta& carta,bool estaEnFlip) {
 
-    switch(carta.getAnverso()->getColor().getColorCarta()) {
-    case TipoColor::AZUL: return 0;
-    case TipoColor::VERDE: return 1;
-    case TipoColor::ROJO: return 2;
-    case TipoColor::AMARILLO: return 3;
-    default: return 4;
+    if(!estaEnFlip){
+
+        switch(carta.getAnverso()->getColor().getColorCarta()) {
+        case TipoColor::AZUL: return 0;
+        case TipoColor::VERDE: return 1;
+        case TipoColor::ROJO: return 2;
+        case TipoColor::AMARILLO: return 3;
+        default: return 4;
+        }
     }
+    else{
+
+        switch(carta.getReverso()->getColor().getColorCarta()) {
+        case TipoColor::NARANJA: return 0;
+        case TipoColor::ROSA: return 1;
+        case TipoColor::TURQUESA: return 2;
+        case TipoColor::VIOLETA: return 3;
+        default: return 4;
+        }
+
+    }
+
 }
 
 //Metodo que retorna la pripridad de jerarquia interna que tienen las cartas (propia logica)
@@ -63,21 +78,27 @@ int Jugador::prioridadColor(const Carta& carta) {
 //14 -> comodin multicolor = CLARO
 //15 -> eclipse = CLARO (P)
 //16 -> espia = CLARO (P)
-int Jugador::prioridadJerarquia(const Carta& carta) {
-    int indice = carta.getIndice();
+int Jugador::prioridadJerarquia(const Carta& carta,bool estaEnFlip) {
+    int indice =0;
+
+    if(!estaEnFlip){
+        indice = carta.getAnverso()->getJerarquia();
+    }else{
+        indice = carta.getReverso()->getJerarquia();
+    }
     return indice;
 }
 
 //Metodo que permite comparar el menor
-bool Jugador::menorQue(const Carta& a, const Carta& b) {
+bool Jugador::menorQue(const Carta& a, const Carta& b,bool estaEnFlip) {
 
-    int prioridadA = prioridadColor(a);
-    int prioridadB = prioridadColor(b);
+    int prioridadA = prioridadColor(a,estaEnFlip);
+    int prioridadB = prioridadColor(b,estaEnFlip);
 
     if(prioridadA != prioridadB)
         return prioridadA < prioridadB;
 
-    return prioridadJerarquia(a) < prioridadJerarquia(b);
+    return prioridadJerarquia(a,estaEnFlip) < prioridadJerarquia(b,estaEnFlip);
 }
 
 

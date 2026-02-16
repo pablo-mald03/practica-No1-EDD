@@ -21,7 +21,7 @@ private:
 
 
 public:
-    Numerica(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado, int _valor);
+    Numerica(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado, int _valor,int _jerarquia);
 
     int getValor() const;
 

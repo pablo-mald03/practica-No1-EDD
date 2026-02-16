@@ -1,7 +1,7 @@
 #include "saltotodos.h"
 
-SaltoTodos::SaltoTodos(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado)
-    :Modelo(_colorRef,_nombre,_lado,TipoCarta::SALTOTOTAL)
+SaltoTodos::SaltoTodos(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia)
+    :Modelo(_colorRef,_nombre,_lado,TipoCarta::SALTOTOTAL,_jerarquia)
 {
 
 }

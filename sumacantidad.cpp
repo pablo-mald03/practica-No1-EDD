@@ -1,7 +1,7 @@
 #include "sumacantidad.h"
 
-SumaCantidad::SumaCantidad(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado, int _valor)
-    :Modelo(_colorRef,_nombre,_lado,TipoCarta::SUMARCANTIDAD),valorSuma(_valor)
+SumaCantidad::SumaCantidad(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia, int _valor)
+    :Modelo(_colorRef,_nombre,_lado,TipoCarta::SUMARCANTIDAD, _jerarquia),valorSuma(_valor)
 {
 
 }

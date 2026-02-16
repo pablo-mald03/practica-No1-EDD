@@ -6,7 +6,7 @@
 class Espia:public Modelo
 {
 public:
-    Espia(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado);
+    Espia(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia);
     ~Espia(); 
 
     //Metodo sobreescrito de imagen

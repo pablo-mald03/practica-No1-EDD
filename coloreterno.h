@@ -6,7 +6,7 @@
 class ColorEterno: public Modelo
 {
 public:
-    ColorEterno(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado);
+    ColorEterno(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia);
     ~ColorEterno();
 
     //Metodo sobreescrito de imagen

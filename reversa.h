@@ -6,7 +6,7 @@
 class Reversa:public Modelo
 {
 public:
-    Reversa(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado);
+    Reversa(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia);
     ~Reversa();
 
     //Metodo sobreescrito de imagen

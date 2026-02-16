@@ -32,12 +32,12 @@ public:
     ListaEnlazada<Carta> * getMazo();
 
     //Metodo para ordenar cartas
-    void ordenarCartas();
+    void ordenarCartas(bool estaEnFlip);
 
     //Metodos de ordenamiento de datos (propios del jugador CASO REAL)
-    int prioridadColor(const Carta& carta);
-    bool menorQue(const Carta& a, const Carta& b);
-    int prioridadJerarquia(const Carta& carta);
+    int prioridadColor(const Carta& carta,bool estaEnFlip);
+    bool menorQue(const Carta& a, const Carta& b,bool estaEnFlip);
+    int prioridadJerarquia(const Carta& carta,bool estaEnFlip);
 
 };
 

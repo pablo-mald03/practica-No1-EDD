@@ -6,7 +6,7 @@
 class SaltoTodos:public Modelo
 {
 public:
-    SaltoTodos(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado);
+    SaltoTodos(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia);
     ~SaltoTodos();
 
     //Metodo para obtener el directorio de la imagen de la carta

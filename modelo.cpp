@@ -1,7 +1,7 @@
 #include "modelo.h"
 
-Modelo::Modelo(const ColorCarta&_colorRef, const std::string &_nombre, const std::string &_lado, TipoCarta _tipo)
-    : color(_colorRef),nombre(_nombre),lado(_lado), tipo(_tipo)
+Modelo::Modelo(const ColorCarta&_colorRef, const std::string &_nombre, const std::string &_lado, TipoCarta _tipo, int _jerarquia)
+    : color(_colorRef),nombre(_nombre),lado(_lado), tipo(_tipo), jerarquia(_jerarquia)
 {
 
 }
@@ -25,6 +25,10 @@ ColorCarta Modelo::getColor()const{
 }
 std::string Modelo::getLado()const{
     return this->lado;
+}
+
+int Modelo::getJerarquia()const{
+    return this->jerarquia;
 }
 
 //Metodo que devuelve el reverso

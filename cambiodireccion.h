@@ -6,7 +6,7 @@
 class CambioDireccion:public Modelo
 {
 public:
-    CambioDireccion(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado);
+    CambioDireccion(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia);
     ~CambioDireccion();
 
     //Metodo sobreescrito de imagen

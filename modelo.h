@@ -39,9 +39,12 @@ protected:
     std::string lado;
     TipoCarta tipo;
 
+    //Atributo para saber a que jerarquia pertenece
+    int jerarquia;
+
 public:
     Modelo(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,
-    TipoCarta _tipo);
+    TipoCarta _tipo, int _jerarquia);
    // Modelo();
     virtual ~Modelo();
 
@@ -53,6 +56,8 @@ public:
     ColorCarta getColor()const;
     std::string getLado()const;
     TipoCarta getTipo()const;
+
+    int getJerarquia()const;
 
     //Metodo para obtener el reverso
     std::string getReversoModelo()const;
