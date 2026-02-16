@@ -111,8 +111,6 @@ void PantallaJuego::prepararInterfazCartas() {
 
 //Metodo para ilustar la pila central con la primera carta
 void PantallaJuego::actualizarPilaCentral(std::string rutaImagen){
-
-    qDebug()<<"actualizo central ";
     QPixmap pix(QString::fromStdString(rutaImagen));
     if (!pix.isNull()) {
         this->ui->labelStackedImg->setPixmap(pix.scaled(this->ui->labelStackedImg->size(),
@@ -184,7 +182,15 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
 
     for (int i = 0; i < total; ++i) {
         Carta cartaDeck = jugadorActual->getMazo()->getValor(i);
-        CartaDeckUI* visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getAnverso()->getPathImagen()));
+
+        bool estaEnFlip = this->controladorPartida->estaModoFlip();
+
+        CartaDeckUI* visual = nullptr;
+        if(!estaEnFlip){
+            visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getAnverso()->getPathImagen()));
+        }else{
+            visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getReverso()->getPathImagen()));
+        }
 
         connect(visual, &CartaDeckUI::cartaClickeda, this, &PantallaJuego::onCartaPresionada);
 

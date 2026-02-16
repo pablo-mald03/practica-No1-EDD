@@ -22,6 +22,9 @@ private:
     std::string direccion;
     int cantidadVueltas;
 
+    //Flag que permite saber si se puede mover
+    bool puedeMoverse;
+
     //Flag que permite saber si se cambio al lado flip
     bool estaFlip;
 
@@ -93,6 +96,21 @@ public:
     int getCantidadVueltas();
     std::string imagenPilaCentral();
     std::string imagenPilaLateral();
+
+    //Permite pasar al siguiente jugador
+    void ejecutarMovimiento();
+
+
+    //Metodo UNICO QUE PERMITE INTERACTUAR CON TODA LA LOGICA DEL BACKEND
+    bool ejecutarTirada(int indice);
+
+    //Metodos getters y setters
+    bool getPuedeMoverse();
+    void setPuedeMoverse(bool accion);
+
+    bool getEstaFlip();
+    void setEstaFlip(bool accion);
+
 };
 
 /*CREATED BY PABLO M*/

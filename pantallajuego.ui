@@ -363,7 +363,7 @@ QPushButton#btnPersonas:pressed {
 </string>
         </property>
         <property name="text">
-         <string>adsfasdf fsldfjsdf fnasdlfnsdaflk sdafjlkasdf sad</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>

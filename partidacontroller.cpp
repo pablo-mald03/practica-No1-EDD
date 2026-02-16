@@ -15,28 +15,39 @@ PartidaController::~PartidaController(){
     this->gestorPartida = nullptr;
 }
 
+bool PartidaController::estaModoFlip(){
+    return this->gestorPartida->getEstaFlip();
+}
+
 
 //Metodo que permite ejecutar la accion y comunicarse con el backend de cuando el jugador en pantalla tira una carta
 void PartidaController::tirarCarta(int indice){
 
-    // 1. Ejecutas la lógica: el jugador actual pierde la carta y esta va a la pila
-    //bool jugadaValida = this->gestorPartida->ejecutarTirada(indice);
-/*
-    if (jugadaValida) {
-        // 2. REFRESCO INMEDIATO (Muestra al mismo jugador con -1 carta)
-        // Como aún NO hemos llamado a avanzarSiguiente(), getJugadorActual() sigue siendo el mismo.
-        this->obtenerDatosPartida();
 
-        // 3. CAMBIO INTERNO (Preparamos el backend para el siguiente)
-        //this->gestorPartida->avanzarSiguiente();
+    try{
+        //Metodo principal
+        bool jugadaNormal = this->gestorPartida->ejecutarTirada(indice);
 
-        // 4. AVISO
-        emit darMensaje("Carta lanzada con éxito...");
-    } else {
+        if (jugadaNormal) {
 
-        emit darMensaje("Esa carta no se puede tirar");
-    }*/
-    reportarMensaje("tilin insano jiji");
+            //Acciones antes de refrescar
+            this->obtenerDatosPartida();
+
+            this->gestorPartida->ejecutarMovimiento();
+
+            if(!this->gestorPartida->getPuedeMoverse()){
+                this->gestorPartida->setPuedeMoverse(true);
+            }
+
+        } else {
+           reportarMensaje("Esa carta no se puede tirar");
+        }
+
+    }catch(const std::runtime_error & ex){
+        reportarMensaje(ex.what());
+    }
+
+
 
 }
 

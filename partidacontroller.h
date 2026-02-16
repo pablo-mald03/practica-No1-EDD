@@ -19,6 +19,7 @@ public:
 
     //Metodos que comunican a la UI con el backend
     void tirarCarta(int indice);
+    bool estaModoFlip();
 
 public slots:
 

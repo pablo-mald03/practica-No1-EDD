@@ -16,7 +16,7 @@
 /*CREATED BY PABLO M*/
 
 Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
-    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false)
+    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false), puedeMoverse(true)
 {
     generarJugadores();
     delete config;
@@ -70,6 +70,42 @@ void Partida::ordenCartas(){
 
 //==============APARTADO DE METODOS QUE PERMITEN RESPONDER A LAS ACCIONES DEL JUGADOR===================
 
+bool Partida::ejecutarTirada(int indice){
+
+
+
+    return true;
+}
+
+//Metodo que permite ejecutar la tirada
+void Partida::ejecutarMovimiento(){
+
+    if(this->direccion == "Derecha" && puedeMoverse){
+        this->listaJugadores.avanzar();
+    }
+    else if(this->direccion == "Izquierda" && puedeMoverse){
+        this->listaJugadores.retroceder();
+    }
+}
+
+//====================SUBREGION Metodos getter y setter=================
+bool Partida::getPuedeMoverse(){
+    return this->puedeMoverse;
+}
+
+void Partida::setPuedeMoverse(bool accion){
+    this->puedeMoverse = accion;
+}
+
+bool Partida::getEstaFlip(){
+    return this->estaFlip;
+}
+
+void Partida::setEstaFlip(bool accion){
+    this->estaFlip = accion;
+}
+
+//====================Fin de la SUBREGION Metodos getter y setter=================
 
 //==============FIN DEL APARTADO DE METODOS QUE PERMITEN RESPONDER A LAS ACCIONES DEL JUGADOR===================
 
@@ -304,7 +340,7 @@ void Partida::armarCartas(){
 
     int cantidadMazos = ((this->cantidadJugadores-1)/6+1);
 
-    qDebug()<<"cantidad de mazos: "<<cantidadMazos;
+    qDebug()<<"CANTIDAD DE MAZOS: "<<cantidadMazos;
 
     for (int i = 0; i < cantidadMazos; i++) {
         if(!this->configuracion.esFlip()){
@@ -425,10 +461,13 @@ void Partida::armarCartasFlip(ListaEnlazada<Carta>*& lista){
     barajarCartas(this->listaCartasBlancas);
     barajarCartas(this->listadoCartasOscuras);
 
-    for (int i = 0; i < this->listadoCartasOscuras->getLongitud(); i++) {
+    int cantidadCartas =this->listadoCartasOscuras->getLongitud();
+
+    for (int i = 0; i < cantidadCartas; i++) {
 
         Modelo* clara = this->listaCartasBlancas->popFront().getAnverso();
         Modelo* oscura = this->listadoCartasOscuras->popFront().getReverso();
+
         this->listadoCartas->insertarFrente(Carta(oscura, clara, i));
     }
 
@@ -445,79 +484,80 @@ void Partida::armarCartasOscuras(ListaEnlazada<Carta>*& lista){
 
     if(!this->configuracion.esFlip()) return;
 
-    int iterador = 0;
+    int modeloIndex = 0;
 
     //Generacion de cartas numericas
-    do{
-        lista->insertarFrente(Carta( this->modelosOscuros[iterador],nullptr, iterador));
-        iterador++;
-    }while(iterador < 40);
+    for (int i = 0; i < 40; i++) {
+
+        lista->insertarFrente(Carta(this->modelosOscuros[i],nullptr, modeloIndex));
+        modeloIndex++;
+        if(modeloIndex >= 10){
+            modeloIndex = 0;
+        }
+    }
 
     int j = 0;
-    do{
-        if(j % 10 != 0){
-            lista->insertarFrente(Carta( this->modelosOscuros[j],nullptr, iterador));
-            iterador++;
+
+    modeloIndex = 1;
+
+    do {
+        //Evita enumerar el cero
+        if (j % 10 != 0) {
+            lista->insertarFrente(Carta(this->modelosOscuros[j],nullptr, modeloIndex));
+            modeloIndex++;
+        }
+
+        if (modeloIndex >= 10) {
+            modeloIndex = 1;
         }
 
         j++;
+    } while (j < 40);
 
-    }while(j < 40);
 
     //Generacion de las cartas +2
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[40],nullptr, iterador));
-        iterador++;
-        lista->insertarFrente(Carta( this->modelosOscuros[41], nullptr,iterador));
-        iterador++;
-        lista->insertarFrente(Carta(this->modelosOscuros[42], nullptr, iterador));
-        iterador++;
-        lista->insertarFrente(Carta( this->modelosOscuros[43], nullptr,iterador));
-        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[40],nullptr, 12));
+        lista->insertarFrente(Carta( this->modelosOscuros[41], nullptr,12));
+        lista->insertarFrente(Carta(this->modelosOscuros[42], nullptr, 12));
+        lista->insertarFrente(Carta( this->modelosOscuros[43], nullptr,12));
     }
+
 
     //Generacion de las cartas cambio de direccion
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[44],nullptr, iterador));
-        iterador++;
-        lista->insertarFrente(Carta(this->modelosOscuros[45], nullptr,iterador));
-        iterador++;
-        lista->insertarFrente(Carta( this->modelosOscuros[46],nullptr, iterador));
-        iterador++;
-        lista->insertarFrente(Carta(this->modelosOscuros[47],nullptr, iterador));
-        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[44],nullptr, 11));
+        lista->insertarFrente(Carta(this->modelosOscuros[45], nullptr,11));
+        lista->insertarFrente(Carta( this->modelosOscuros[46],nullptr, 11));
+        lista->insertarFrente(Carta(this->modelosOscuros[47],nullptr, 11));
     }
 
     //Generacion de las cartas cambio de salto total
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[48],nullptr, iterador));
-        iterador++;
-        lista->insertarFrente(Carta( this->modelosOscuros[49],nullptr, iterador));
-        iterador++;
-        lista->insertarFrente(Carta( this->modelosOscuros[50],nullptr, iterador));
-        iterador++;
-        lista->insertarFrente(Carta( this->modelosOscuros[51],nullptr, iterador));
-        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[48],nullptr, 10));
+        lista->insertarFrente(Carta( this->modelosOscuros[49],nullptr, 10));
+        lista->insertarFrente(Carta( this->modelosOscuros[50],nullptr, 10));
+        lista->insertarFrente(Carta( this->modelosOscuros[51],nullptr, 10));
     }
 
+    //Generar carta multicolor suma
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[52],nullptr, iterador));
-        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[52],nullptr, 13));
     }
 
+    //Cartas comodin color eterno
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[53],nullptr, iterador));
-        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[53],nullptr, 14));
     }
 
+    //Generar carta eclipse MIA (P)
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[54],nullptr, iterador));
-        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[54],nullptr, 15));
     }
 
+    //Generar carta espia MIA (P)
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[55],nullptr, iterador));
-        iterador++;
+        lista->insertarFrente(Carta( this->modelosOscuros[55],nullptr, 16));
     }
 
 }
