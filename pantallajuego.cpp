@@ -248,6 +248,19 @@ void PantallaJuego::on_btnRetorno_clicked()
 
 void PantallaJuego::on_btnPilaLateral_clicked()
 {
+    if(this->controladorPartida->puedeDesapilar()){
+        this->darMensajeJugador("Tienes las cartas necesarias. No puedes desapilar");
+        return;
+    }
+
+    try{
+
+        this->controladorPartida->desapilarCarta();
+
+    }catch(const std::runtime_error & ex){
+        this->darMensajeJugador(ex.what());
+    }
+
 
 }
 

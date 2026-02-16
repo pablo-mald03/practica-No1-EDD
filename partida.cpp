@@ -69,12 +69,32 @@ void Partida::ordenCartas(){
 
 
 //==============APARTADO DE METODOS QUE PERMITEN RESPONDER A LAS ACCIONES DEL JUGADOR===================
+
+
+bool Partida::tomarCarta(){
+
+    try{
+
+        Carta cartaTomada = this->pilaLateralCartas->verTop();
+
+        this->listaJugadores.getActual()->getMazo()->insertarFrente(cartaTomada);
+        this->pilaLateralCartas->pop();
+
+        this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
+
+        return true;
+    }catch(const std::runtime_error & ex){
+         return false;
+    }
+}
 //Metodo que permite ejecutar la tirada
 bool Partida::ejecutarTirada(int indice){
 
-
-
-
+    bool puedeTirar = this->tieneCartaNecesaria();
+    if(!puedeTirar){
+        throw std::runtime_error("No tienes cartas para poder tirar");
+        return false;
+    }
 
     return true;
 }
@@ -92,37 +112,71 @@ bool Partida::tieneCartaNecesaria(){
 //Metodo que permite verificar si tiene las cartas claras
 bool Partida::tieneEnClaras(){
 
-    Carta cartaActualCentral = this->pilaCentralCartas->verTop();
+    Carta cartaCentral = this->pilaCentralCartas->verTop();
+    ListaEnlazada<Carta>* mazo = this->listaJugadores.getActual()->getMazo();
 
-    int cantidadCartasJugador = this->listaJugadores.getLongitud();
+    int cantidad = mazo->getLongitud();
 
-    ListaEnlazada<Carta> * mazoJugadorActual = this->listaJugadores.getActual()->getMazo();
+    for(int i = 0; i < cantidad; i++){
 
-    int contadorCartas = 0;
+        Carta cartaJugador = mazo->verValor(i);
 
-    for (int i = 0; i < cantidadCartasJugador; i++) {
-        if(mazoJugadorActual->verValor(i).getAnverso()->getColor().getColorCarta() == cartaActualCentral.getAnverso()->getColor().getColorCarta()){
-            contadorCartas++;
+        // Coincide color
+        if(cartaJugador.getAnverso()->getColor().getColorCarta() ==
+            cartaCentral.getAnverso()->getColor().getColorCarta()){
+            return true;
         }
 
+        // Coincide jerarquia
+        if(cartaJugador.getAnverso()->getJerarquia() ==
+            cartaCentral.getAnverso()->getJerarquia()){
+            return true;
+        }
+
+        // Es comodin o carta especial
+        if(cartaJugador.getAnverso()->getJerarquia() >13 ){
+            return true;
+        }
     }
 
-    /*for (int i = 0; i < cantidadCartasJugador; i++) {
-        if(mazoJugadorActual->verValor(i).getAnverso() == cartaActualCentral.getAnverso()->getColor().getColorCarta()){
-            contadorCartas++;
-        }
-
-    }*/
-
-    return contadorCartas > 0;
+    return false;
 }
 
 //Metodo que permite verificar si tiene las cartas oscuras
 bool Partida::tieneEnOscuras(){
 
-    int contadorCartas = 0;
+    if(!this->estaFlip){
+        return false;
+    }
 
-    return contadorCartas > 0;
+    Carta cartaCentral = this->pilaCentralCartas->verTop();
+    ListaEnlazada<Carta>* mazo = this->listaJugadores.getActual()->getMazo();
+
+    int cantidad = mazo->getLongitud();
+
+    for(int i = 0; i < cantidad; i++){
+
+        Carta cartaJugador = mazo->verValor(i);
+
+        // Coincide color
+        if(cartaJugador.getReverso()->getColor().getColorCarta() ==
+            cartaCentral.getReverso()->getColor().getColorCarta()){
+            return true;
+        }
+
+        // Coincide jerarquia
+        if(cartaJugador.getReverso()->getJerarquia() ==
+            cartaCentral.getReverso()->getJerarquia()){
+            return true;
+        }
+
+        // Es comodin o carta especial
+        if(cartaJugador.getReverso()->getJerarquia() >13 ){
+            return true;
+        }
+    }
+
+    return false;
 }
 
 

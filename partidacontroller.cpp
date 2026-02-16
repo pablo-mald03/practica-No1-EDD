@@ -47,7 +47,22 @@ void PartidaController::tirarCarta(int indice){
         reportarMensaje(ex.what());
     }
 
+}
+//Metodo util para verificar si puede desapilar
+bool PartidaController::puedeDesapilar(){
+    return this->gestorPartida->tieneCartaNecesaria();
+}
 
+//Metodo utilzado para que el usuario pueda desapilar una carta
+void PartidaController::desapilarCarta(){
+
+    bool cartaDesapilada = this->gestorPartida->tomarCarta();
+
+    if(cartaDesapilada){
+        this->obtenerDatosPartida();
+    }else{
+        throw std::runtime_error("La pila de cartas ya esta vacia");
+    }
 
 }
 

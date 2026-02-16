@@ -117,6 +117,9 @@ public:
     //Metodo de verificacion para saber si tiene carta del mismo color o mismo numero
     bool tieneCartaNecesaria();
 
+    //Metodo ejecutado cuando un jugador toma una carta y la agrega a su mazo
+    bool tomarCarta();
+
 };
 
 /*CREATED BY PABLO M*/

@@ -21,6 +21,12 @@ public:
     void tirarCarta(int indice);
     bool estaModoFlip();
 
+    //Metodo que verifica si el jugador puede desapilar
+    bool puedeDesapilar();
+
+    //Metodo utilzado para desapilar las cartas y agregarselas al jugador
+    void desapilarCarta();
+
 public slots:
 
     void obtenerDatosPartida();
@@ -34,6 +40,7 @@ signals:
     void datosPilaLateral(std::string direccion, int cartasPila);
 
     void darMensaje(std::string mensaje);
+
 
 };
 
