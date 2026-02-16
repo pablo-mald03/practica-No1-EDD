@@ -56,7 +56,7 @@ private:
     void actualizarPilaCentral(std::string rutaImagen);
     void actualizarBarajaLateral(std::string rutaImagenPila, int longitudPila);
 
-    void darMensajeJugador(std::string mensaje);
+    void darMensajeJugador(std::string mensaje, QString colorHex, int tiempo);
 
     //metodo para generar la instancia del timer
     void instanciarTimer();

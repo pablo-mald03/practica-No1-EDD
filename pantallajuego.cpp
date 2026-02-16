@@ -54,7 +54,7 @@ void PantallaJuego::instanciarTimer(){
 }
 
 //Metodo que srive para poder dar mensajes en pantalla al jugador
-void PantallaJuego::darMensajeJugador(std::string mensaje){
+void PantallaJuego::darMensajeJugador(std::string mensaje, QString colorHex, int tiempo){
 
     if (timerMensaje->isActive()) {
         timerMensaje->stop();
@@ -62,7 +62,9 @@ void PantallaJuego::darMensajeJugador(std::string mensaje){
 
     this->ui->labelMensajes->setText(QString::fromStdString(mensaje));
 
-    timerMensaje->start(2500);
+    this->ui->labelMensajes->setStyleSheet(
+        "color: " + colorHex + "; font-size: 20px; font-weight: bold; font-family: \"Segoe UI\", Arial; background: transparent;padding: 2px; margin-bottom: 5px;");
+    timerMensaje->start(tiempo);
 
 }
 
@@ -209,7 +211,7 @@ void PantallaJuego::onCartaPresionada(int indice) {
 
     this->controladorPartida->tirarCarta(indice);
 
-    QTimer::singleShot(1500, this, [this]() {
+    QTimer::singleShot(2000, this, [this]() {
         this->controladorPartida->obtenerDatosPartida();
 
         capaBloqueo->hide();
@@ -249,7 +251,7 @@ void PantallaJuego::on_btnRetorno_clicked()
 void PantallaJuego::on_btnPilaLateral_clicked()
 {
     if(this->controladorPartida->puedeDesapilar()){
-        this->darMensajeJugador("Tienes las cartas necesarias. No puedes desapilar");
+        this->darMensajeJugador("Tienes las cartas necesarias. No puedes desapilar","#91042B",2500);
         return;
     }
 
@@ -258,7 +260,7 @@ void PantallaJuego::on_btnPilaLateral_clicked()
         this->controladorPartida->desapilarCarta();
 
     }catch(const std::runtime_error & ex){
-        this->darMensajeJugador(ex.what());
+        this->darMensajeJugador(ex.what(), "#91042B",2500);
     }
 
 

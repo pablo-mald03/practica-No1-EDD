@@ -88,7 +88,7 @@ bool Partida::tomarCarta(){
     }
 }
 //Metodo que permite ejecutar la tirada
-bool Partida::ejecutarTirada(int indice){
+bool Partida::ejecutarTirada(int indice, std::string &mensaje, bool &darMensaje, int &tiempo){
 
     bool puedeTirar = this->tieneCartaNecesaria();
     if(!puedeTirar){
@@ -108,7 +108,7 @@ bool Partida::ejecutarTirada(int indice){
             bool coincide = this->esMismaClara(cartaElegida,cartaSuperior);
 
             if(coincide){
-                return this->ejecutarAccionCartaClara(indice);
+                return this->ejecutarAccionCartaClara(indice,mensaje,darMensaje,tiempo);
 
             }else{
                 throw std::runtime_error("El color ni en valor de la carta coinciden");
@@ -128,7 +128,7 @@ bool Partida::ejecutarTirada(int indice){
             bool coincide = this->esMismaOscura(cartaElegida,cartaSuperior);
 
             if(coincide){
-                return this->ejecutarAccionCartaOscura(indice);
+                return this->ejecutarAccionCartaOscura(indice,mensaje,darMensaje,tiempo);
 
             }else{
                 throw std::runtime_error("El color ni en valor de la carta coinciden");
@@ -145,7 +145,7 @@ bool Partida::ejecutarTirada(int indice){
 }
 
 //Metodo utilizado para ejecutar la accion de cada carta clara
-bool Partida::ejecutarAccionCartaClara(int indice){
+bool Partida::ejecutarAccionCartaClara(int indice, std::string &mensaje, bool &darMensaje, int &tiempo){
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
 
@@ -153,11 +153,38 @@ bool Partida::ejecutarAccionCartaClara(int indice){
 
     if(cartaElegida.getAnverso()->getJerarquia() <= 9 ){
 
+        darMensaje = true;
+        tiempo= 1500;
+        mensaje = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre();
+
         this->pilaCentralCartas->push(cartaElegida);
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
         return true;
     }
 
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CARTABLOQUEO && cartaElegida.getAnverso()->getJerarquia() == 10){
+
+        darMensaje = true;
+        tiempo= 3500;
+
+
+        if(this->direccion == "Derecha"){
+            mensaje = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre() + std::string(" al ") + this->listaJugadores.pickSiguiente()->getNombre();
+
+            cartaElegida.getAnverso()->lanzarCarta(*this,this->listaJugadores);
+
+            this->pilaCentralCartas->push(cartaElegida);
+            this->listaJugadores.pickAnterior()->getMazo()->eliminar(indice);
+
+        }else if (this->direccion == "Izquierda"){
+            mensaje = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre() + std::string(" al ") + this->listaJugadores.pickAnterior()->getNombre();
+            cartaElegida.getAnverso()->lanzarCarta(*this,this->listaJugadores);
+            this->pilaCentralCartas->push(cartaElegida);
+            this->listaJugadores.pickSiguiente()->getMazo()->eliminar(indice);
+        }
+
+        return true;
+    }
 
 
 
@@ -165,13 +192,17 @@ bool Partida::ejecutarAccionCartaClara(int indice){
 }
 
 //Metodo utilizado para ejecutar la accion de cada carta oscura
-bool Partida::ejecutarAccionCartaOscura(int indice){
+bool Partida::ejecutarAccionCartaOscura(int indice, std::string &mensaje, bool &darMensaje, int &tiempo){
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
 
     ColorCarta color = cartaElegida.getReverso()->getColor().getColorCarta();
 
     if(cartaElegida.getReverso()->getJerarquia() <9 ){
+
+        darMensaje = true;
+        tiempo= 1500;
+        mensaje = std::string("Se ha tirado la carta ") + cartaElegida.getReverso()->getNombre();
 
         this->pilaCentralCartas->push(cartaElegida);
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
@@ -306,9 +337,18 @@ void Partida::ejecutarMovimiento(){
 
     if(this->direccion == "Derecha" && puedeMoverse){
         this->listaJugadores.avanzar();
+        this->verificarVuelta();
     }
     else if(this->direccion == "Izquierda" && puedeMoverse){
         this->listaJugadores.retroceder();
+        this->verificarVuelta();
+    }
+}
+
+//Metodo que permite verificar si ya se ha dado una vuelta
+void Partida::verificarVuelta(){
+    if(this->inicioRonda.getDato() == this->listaJugadores.getActual()){
+        this->cantidadVueltas++;
     }
 }
 

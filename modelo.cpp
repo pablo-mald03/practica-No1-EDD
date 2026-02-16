@@ -27,6 +27,10 @@ std::string Modelo::getLado()const{
     return this->lado;
 }
 
+TipoCarta Modelo::getTipo()const{
+    return this->tipo;
+}
+
 int Modelo::getJerarquia()const{
     return this->jerarquia;
 }

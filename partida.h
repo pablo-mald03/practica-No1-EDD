@@ -70,6 +70,8 @@ private:
     //Metodos que sirven para poder barajear y mezclar las cartas
     void barajarCartas(ListaEnlazada<Carta> *& lista);
 
+    //Metodo para verificar si ya se dio una vuelta
+    void verificarVuelta();
 
     //Metodo para limpiar las cosas en el destructor
     void limpiarReferencias();
@@ -88,8 +90,8 @@ private:
     bool esMismaOscura(const Carta& cartaJugador, const Carta& cartaPila);
 
     //Metodo para ejecutar las acciones de las cartas claras y oscuras
-    bool ejecutarAccionCartaClara(int indice);
-    bool ejecutarAccionCartaOscura(int indice);
+    bool ejecutarAccionCartaClara(int indice, std::string &mensaje, bool &darMensaje, int &tiempo);
+    bool ejecutarAccionCartaOscura(int indice, std::string &mensaje, bool &darMensaje, int &tiempo);
 
 
 public:
@@ -113,7 +115,7 @@ public:
 
 
     //Metodo UNICO QUE PERMITE INTERACTUAR CON TODA LA LOGICA DEL BACKEND
-    bool ejecutarTirada(int indice);
+    bool ejecutarTirada(int indice, std::string &mensaje, bool &darMensaje, int &tiempo);
 
     //Metodos getters y setters
     bool getPuedeMoverse();

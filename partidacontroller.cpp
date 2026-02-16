@@ -25,8 +25,11 @@ void PartidaController::tirarCarta(int indice){
 
 
     try{
+        std::string mensajeJugador = "";
+        bool darMensaje = false;
+        int tiempo = 0;
         //Metodo principal
-        bool jugadaNormal = this->gestorPartida->ejecutarTirada(indice);
+        bool jugadaNormal = this->gestorPartida->ejecutarTirada(indice, mensajeJugador,darMensaje,tiempo);
 
         if (jugadaNormal) {
 
@@ -39,12 +42,16 @@ void PartidaController::tirarCarta(int indice){
                 this->gestorPartida->setPuedeMoverse(true);
             }
 
+            if(darMensaje){
+               reportarMensaje(mensajeJugador, "#0C7527", tiempo);
+            }
+
         } else {
-           reportarMensaje("Esa carta no se puede tirar");
+           reportarMensaje("Esa carta no se puede tirar", "#91042B", 2500);
         }
 
     }catch(const std::runtime_error & ex){
-        reportarMensaje(ex.what());
+        reportarMensaje(ex.what(), "#91042B", 2500);
     }
 
 }
@@ -68,8 +75,8 @@ void PartidaController::desapilarCarta(){
 
 
 //Metodo que permite soltar mensajes en la ui de avisos
-void PartidaController::reportarMensaje(std::string mensaje){
-    emit darMensaje(mensaje);
+void PartidaController::reportarMensaje(std::string mensaje, QString colorHex, int tiempo){
+    emit darMensaje(mensaje,colorHex, tiempo);
 }
 
 //Metodo que se encarga de retornar la informacion principal al iniciar la partida

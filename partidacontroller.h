@@ -30,7 +30,7 @@ public:
 public slots:
 
     void obtenerDatosPartida();
-    void reportarMensaje(std::string mensaje);
+    void reportarMensaje(std::string mensaje, QString colorHex, int tiempo);
 
 signals:
     void datosPartida(Jugador* &jugador,std::string direccion, int cartasPila, int vueltas);
@@ -39,7 +39,7 @@ signals:
 
     void datosPilaLateral(std::string direccion, int cartasPila);
 
-    void darMensaje(std::string mensaje);
+    void darMensaje(std::string mensaje, QString colorHex, int tiempo);
 
 
 };

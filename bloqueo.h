@@ -2,6 +2,9 @@
 #define BLOQUEO_H
 
 #include"modelo.h"
+#include"listacircular.h"
+#include"jugador.h"
+#include"partida.h"
 
 class Bloqueo:public Modelo
 {
