@@ -96,8 +96,129 @@ bool Partida::ejecutarTirada(int indice){
         return false;
     }
 
-    return true;
+    Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
+
+    Carta cartaSuperior = this->pilaCentralCartas->verTop();
+
+    if(!this->estaFlip){
+
+        //Caso de uno cuando no esta en flip
+        if(cartaElegida.getAnverso()->getJerarquia()< 13){
+
+            bool coincide = this->esMismaClara(cartaElegida,cartaSuperior);
+
+            if(coincide){
+                return this->ejecutarAccionCartaClara(indice);
+
+            }else{
+                throw std::runtime_error("El color ni en valor de la carta coinciden");
+            }
+
+        }else{
+            //PENDIENTE LAS ESPECIALES
+
+
+        }
+
+    }else{
+
+        //Caso cuando se activo el flip (se dio la vuelta)
+        if(cartaElegida.getReverso()->getJerarquia()< 13){
+
+            bool coincide = this->esMismaOscura(cartaElegida,cartaSuperior);
+
+            if(coincide){
+                return this->ejecutarAccionCartaOscura(indice);
+
+            }else{
+                throw std::runtime_error("El color ni en valor de la carta coinciden");
+            }
+
+        }else{
+            //PENDIENTE LAS ESPECIALES
+
+        }
+
+    }
+
+    return false;
 }
+
+//Metodo utilizado para ejecutar la accion de cada carta clara
+bool Partida::ejecutarAccionCartaClara(int indice){
+
+    Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
+
+    ColorCarta color = cartaElegida.getAnverso()->getColor().getColorCarta();
+
+    if(cartaElegida.getAnverso()->getJerarquia() <= 9 ){
+
+        this->pilaCentralCartas->push(cartaElegida);
+        this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+        return true;
+    }
+
+
+
+
+    return false;
+}
+
+//Metodo utilizado para ejecutar la accion de cada carta oscura
+bool Partida::ejecutarAccionCartaOscura(int indice){
+
+    Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
+
+    ColorCarta color = cartaElegida.getReverso()->getColor().getColorCarta();
+
+    if(cartaElegida.getReverso()->getJerarquia() <9 ){
+
+        this->pilaCentralCartas->push(cartaElegida);
+        this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+        return true;
+    }
+
+    return false;
+
+}
+
+
+//Metodo que verifica si la carta tirada pertenece al mismo color (en claro)
+bool Partida::esMismaClara(const Carta& cartaJugador, const Carta& cartaPila){
+
+    if(cartaJugador.getAnverso()->getColor().getColorCarta() ==
+        cartaPila.getAnverso()->getColor().getColorCarta()){
+        return true;
+    }
+
+    // Coincide jerarquia
+    if(cartaJugador.getAnverso()->getJerarquia() ==
+        cartaPila.getAnverso()->getJerarquia()){
+        return true;
+    }
+
+    return false;
+}
+
+
+//Metodo que verifica si la carta tirada pertenece al mismo color (en oscuro)
+bool Partida::esMismaOscura(const Carta& cartaJugador, const Carta& cartaPila){
+
+    // Coincide color
+    if(cartaJugador.getReverso()->getColor().getColorCarta() ==
+        cartaPila.getReverso()->getColor().getColorCarta()){
+        return true;
+    }
+
+    // Coincide jerarquia
+    if(cartaJugador.getReverso()->getJerarquia() ==
+        cartaPila.getReverso()->getJerarquia()){
+        return true;
+    }
+
+    return false;
+}
+
 
 //Metodo que le permite saber al programa si el usuario tiene la carta con el color necesario
 bool Partida::tieneCartaNecesaria(){

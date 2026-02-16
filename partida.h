@@ -83,6 +83,14 @@ private:
     bool tieneEnClaras();
     bool tieneEnOscuras();
 
+    //Metodos para verificar la jerarquia y el color de la carta
+    bool esMismaClara(const Carta& cartaJugador, const Carta& cartaPila);
+    bool esMismaOscura(const Carta& cartaJugador, const Carta& cartaPila);
+
+    //Metodo para ejecutar las acciones de las cartas claras y oscuras
+    bool ejecutarAccionCartaClara(int indice);
+    bool ejecutarAccionCartaOscura(int indice);
+
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
