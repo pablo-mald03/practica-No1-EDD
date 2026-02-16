@@ -205,17 +205,35 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
 //Metodo que permite que la carta envie su signal para reportar que el jugador la quiere tirar
 void PantallaJuego::onCartaPresionada(int indice) {
 
-    capaBloqueo->setGeometry(this->rect());
-    capaBloqueo->show();
-    capaBloqueo->raise();
+    try{
+        capaBloqueo->setGeometry(this->rect());
+        capaBloqueo->show();
+        capaBloqueo->raise();
 
-    this->controladorPartida->tirarCarta(indice);
+        ResultadoJugada resultado = this->controladorPartida->tirarCarta(indice);
 
-    QTimer::singleShot(2000, this, [this]() {
-        this->controladorPartida->obtenerDatosPartida();
+        if (!resultado.jugadaValida) {
+            capaBloqueo->hide();
+            return;
+        }
 
+        if (resultado.requiereDecision) {
+            capaBloqueo->hide();
+            //mostrarDialogoDecision();   // +2, +4, etc.
+            return;
+        }
+
+        QTimer::singleShot(resultado.tiempoAnimacion, this, [this]() {
+            this->controladorPartida->obtenerDatosPartida();
+            capaBloqueo->hide();
+        });
+
+    }catch(const std::runtime_error & ex){
         capaBloqueo->hide();
-    });
+        darMensajeJugador(ex.what(), "#91042B", 2500);
+    }
+
+
 }
 
 PantallaJuego::~PantallaJuego()

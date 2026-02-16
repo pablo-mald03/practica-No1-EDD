@@ -13,6 +13,16 @@ struct DatosConfiguracion;
 #include"configuracionpartida.h"
 #include"pila.h"
 
+struct ResultadoJugada {
+
+    bool jugadaValida = false;
+    bool darMensaje = false;
+    std::string mensajeJugador;
+    int tiempoMensaje = 0;
+    int tiempoAnimacion = 0;
+    bool requiereDecision = false;
+};
+
 class Partida
 {
 private:
@@ -90,8 +100,8 @@ private:
     bool esMismaOscura(const Carta& cartaJugador, const Carta& cartaPila);
 
     //Metodo para ejecutar las acciones de las cartas claras y oscuras
-    bool ejecutarAccionCartaClara(int indice, std::string &mensaje, bool &darMensaje, int &tiempo);
-    bool ejecutarAccionCartaOscura(int indice, std::string &mensaje, bool &darMensaje, int &tiempo);
+    ResultadoJugada ejecutarAccionCartaClara(int indice);
+    ResultadoJugada ejecutarAccionCartaOscura(int indice);
 
 
 public:
@@ -115,7 +125,7 @@ public:
 
 
     //Metodo UNICO QUE PERMITE INTERACTUAR CON TODA LA LOGICA DEL BACKEND
-    bool ejecutarTirada(int indice, std::string &mensaje, bool &darMensaje, int &tiempo);
+    ResultadoJugada ejecutarTirada(int indice);
 
     //Metodos getters y setters
     bool getPuedeMoverse();

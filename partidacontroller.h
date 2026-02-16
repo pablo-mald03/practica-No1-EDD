@@ -18,7 +18,7 @@ public:
     ~PartidaController();
 
     //Metodos que comunican a la UI con el backend
-    void tirarCarta(int indice);
+    ResultadoJugada tirarCarta(int indice);
     bool estaModoFlip();
 
     //Metodo que verifica si el jugador puede desapilar

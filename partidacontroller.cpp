@@ -21,17 +21,14 @@ bool PartidaController::estaModoFlip(){
 
 
 //Metodo que permite ejecutar la accion y comunicarse con el backend de cuando el jugador en pantalla tira una carta
-void PartidaController::tirarCarta(int indice){
+ResultadoJugada PartidaController::tirarCarta(int indice){
 
 
     try{
-        std::string mensajeJugador = "";
-        bool darMensaje = false;
-        int tiempo = 0;
         //Metodo principal
-        bool jugadaNormal = this->gestorPartida->ejecutarTirada(indice, mensajeJugador,darMensaje,tiempo);
+        ResultadoJugada jugadaNormal = this->gestorPartida->ejecutarTirada(indice);
 
-        if (jugadaNormal) {
+        if (jugadaNormal.jugadaValida) {
 
             //Acciones antes de refrescar
             this->obtenerDatosPartida();
@@ -42,9 +39,11 @@ void PartidaController::tirarCarta(int indice){
                 this->gestorPartida->setPuedeMoverse(true);
             }
 
-            if(darMensaje){
-               reportarMensaje(mensajeJugador, "#0C7527", tiempo);
+            if(jugadaNormal.darMensaje){
+               reportarMensaje(jugadaNormal.mensajeJugador, "#0C7527", jugadaNormal.tiempoMensaje);
             }
+
+            return jugadaNormal;
 
         } else {
            reportarMensaje("Esa carta no se puede tirar", "#91042B", 2500);
@@ -54,6 +53,10 @@ void PartidaController::tirarCarta(int indice){
         reportarMensaje(ex.what(), "#91042B", 2500);
     }
 
+    ResultadoJugada jugadaNormal;
+    jugadaNormal.jugadaValida = false;
+
+    return jugadaNormal;
 }
 //Metodo util para verificar si puede desapilar
 bool PartidaController::puedeDesapilar(){

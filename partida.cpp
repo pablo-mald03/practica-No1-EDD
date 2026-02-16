@@ -88,12 +88,11 @@ bool Partida::tomarCarta(){
     }
 }
 //Metodo que permite ejecutar la tirada
-bool Partida::ejecutarTirada(int indice, std::string &mensaje, bool &darMensaje, int &tiempo){
+ResultadoJugada Partida::ejecutarTirada(int indice){
 
     bool puedeTirar = this->tieneCartaNecesaria();
     if(!puedeTirar){
-        throw std::runtime_error("No tienes cartas para poder tirar");
-        return false;
+        throw std::runtime_error("No tienes cartas para poder tirar. Saca de la pila");
     }
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
@@ -108,7 +107,7 @@ bool Partida::ejecutarTirada(int indice, std::string &mensaje, bool &darMensaje,
             bool coincide = this->esMismaClara(cartaElegida,cartaSuperior);
 
             if(coincide){
-                return this->ejecutarAccionCartaClara(indice,mensaje,darMensaje,tiempo);
+                return this->ejecutarAccionCartaClara(indice);
 
             }else{
                 throw std::runtime_error("El color ni en valor de la carta coinciden");
@@ -128,7 +127,7 @@ bool Partida::ejecutarTirada(int indice, std::string &mensaje, bool &darMensaje,
             bool coincide = this->esMismaOscura(cartaElegida,cartaSuperior);
 
             if(coincide){
-                return this->ejecutarAccionCartaOscura(indice,mensaje,darMensaje,tiempo);
+                return this->ejecutarAccionCartaOscura(indice);
 
             }else{
                 throw std::runtime_error("El color ni en valor de la carta coinciden");
@@ -141,35 +140,38 @@ bool Partida::ejecutarTirada(int indice, std::string &mensaje, bool &darMensaje,
 
     }
 
-    return false;
+    throw std::runtime_error("No se pudo ejecutar la tirada");
 }
 
 //Metodo utilizado para ejecutar la accion de cada carta clara
-bool Partida::ejecutarAccionCartaClara(int indice, std::string &mensaje, bool &darMensaje, int &tiempo){
+ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
 
     ColorCarta color = cartaElegida.getAnverso()->getColor().getColorCarta();
 
+    ResultadoJugada resultadoTirada;
+
     if(cartaElegida.getAnverso()->getJerarquia() <= 9 ){
 
-        darMensaje = true;
-        tiempo= 1500;
-        mensaje = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre();
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 1500;
+        resultadoTirada.mensajeJugador = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre();
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = true;
 
         this->pilaCentralCartas->push(cartaElegida);
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
-        return true;
+        return resultadoTirada;
     }
 
     if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CARTABLOQUEO && cartaElegida.getAnverso()->getJerarquia() == 10){
 
-        darMensaje = true;
-        tiempo= 3500;
-
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 3000;
 
         if(this->direccion == "Derecha"){
-            mensaje = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre() + std::string(" al ") + this->listaJugadores.pickSiguiente()->getNombre();
+            resultadoTirada.mensajeJugador = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre() + std::string(" al ") + this->listaJugadores.pickSiguiente()->getNombre();
 
             cartaElegida.getAnverso()->lanzarCarta(*this,this->listaJugadores);
 
@@ -177,39 +179,47 @@ bool Partida::ejecutarAccionCartaClara(int indice, std::string &mensaje, bool &d
             this->listaJugadores.pickAnterior()->getMazo()->eliminar(indice);
 
         }else if (this->direccion == "Izquierda"){
-            mensaje = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre() + std::string(" al ") + this->listaJugadores.pickAnterior()->getNombre();
+            resultadoTirada.mensajeJugador = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre() + std::string(" al ") + this->listaJugadores.pickAnterior()->getNombre();
             cartaElegida.getAnverso()->lanzarCarta(*this,this->listaJugadores);
             this->pilaCentralCartas->push(cartaElegida);
             this->listaJugadores.pickSiguiente()->getMazo()->eliminar(indice);
         }
 
-        return true;
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = true;
+
+        return resultadoTirada;
     }
 
 
-
-    return false;
+    resultadoTirada.jugadaValida = false;
+    return resultadoTirada;
 }
 
 //Metodo utilizado para ejecutar la accion de cada carta oscura
-bool Partida::ejecutarAccionCartaOscura(int indice, std::string &mensaje, bool &darMensaje, int &tiempo){
+ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
 
     ColorCarta color = cartaElegida.getReverso()->getColor().getColorCarta();
 
+    ResultadoJugada resultadoTirada;
+
     if(cartaElegida.getReverso()->getJerarquia() <9 ){
 
-        darMensaje = true;
-        tiempo= 1500;
-        mensaje = std::string("Se ha tirado la carta ") + cartaElegida.getReverso()->getNombre();
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 1500;
+        resultadoTirada.mensajeJugador = std::string("Se ha tirado la carta ") + cartaElegida.getReverso()->getNombre();
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = true;
 
         this->pilaCentralCartas->push(cartaElegida);
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
-        return true;
+        return resultadoTirada;
     }
 
-    return false;
+    resultadoTirada.jugadaValida = false;
+    return resultadoTirada;
 
 }
 
