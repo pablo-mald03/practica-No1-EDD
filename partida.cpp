@@ -90,7 +90,7 @@ void Partida::moverJugador(){
     }
 }
 
-
+//Metodo que le permite al usuario tomar carta
 ResultadoJugada Partida::tomarCarta(){
 
     ResultadoJugada resultado;
@@ -327,22 +327,13 @@ ResultadoJugada Partida::aplicarAcumuladas(){
     ResultadoJugada resultado;
     try{
 
-        resultado.tiempoMensaje = 2000;
+        resultado.tiempoMensaje = 2500;
         resultado.darMensaje = true;
         int cantidad = this->pilaStacking->getLongitud();
 
         Carta cartaApilada = this->pilaStacking->verTop();
 
-        std::string tipoCarta = "";
-
-        if(!this->estaFlip){
-            tipoCarta = cartaApilada.getAnverso()->getNombre();
-        }
-        else{
-            tipoCarta = cartaApilada.getReverso()->getNombre();
-        }
-
-        resultado.mensajeJugador = std::string("Se te han sumado ") + std::to_string(cantidad) + " cartas " + tipoCarta;
+        resultado.mensajeJugador = std::string("Se te han sumado ") + std::to_string(cantidad*2) + " cartas ";
 
         while(!this->pilaStacking->estaVacia()){
 
@@ -927,11 +918,7 @@ void Partida::armarCartas(){
 
     this->pilaCentralCartas = new Pila<Carta>();
 
-    if(this->configuracion.esStacking()){
-        this->pilaStacking = new Pila<Carta>();
-    } else{
-        this->pilaStacking = nullptr;
-    }
+    this->pilaStacking = new Pila<Carta>();
 
 }
 
