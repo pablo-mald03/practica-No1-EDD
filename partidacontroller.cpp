@@ -70,6 +70,24 @@ bool PartidaController::puedeStackear(){
     return flag;
 }
 
+//Metodo que permite limitar al jugador que solo puede tirar una carta
+void PartidaController::obligarJugador(){
+
+    Jugador * jugadorActual = this->gestorPartida->getJugadorActual();
+    Carta cartaAcual = this->gestorPartida->getPilaStack()->verTop();
+
+    jugadorActual->setEstaObligado(true);
+
+    if(this->estaModoFlip()){
+        TipoCarta tipoCarta = cartaAcual.getReverso()->getTipo();
+        jugadorActual->setTipoObligado(tipoCarta);
+    }else{
+        TipoCarta tipoCarta = cartaAcual.getAnverso()->getTipo();
+        jugadorActual->setTipoObligado(tipoCarta);
+    }
+
+}
+
 //Metodo que permite verificar si tiene las cartas para volver a stackear
 bool PartidaController::tieneParaStackear(){
 
@@ -160,11 +178,20 @@ ResultadoJugada PartidaController::desapilarCarta(){
     ResultadoJugada resultadoJugada = this->gestorPartida->tomarCarta();
 
     if(resultadoJugada.jugadaValida){
-        this->obtenerDatosPartida(true);
+        this->obtenerDatosPartida(resultadoJugada.analizarStack);
         return resultadoJugada;
 
     }else{
-        throw std::runtime_error("La pila de cartas ya esta vacia");
+        this->obtenerDatosPartida(resultadoJugada.analizarStack);
+
+        this->gestorPartida->ejecutarMovimiento();
+
+        if(resultadoJugada.darMensaje){
+            QString color = QString::fromStdString(resultadoJugada.colorAviso);
+            reportarMensaje(resultadoJugada.mensajeJugador, color, resultadoJugada.tiempoMensaje);
+        }
+
+        return resultadoJugada;
     }
 }
 

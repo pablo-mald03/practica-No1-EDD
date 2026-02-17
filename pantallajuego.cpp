@@ -188,6 +188,7 @@ void PantallaJuego::verificarStacking(bool evaluar){
     }
 
     this->darMensajeJugador("Selecciona tu carta para poder stackearla", "#0C7527",2000);
+    this->controladorPartida->obligarJugador();
 }
 
 //Metodo de front que permite preguntarle al jugador si va a seguir stackeando

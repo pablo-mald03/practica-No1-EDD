@@ -42,6 +42,9 @@ public:
     //Permite obtener el mensaje de pregunta SI SOLO SI SE PUEDE STACKEAR
     std::string getMensajeStacking();
 
+    //Metodo que le obliga al jugador a solo tirar un tipo
+    void obligarJugador();
+
 
 public slots:
 

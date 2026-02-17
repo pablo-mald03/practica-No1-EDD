@@ -1,7 +1,7 @@
 #include "jugador.h"
 #include"QDebug"
 
-Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codigo(_codigo)
+Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codigo(_codigo), estaObligado(false),tipoObligado(TipoCarta::Predeterminado)
 {
     this->mazo = new ListaEnlazada<Carta>();
 
@@ -102,8 +102,23 @@ bool Jugador::menorQue(const Carta& a, const Carta& b,bool estaEnFlip) {
 }
 
 
-//Apartado de acciones que puede hacer el jugador
+//=======Metodos que permiten saber si se esta obligado a tirar un color o carta=======
+TipoCarta Jugador::getTipoObligado(){
+    return this->tipoObligado;
+}
 
+bool Jugador::getEstaObligado(){
+    return this->estaObligado;
+}
+
+void Jugador::setTipoObligado(TipoCarta tipo){
+    this->tipoObligado = tipo;
+}
+
+void Jugador::setEstaObligado(bool flag){
+    this->estaObligado = flag;
+}
+//=======Fin de los Metodos que permiten saber si se esta obligado a tirar un color o carta=======
 
 //Sobrecarga del operador igual
 bool Jugador::operator==(const Jugador& otro) const{

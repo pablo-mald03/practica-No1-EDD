@@ -35,16 +35,16 @@ void SumaCantidad::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> 
 
     Pila<Carta> * pilaLateral = partidaActual.getPilaLateral();
 
-    for (int i = 0; i < 2; i++) {
-
-        Carta cartaDesapilada = pilaLateral->verTop();
-
-        listaCartas->insertarFrente(cartaDesapilada);
-        pilaLateral->pop();
-
-        if(pilaLateral->estaVacia()){
+    for (int i = 0; i < this->valorSuma; i++) {
+        if (pilaLateral->estaVacia()) {
             partidaActual.llenarPilaLateral();
         }
+
+        if (pilaLateral->estaVacia()) break;
+
+        Carta cartaDesapilada = pilaLateral->verTop();
+        listaCartas->insertarFrente(cartaDesapilada);
+        pilaLateral->pop();
     }
 
 }

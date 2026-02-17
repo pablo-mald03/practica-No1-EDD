@@ -101,23 +101,22 @@ ResultadoJugada Partida::tomarCarta(){
 
         this->listaJugadores.getActual()->getMazo()->insertarFrente(cartaTomada);
         this->pilaLateralCartas->pop();
-
         this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
 
-       // if(this->configuracion.esModoRobo())
+        resultado.analizarStack = true;
 
-        resultado.jugadaValida = true;
-        return resultado;
-
-        /*
+        if(this->configuracion.esModoRobo()){
+            resultado.jugadaValida = true;
+            return resultado;
+        }
 
         resultado.tiempoAnimacion = 2500;
         resultado.tiempoMensaje = 2000;
         resultado.darMensaje = true;
-        resultado.colorAviso = "#0C7527";
-        resultado.mensajeJugador = ""
-        */
-
+        resultado.colorAviso = "#91042B";
+        resultado.jugadaValida = false;
+        resultado.mensajeJugador = "Modo robo desactivado. Solo puedes sacar una";
+        return resultado;
 
     }catch(const std::runtime_error & ex){
         resultado.jugadaValida = false;
@@ -173,6 +172,27 @@ ResultadoJugada Partida::ejecutarTirada(int indice){
         resultadoTirada.jugadaValida = false;
         return resultadoTirada;
     }
+
+    if(this->getJugadorActual()->getEstaObligado()){
+
+        Carta cartaActual = this->listaJugadores.getActual()->getMazo()->getValor(indice);
+
+        if(this->estaFlip){
+
+            if(cartaActual.getReverso()->getTipo() != this->getJugadorActual()->getTipoObligado()){
+                Modelo * modeloCarta = this->pilaStacking->verTop().getReverso();
+                throw std::runtime_error(std::string( "Obligado a tirar similar a ") + modeloCarta->getNombre());
+            }
+
+        }else{
+
+            if(cartaActual.getAnverso()->getTipo() != this->getJugadorActual()->getTipoObligado()){
+                Modelo * modeloCarta = this->pilaStacking->verTop().getAnverso();
+                throw std::runtime_error(std::string( "Obligado a tirar similar a ") + modeloCarta->getNombre());
+            }
+        }
+    }
+
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
 
@@ -300,7 +320,7 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
     if(cartaElegida.getAnverso()->getTipo() == TipoCarta::SUMARCANTIDAD && cartaElegida.getAnverso()->getJerarquia() == 12){
 
         resultadoTirada.darMensaje = true;
-        resultadoTirada.tiempoMensaje = 2000;
+        resultadoTirada.tiempoMensaje = 1500;
         resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getAnverso()->getNombre() ;
 
         this->pilaCentralCartas->push(cartaElegida);
@@ -308,10 +328,15 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
 
         resultadoTirada.requiereDecision = false;
-        resultadoTirada.tiempoAnimacion = 3000;
+        resultadoTirada.tiempoAnimacion = 2200;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.colorAviso = "#0C7527";
         resultadoTirada.analizarStack = false;
+
+        if(this->getJugadorActual()->getEstaObligado()){
+            this->getJugadorActual()->setEstaObligado(false);
+            this->getJugadorActual()->setTipoObligado(TipoCarta::Predeterminado);
+        }
 
         return resultadoTirada;
     }
@@ -379,7 +404,29 @@ Pila<Carta> * Partida::getPilaLateral(){
 
 //Metodo utilizado para poder rellenar de nuevo la pila lateral
 void Partida::llenarPilaLateral(){
-    //IMPLEMENTACION PENDIENTE
+
+    if (this->pilaCentralCartas->estaVacia()) return;
+
+    Carta cartaEnMesa = this->pilaCentralCartas->verTop();
+    this->pilaCentralCartas->pop();
+
+    this->listadoCartas = new ListaEnlazada<Carta>();
+
+    while (!this->pilaCentralCartas->estaVacia()) {
+        this->listadoCartas->insertarFrente(this->pilaCentralCartas->verTop());
+        this->pilaCentralCartas->pop();
+    }
+
+    this->pilaCentralCartas->push(cartaEnMesa);
+
+    this->barajarCartas(this->listadoCartas);
+
+    while (this->listadoCartas->getLongitud() > 0) {
+        this->pilaLateralCartas->push(this->listadoCartas->popFront());
+    }
+
+    delete this->listadoCartas;
+    this->listadoCartas = nullptr;
 }
 
 //Metodo que permite verificar si cuenta con cartas de suma par poder realizar la tirada

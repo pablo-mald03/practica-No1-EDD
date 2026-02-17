@@ -17,6 +17,10 @@ private:
     std::string nombre;
     ListaEnlazada<Carta> *mazo;
 
+    //Atributos que permiten saber si el jugador esta obligado a tirar una carta
+    TipoCarta tipoObligado;
+    bool estaObligado;
+
 public:
     Jugador(const std::string _nombre, int codigo);
     ~Jugador();
@@ -30,6 +34,13 @@ public:
 
     //Metodo que permite obtener el mazo
     ListaEnlazada<Carta> * getMazo();
+
+    //Metodos que permiten saber si se esta obligado a tirar un color o carta
+    TipoCarta getTipoObligado();
+    bool getEstaObligado();
+
+    void setTipoObligado(TipoCarta tipo);
+    void setEstaObligado(bool flag);
 
     //Metodo para ordenar cartas
     void ordenarCartas(bool estaEnFlip);
