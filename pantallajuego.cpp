@@ -34,7 +34,7 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
     connect(this->controladorPartida, &PartidaController::datosPilaCentral, this,&PantallaJuego::actualizarPilaCentral);
     connect(this->controladorPartida, &PartidaController::datosPilaLateral, this,&PantallaJuego::actualizarBarajaLateral);
     connect(this->controladorPartida, &PartidaController::darMensaje, this,&PantallaJuego::darMensajeJugador);
-    this->controladorPartida->obtenerDatosPartida();
+    this->controladorPartida->obtenerDatosPartida(true);
 
     this->capaBloqueo = new QWidget(this);
     this->capaBloqueo->setStyleSheet("background: transparent;");
@@ -150,19 +150,121 @@ void PantallaJuego::actualizarBarajaLateral(std::string rutaImagenPila, int long
 
 }
 
+//Metodo de front que permite estar al tanto si se esta apilando una carta sumatoria
+void PantallaJuego::verificarStacking(bool evaluar){
+
+    if(!evaluar){
+        return;
+    }
+
+    bool estaStacking =  this->controladorPartida->estaStackeando();
+
+    if(!estaStacking){
+        return;
+    }
+
+    bool puedeStackear = this->controladorPartida->puedeStackear();
+
+    if(!puedeStackear){
+        ejecutarSumaCartas();
+        return;
+    }
+
+    bool tieneCartasNecesarias = this->controladorPartida->tieneParaStackear();
+
+    if(!tieneCartasNecesarias){
+        ejecutarSumaCartas();
+        return;
+    }
+
+    //Si llega hasta aca es porque si puede decidir si seguir stackeando
+    std::string mensaje = this->controladorPartida->getMensajeStacking();
+
+    bool decisionStackeo = mostrarConfirmacionStacking(mensaje);
+
+    if(!decisionStackeo){
+        ejecutarSumaCartas();
+        return;
+    }
+
+    this->darMensajeJugador("Selecciona tu carta para poder stackearla", "#0C7527",2000);
+}
+
+//Metodo de front que permite preguntarle al jugador si va a seguir stackeando
+bool PantallaJuego::mostrarConfirmacionStacking(std::string mensaje) {
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Tienes la posibilidad de apilar");
+    msgBox.setText(QString::fromStdString(mensaje));
+
+    // Botones personalizados
+    QPushButton *btnSi = msgBox.addButton("¡Aceptar!", QMessageBox::YesRole);
+    QPushButton *btnNo = msgBox.addButton("Paso", QMessageBox::NoRole);
+    msgBox.setDefaultButton(btnNo);
+
+    msgBox.setStyleSheet(
+        "QMessageBox {"
+        "  background-color: #2c3e50;"
+        "  border: 2px solid #ecf0f1;"
+        "}"
+        "QLabel {"
+        "  color: white;"
+        "  font-size: 16px;"
+        "  font-weight: bold;"
+        "  padding: 10px;"
+        "}"
+        "QPushButton {"
+        "  background-color: #34495e;"
+        "  color: white;"
+        "  border-radius: 5px;"
+        "  padding: 8px 15px;"
+        "  min-width: 100px;"
+        "}"
+        "QPushButton:hover {"
+        "  background-color: #e67e22;"
+        "}"
+        );
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == btnSi) {
+        return true;
+    }
+    return false;
+}
+
+//Metodo que ejecuta la suma de las cartas
+void PantallaJuego::ejecutarSumaCartas(){
+
+    capaBloqueo->setGeometry(this->rect());
+    capaBloqueo->show();
+    capaBloqueo->raise();
+
+    ResultadoJugada resultado = this->controladorPartida->aplicarCartasStackeadas();
+
+    if (!resultado.jugadaValida) {
+        capaBloqueo->hide();
+        return;
+    }
+
+    QTimer::singleShot(resultado.tiempoAnimacion, this, [this]() {
+        this->controladorPartida->obtenerDatosPartida(true);
+        capaBloqueo->hide();
+    });
+
+}
 
 //Metodo que muestra los datos del jugador en pantalla
-void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion, int cartasPila, int vueltas){
+void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion, int cartasPila, int vueltas, bool verificar){
 
     this->ui->labelNombreJugador->setText(QString::fromStdString( jugadorActual->getNombre()));
     this->ui->labelVueltas->setText("Direccion: " + QString::fromStdString(direccion));
     this->ui->labelCantidadPila->setText("En pila: "+ QString::number(cartasPila));
     this->ui->labelVPartida->setText("Vueltas: "+ QString::number(vueltas));
-    dibujarMazo(jugadorActual);
+    dibujarMazo(jugadorActual, verificar);
 }
 
 //Metodo que permite dibujar el mazo
-void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
+void PantallaJuego::dibujarMazo(Jugador* & jugadorActual, bool verificar){
 
     this->escena->clear();
 
@@ -200,6 +302,8 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual){
         visual->setPos(xActual + (i * separacion), 30);
         visual->setZValue(i);
     }
+
+    this->verificarStacking(verificar);
 }
 
 //Metodo que permite que la carta envie su signal para reportar que el jugador la quiere tirar
@@ -219,12 +323,12 @@ void PantallaJuego::onCartaPresionada(int indice) {
 
         if (resultado.requiereDecision) {
             capaBloqueo->hide();
-            //mostrarDialogoDecision();   // +2, +4, etc.
+            //mostrarDialogoDecision();
             return;
         }
 
         QTimer::singleShot(resultado.tiempoAnimacion, this, [this]() {
-            this->controladorPartida->obtenerDatosPartida();
+            this->controladorPartida->obtenerDatosPartida(true);
             capaBloqueo->hide();
         });
 
@@ -288,7 +392,7 @@ void PantallaJuego::on_btnPilaLateral_clicked()
         }
 
         QTimer::singleShot(resultado.tiempoAnimacion, this, [this]() {
-            this->controladorPartida->obtenerDatosPartida();
+            this->controladorPartida->obtenerDatosPartida(true);
             capaBloqueo->hide();
         });
 

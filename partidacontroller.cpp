@@ -15,6 +15,96 @@ PartidaController::~PartidaController(){
     this->gestorPartida = nullptr;
 }
 
+//Metodo que permite saber si el backend esta stackeando
+bool PartidaController::estaStackeando(){
+
+    Pila<Carta> * pilaStack = this->gestorPartida->getPilaStack();
+
+    if(pilaStack == nullptr){
+        return false;
+    }
+
+    if(pilaStack->estaVacia()){
+        return false;
+    }
+
+    return true;
+}
+
+//Metodo que permite dar el aviso para que se apliquen todas las cartas del stack al jugador
+ResultadoJugada PartidaController::aplicarCartasStackeadas(){
+
+    ResultadoJugada resultado;
+
+    try{
+        //Metodo principal
+        resultado = this->gestorPartida->aplicarAcumuladas();
+
+        if (resultado.jugadaValida) {
+
+            //Acciones antes de refrescar
+            this->obtenerDatosPartida(resultado.analizarStack);
+
+            if(resultado.darMensaje){
+                QString color = QString::fromStdString(resultado.colorAviso);
+                reportarMensaje(resultado.mensajeJugador, color, resultado.tiempoMensaje);
+            }
+
+            return resultado;
+
+        } else {
+            reportarMensaje("No se pudo aplicar las sumas de las cartas", "#91042B", 2500);
+        }
+
+    }catch(const std::runtime_error & ex){
+        reportarMensaje(ex.what(), "#91042B", 2500);
+    }
+
+    resultado.jugadaValida = false;
+    return resultado;
+}
+
+//Metodo que le permite saber a front si puede stackear
+bool PartidaController::puedeStackear(){
+    bool flag = this->gestorPartida->getConfiguracion().esStacking();
+    return flag;
+}
+
+//Metodo que permite verificar si tiene las cartas para volver a stackear
+bool PartidaController::tieneParaStackear(){
+
+    Pila<Carta> * pilaStack = this->gestorPartida->getPilaStack();
+
+    Carta cartaEnStack = pilaStack->verTop();
+
+    if(cartaEnStack.getAnverso()->getTipo() == TipoCarta::SUMARCANTIDAD){
+        return this->gestorPartida->tieneCartasSumaStacking();
+    }
+    else if(cartaEnStack.getAnverso()->getTipo() == TipoCarta::SUMAMULTICOLOR){
+        return this->gestorPartida->tieneCartasMulticolorStacking();
+    }
+
+    return false;
+}
+
+//Permite obtener el mensaje de pregunta SI SOLO SI SE PUEDE STACKEAR
+std::string PartidaController::getMensajeStacking(){
+
+    Pila<Carta> * pilaStack = this->gestorPartida->getPilaStack();
+
+    bool estaFlip = this->estaModoFlip();
+
+    int cantidad = pilaStack->getLongitud();
+
+    if(!estaFlip){
+        return std::string("Hay ") + std::to_string(cantidad) + std::string(" de cartas ")+ pilaStack->verTop().getAnverso()->getNombre();
+
+    }else{
+        return std::string("Hay ") + std::to_string(cantidad) + std::string(" de cartas ")+ pilaStack->verTop().getReverso()->getNombre();
+    }
+}
+
+//Metodo que comunica a front que hacer si se esta en modo flip
 bool PartidaController::estaModoFlip(){
     return this->gestorPartida->getEstaFlip();
 }
@@ -22,8 +112,6 @@ bool PartidaController::estaModoFlip(){
 
 //Metodo que permite ejecutar la accion y comunicarse con el backend de cuando el jugador en pantalla tira una carta
 ResultadoJugada PartidaController::tirarCarta(int indice){
-
-
     try{
         //Metodo principal
         ResultadoJugada jugadaNormal = this->gestorPartida->ejecutarTirada(indice);
@@ -31,7 +119,7 @@ ResultadoJugada PartidaController::tirarCarta(int indice){
         if (jugadaNormal.jugadaValida) {
 
             //Acciones antes de refrescar
-            this->obtenerDatosPartida();
+            this->obtenerDatosPartida(jugadaNormal.analizarStack);
 
             this->gestorPartida->ejecutarMovimiento();
 
@@ -72,7 +160,7 @@ ResultadoJugada PartidaController::desapilarCarta(){
     ResultadoJugada resultadoJugada = this->gestorPartida->tomarCarta();
 
     if(resultadoJugada.jugadaValida){
-        this->obtenerDatosPartida();
+        this->obtenerDatosPartida(true);
         return resultadoJugada;
 
     }else{
@@ -87,8 +175,8 @@ void PartidaController::reportarMensaje(std::string mensaje, QString colorHex, i
 }
 
 //Metodo que se encarga de retornar la informacion principal al iniciar la partida
-void PartidaController::obtenerDatosPartida(){
-    emit datosPartida(this->gestorPartida->getJugadorActual(),this->gestorPartida->getDireccion(), this->gestorPartida->getCantidadPila(), this->gestorPartida->getCantidadVueltas());
+void PartidaController::obtenerDatosPartida(bool verificar){
+    emit datosPartida(this->gestorPartida->getJugadorActual(),this->gestorPartida->getDireccion(), this->gestorPartida->getCantidadPila(), this->gestorPartida->getCantidadVueltas(),verificar);
     emit datosPilaCentral(this->gestorPartida->imagenPilaCentral());
     emit datosPilaLateral(this->gestorPartida->imagenPilaLateral(), this->gestorPartida->getCantidadPila());
 

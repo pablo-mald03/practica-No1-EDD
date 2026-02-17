@@ -243,6 +243,8 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.colorAviso = "#0C7527";
+        resultadoTirada.requiereDecision = false;
+        resultadoTirada.analizarStack = true;
         return resultadoTirada;
     }
 
@@ -266,9 +268,11 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
             this->listaJugadores.pickSiguiente()->getMazo()->eliminar(indice);
         }
 
+        resultadoTirada.requiereDecision = false;
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.colorAviso = "#0C7527";
+        resultadoTirada.analizarStack = true;
         return resultadoTirada;
     }
 
@@ -281,19 +285,166 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
         cartaElegida.getAnverso()->lanzarCarta(*this,this->listaJugadores);
         this->pilaCentralCartas->push(cartaElegida);
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+        this->inicioRonda = this->listaJugadores.getActual();
         this->setPuedeMoverse(false);
 
+        resultadoTirada.requiereDecision = false;
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.colorAviso = "#0C7527";
+        resultadoTirada.analizarStack = true;
 
         return resultadoTirada;
     }
 
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::SUMARCANTIDAD && cartaElegida.getAnverso()->getJerarquia() == 12){
+
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 2000;
+        resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getAnverso()->getNombre() ;
+
+        this->pilaCentralCartas->push(cartaElegida);
+        this->pilaStacking->push(cartaElegida);
+        this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+
+        resultadoTirada.requiereDecision = false;
+        resultadoTirada.tiempoAnimacion = 3000;
+        resultadoTirada.jugadaValida = true;
+        resultadoTirada.colorAviso = "#0C7527";
+        resultadoTirada.analizarStack = false;
+
+        return resultadoTirada;
+    }
 
     resultadoTirada.colorAviso = "#91042B";
     resultadoTirada.jugadaValida = false;
     return resultadoTirada;
+}
+
+//Metodo que permite ejecutar la accion de aplicar todo el stack acumulado de cartas de suma
+ResultadoJugada Partida::aplicarAcumuladas(){
+
+    ResultadoJugada resultado;
+    try{
+
+        resultado.tiempoMensaje = 2000;
+        resultado.darMensaje = true;
+        int cantidad = this->pilaStacking->getLongitud();
+
+        Carta cartaApilada = this->pilaStacking->verTop();
+
+        std::string tipoCarta = "";
+
+        if(!this->estaFlip){
+            tipoCarta = cartaApilada.getAnverso()->getNombre();
+        }
+        else{
+            tipoCarta = cartaApilada.getReverso()->getNombre();
+        }
+
+        resultado.mensajeJugador = std::string("Se te han sumado ") + std::to_string(cantidad) + " cartas " + tipoCarta;
+
+        while(!this->pilaStacking->estaVacia()){
+
+            Carta cartaDesapilada = this->pilaStacking->verTop();
+
+            if(!this->estaFlip){
+                cartaDesapilada.getAnverso()->lanzarCarta(*this, this->listaJugadores);
+            }
+            else{
+                cartaDesapilada.getReverso()->lanzarCarta(*this, this->listaJugadores);
+            }
+
+            this->pilaStacking->pop();
+        }
+
+        this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
+
+        resultado.jugadaValida = true;
+        resultado.tiempoAnimacion = 3000;
+        resultado.colorAviso = "#091787";
+        resultado.analizarStack = false;
+        return resultado;
+
+    }
+    catch(const std::runtime_error & ex)
+    {
+        throw std::runtime_error("No se pudo desapilar el stack");
+    }
+
+    resultado.jugadaValida = false;
+    return resultado;
+}
+
+//Metodo que le permitira al front realizar la peticion de cartas para ver si stackean
+Pila<Carta> * Partida::getPilaStack()  {
+    return this->pilaStacking;
+}
+
+//Metodo que le permitira al front realizar la peticion de cartas para ver si stackean
+Pila<Carta> * Partida::getPilaLateral(){
+    return this->pilaLateralCartas;
+}
+
+//Metodo utilizado para poder rellenar de nuevo la pila lateral
+void Partida::llenarPilaLateral(){
+    //IMPLEMENTACION PENDIENTE
+}
+
+//Metodo que permite verificar si cuenta con cartas de suma par poder realizar la tirada
+bool Partida::tieneCartasSumaStacking(){
+
+    Carta cartaCentral = this->pilaStacking->verTop();
+    ListaEnlazada<Carta>* mazo = this->listaJugadores.getActual()->getMazo();
+
+    int cantidad = mazo->getLongitud();
+
+    if(this->estaFlip){
+        for(int i = 0; i < cantidad; i++){
+            Carta cartaJugador = mazo->verValor(i);
+            //ES SUMA DE COLOR
+            if(cartaJugador.getReverso()->getJerarquia() == 12 && cartaJugador.getReverso()->getTipo() == TipoCarta::SUMARCANTIDAD){
+                return true;
+            }
+        }
+    }else{
+        for(int i = 0; i < cantidad; i++){
+            Carta cartaJugador = mazo->verValor(i);
+            //ES SUMA DE COLOR
+            if(cartaJugador.getAnverso()->getJerarquia() == 12 && cartaJugador.getAnverso()->getTipo() == TipoCarta::SUMARCANTIDAD){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+//Metodo que permite verificar si cuenta con cartas de suma par poder realizar la tirada
+bool Partida::tieneCartasMulticolorStacking(){
+
+    Carta cartaCentral = this->pilaStacking->verTop();
+    ListaEnlazada<Carta>* mazo = this->listaJugadores.getActual()->getMazo();
+
+    int cantidad = mazo->getLongitud();
+
+    if(this->estaFlip){
+        for(int i = 0; i < cantidad; i++){
+            Carta cartaJugador = mazo->verValor(i);
+            //ES SUMA MULTICOLOR
+            if(cartaJugador.getReverso()->getJerarquia() == 13 && cartaJugador.getReverso()->getTipo() == TipoCarta::SUMAMULTICOLOR){
+                return true;
+            }
+        }
+    }else{
+        for(int i = 0; i < cantidad; i++){
+            Carta cartaJugador = mazo->verValor(i);
+            //ES SUMA MULTICOLOR
+            if(cartaJugador.getAnverso()->getJerarquia() == 13 && cartaJugador.getAnverso()->getTipo() == TipoCarta::SUMAMULTICOLOR){
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 //Metodo que permite saber si un jugador ya solo tiene una carta
@@ -321,7 +472,9 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
+        resultadoTirada.requiereDecision = false;
         resultadoTirada.colorAviso = "#0C7527";
+        resultadoTirada.analizarStack = true;
         return resultadoTirada;
     }
 
@@ -339,6 +492,8 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
 
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
+        resultadoTirada.requiereDecision = false;
+        resultadoTirada.analizarStack = true;
         resultadoTirada.colorAviso = "#0C7527";
 
         return resultadoTirada;
@@ -504,6 +659,10 @@ bool Partida::getEstaFlip(){
 
 void Partida::setEstaFlip(bool accion){
     this->estaFlip = accion;
+}
+//Metodo que permite obtener la configuracion de la partida
+ConfiguracionPartida Partida::getConfiguracion(){
+    return this->configuracion;
 }
 
 //====================Fin de la SUBREGION Metodos getter y setter=================
@@ -767,6 +926,13 @@ void Partida::armarCartas(){
     this->listadoCartas = nullptr;
 
     this->pilaCentralCartas = new Pila<Carta>();
+
+    if(this->configuracion.esStacking()){
+        this->pilaStacking = new Pila<Carta>();
+    } else{
+        this->pilaStacking = nullptr;
+    }
+
 }
 
 //Metodo que permite armar las cartas del UNO Normal
@@ -1029,6 +1195,10 @@ void Partida::limpiarReferencias(){
 
     delete this->pilaCentralCartas;
     delete this->pilaLateralCartas;
+
+    if(this->pilaStacking != nullptr){
+         delete this->pilaStacking;
+    }
 }
 
 Partida::~Partida(){

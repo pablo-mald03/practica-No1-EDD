@@ -1,4 +1,7 @@
 #include "sumacantidad.h"
+#include"jugador.h"
+#include"partida.h"
+#include"QDebug"
 
 SumaCantidad::SumaCantidad(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia, int _valor)
     :Modelo(_colorRef,_nombre,_lado,TipoCarta::SUMARCANTIDAD, _jerarquia),valorSuma(_valor)
@@ -27,6 +30,22 @@ void SumaCantidad::lanzarCarta(Partida & partidaActual) {
 
 //Caso donde la carta debe interactuar con la partida y un jugador x
 void SumaCantidad::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+    ListaEnlazada<Carta> * listaCartas = jugador.getActual()->getMazo();
+
+    Pila<Carta> * pilaLateral = partidaActual.getPilaLateral();
+
+    for (int i = 0; i < 2; i++) {
+
+        Carta cartaDesapilada = pilaLateral->verTop();
+
+        listaCartas->insertarFrente(cartaDesapilada);
+        pilaLateral->pop();
+
+        if(pilaLateral->estaVacia()){
+            partidaActual.llenarPilaLateral();
+        }
+    }
 
 }
 

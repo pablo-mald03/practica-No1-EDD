@@ -42,12 +42,12 @@ private:
     int cantidadJugadores;
 
     //Metodos que comunican a la UI sus acciones
-    void mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion, int cartasPila, int vueltas);
+    void mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion, int cartasPila, int vueltas, bool verificar);
 
     void inicializarVistaMazo();
 
     //Metodo para ilustrar el mazo del jugador
-    void dibujarMazo(Jugador* & jugadorActual);
+    void dibujarMazo(Jugador* & jugadorActual, bool verificar);
 
     //Metodo para preparar a la UI
     void prepararInterfazCartas();
@@ -61,6 +61,14 @@ private:
     //metodo para generar la instancia del timer
     void instanciarTimer();
 
+    //Metodo que permite verificar el stacking de cartas
+    void verificarStacking(bool evaluar);
+
+    //Metodo que permite ejecutar la suma de las cartas de stackeo
+    void ejecutarSumaCartas();
+
+    //Metodo de front que permite preguntarle al jugador si va a seguir stackeando
+    bool mostrarConfirmacionStacking(std::string mensaje);
 
 signals:
     void solicitarSalida();

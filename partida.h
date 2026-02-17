@@ -22,6 +22,7 @@ struct ResultadoJugada {
     int tiempoAnimacion = 0;
     bool requiereDecision = false;
     std::string colorAviso;
+    bool analizarStack = false;
 };
 
 class Partida
@@ -55,6 +56,8 @@ private:
 
     //Pila de las cartas laterales
     Pila<Carta> *pilaCentralCartas;
+
+    Pila<Carta> * pilaStacking;
 
     //Referencia al puntero para contabilizar una vuelta dada
     Nodo<Jugador*> inicioRonda = nullptr;
@@ -153,6 +156,27 @@ public:
 
     //Metodo que permite saber si el jugador ya solo tiene una carta
     bool esUltimaCarta(Jugador * jugadorActual);
+
+    //Metodo que permite obtener la pila del stacking
+    Pila<Carta> * getPilaStack();
+
+    //Metodo que permite obtener la pila de las cartas laterales
+    Pila<Carta> * getPilaLateral();
+
+    //Metodo getter que permite obtener la configuracion
+    ConfiguracionPartida getConfiguracion();
+
+    //Metodo que permite ejecutar la accion de aplicar todo el stack acumulado de cartas de suma
+    ResultadoJugada aplicarAcumuladas();
+
+    //Metodo que permite saber si el jugador puede stackear carta suma
+    bool tieneCartasSumaStacking();
+    //Metodo que permite saber si el jugador puede stackear carta suma multicolor
+    bool tieneCartasMulticolorStacking();
+
+    //Metodo para volver a llenar la pila lateral si es que se queda sin cartas
+    void llenarPilaLateral();
+
 };
 
 /*CREATED BY PABLO M*/
