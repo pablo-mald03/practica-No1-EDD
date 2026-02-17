@@ -41,6 +41,7 @@ qt_add_executable(PracticaNo1
     cartadeckui.h cartadeckui.cpp
     saltotodos.h saltotodos.cpp
     pila.h pila.cpp
+    selectorcolordialog.h selectorcolordialog.cpp selectorcolordialog.ui
 
 
 

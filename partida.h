@@ -40,6 +40,9 @@ private:
     //Flag que permite saber si se cambio al lado flip
     bool estaFlip;
 
+    //Atributo que permite saber el color en el que esta la partida
+    std::string colorPartida;
+
     //Arreglos modelo de cartas
     Modelo * modelosClaros[56];
     Modelo * modelosOscuros[56];
@@ -111,6 +114,9 @@ private:
     ResultadoJugada ejecutarAccionCartaClara(int indice);
     ResultadoJugada ejecutarAccionCartaOscura(int indice);
 
+    ResultadoJugada accionCartaEspecialClara(int indice);
+    ResultadoJugada accionCartaEspecialOscura(int indice);
+
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
@@ -134,6 +140,9 @@ public:
 
     //Metodo UNICO QUE PERMITE INTERACTUAR CON TODA LA LOGICA DEL BACKEND
     ResultadoJugada ejecutarTirada(int indice);
+
+    //Metodo UNICO QUE PERMITE INTERACTUAR PARA PODER ESTABLECER UN COLOR O UNA ACCION EXTERNA
+    ResultadoJugada ejecutarDecision(int indice, int decision);
 
     //Metodos getters y setters
     bool getPuedeMoverse();

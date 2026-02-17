@@ -70,6 +70,8 @@ private:
     //Metodo de front que permite preguntarle al jugador si va a seguir stackeando
     bool mostrarConfirmacionStacking(std::string mensaje);
 
+    int mostrarSelectorColor(bool estaFlip);
+
 signals:
     void solicitarSalida();
 private slots:

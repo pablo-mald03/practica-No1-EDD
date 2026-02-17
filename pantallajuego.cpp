@@ -6,6 +6,7 @@
 #include"mainwindow.h"
 #include"carta.h"
 #include<QTimer>
+#include "selectorcolordialog.h"
 
 //CREATED BY PABLO M
 
@@ -51,6 +52,18 @@ void PantallaJuego::instanciarTimer(){
     connect(timerMensaje, &QTimer::timeout, [this]() {
         this->ui->labelMensajes->clear();
     });
+}
+
+//Metodo que permite seleccionar el color que se va a elegir  para el comodin
+int PantallaJuego::mostrarSelectorColor(bool estaFlip)
+{
+    SelectorColorDialog dlg(estaFlip, this);
+
+    if (dlg.exec() == QDialog::Accepted) {
+        return dlg.getColorElegido();
+    }
+
+    return -1;
 }
 
 //Metodo que srive para poder dar mensajes en pantalla al jugador
@@ -324,7 +337,29 @@ void PantallaJuego::onCartaPresionada(int indice) {
 
         if (resultado.requiereDecision) {
             capaBloqueo->hide();
-            //mostrarDialogoDecision();
+            bool flip = this->controladorPartida->estaModoFlip();
+            int seleccion = this->mostrarSelectorColor(flip);
+
+            if(seleccion <= 0){
+                capaBloqueo->hide();
+                darMensajeJugador("HAS ELEGIDO UNA OPCION INVALIDA", "#91042B", 2000);
+                return;
+            }
+
+            //METODO QUE SE ENCARGA DE HACER LA EJECUCION CUANDO EL JUGADOR DEBE ELEGIR UNA CARTA
+            ResultadoJugada resultadoDecision = this->controladorPartida->decisionJugador(indice, seleccion);
+
+            if (!resultadoDecision.jugadaValida) {
+                capaBloqueo->hide();
+                return;
+            }
+
+            QTimer::singleShot(resultadoDecision.tiempoAnimacion, this, [this]() {
+                this->controladorPartida->obtenerDatosPartida(true);
+                capaBloqueo->hide();
+            });
+
+
             return;
         }
 
@@ -335,10 +370,8 @@ void PantallaJuego::onCartaPresionada(int indice) {
 
     }catch(const std::runtime_error & ex){
         capaBloqueo->hide();
-        darMensajeJugador(ex.what(), "#91042B", 2500);
+        darMensajeJugador(ex.what(), "#91042B", 2000);
     }
-
-
 }
 
 PantallaJuego::~PantallaJuego()

@@ -127,6 +127,47 @@ bool PartidaController::estaModoFlip(){
     return this->gestorPartida->getEstaFlip();
 }
 
+//Metodo que permite dar la accion de poder seleccionar un valor para establecer un color
+ResultadoJugada PartidaController::decisionJugador(int indice, int decision){
+
+    try{
+        //Metodo principal
+        ResultadoJugada jugadaNormal = this->gestorPartida->ejecutarDecision(indice, decision);
+
+        if (jugadaNormal.jugadaValida) {
+
+            //Acciones antes de refrescar
+            this->obtenerDatosPartida(jugadaNormal.analizarStack);
+
+            this->gestorPartida->ejecutarMovimiento();
+
+            bool puedeMoverse =this->gestorPartida->getPuedeMoverse();
+
+            if(!puedeMoverse){
+                this->gestorPartida->setPuedeMoverse(true);
+            }
+
+            if(jugadaNormal.darMensaje){
+                QString color = QString::fromStdString(jugadaNormal.colorAviso);
+                reportarMensaje(jugadaNormal.mensajeJugador, color, jugadaNormal.tiempoMensaje);
+            }
+
+            return jugadaNormal;
+
+        } else {
+            reportarMensaje("Esa carta no se puede tirar", "#91042B", 2500);
+        }
+
+    }catch(const std::runtime_error & ex){
+        reportarMensaje(ex.what(), "#91042B", 2500);
+    }
+
+    ResultadoJugada jugadaNormal;
+    jugadaNormal.jugadaValida = false;
+
+    return jugadaNormal;
+}
+
 
 //Metodo que permite ejecutar la accion y comunicarse con el backend de cuando el jugador en pantalla tira una carta
 ResultadoJugada PartidaController::tirarCarta(int indice){

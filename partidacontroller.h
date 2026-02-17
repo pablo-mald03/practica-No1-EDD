@@ -45,6 +45,7 @@ public:
     //Metodo que le obliga al jugador a solo tirar un tipo
     void obligarJugador();
 
+    ResultadoJugada decisionJugador(int indice, int decision);
 
 public slots:
 

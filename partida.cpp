@@ -213,9 +213,7 @@ ResultadoJugada Partida::ejecutarTirada(int indice){
             }
 
         }else{
-            //PENDIENTE LAS ESPECIALES
-
-
+            return this->accionCartaEspecialClara(indice);
         }
 
     }else{
@@ -240,6 +238,64 @@ ResultadoJugada Partida::ejecutarTirada(int indice){
     }
 
     throw std::runtime_error("No se pudo ejecutar la tirada");
+}
+
+//Metodo que permite ejecutar la decision del jugador ya que selecciono un color
+ResultadoJugada Partida::ejecutarDecision(int indice, int decision){
+
+    Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
+
+    ColorCarta color = cartaElegida.getAnverso()->getColor().getColorCarta();
+
+    ResultadoJugada resultadoTirada;
+
+
+    resultadoTirada.colorAviso = "#91042B";
+    resultadoTirada.jugadaValida = false;
+    return resultadoTirada;
+
+}
+
+//Metodo que se utiiza para poder ejecutar la accion de una carta especial de jerarquia 13 para 16 CLARA
+ResultadoJugada Partida::accionCartaEspecialClara(int indice){
+    Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
+
+    ColorCarta color = cartaElegida.getAnverso()->getColor().getColorCarta();
+
+    ResultadoJugada resultadoTirada;
+
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::COLORCOMODIN && cartaElegida.getAnverso()->getJerarquia() == 14){
+
+        resultadoTirada.darMensaje = false;
+        resultadoTirada.tiempoMensaje = 3000;
+        resultadoTirada.requiereDecision = true;
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = true;
+        resultadoTirada.analizarStack = true;
+        return resultadoTirada;
+    }
+
+
+    resultadoTirada.colorAviso = "#91042B";
+    resultadoTirada.jugadaValida = false;
+    return resultadoTirada;
+}
+
+//Metodo que se utiiza para poder ejecutar la accion de una carta especial de jerarquia 13 para 16 OSCURA
+ResultadoJugada Partida::accionCartaEspecialOscura(int indice){
+
+    Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
+
+    ColorCarta color = cartaElegida.getAnverso()->getColor().getColorCarta();
+
+    ResultadoJugada resultadoTirada;
+
+
+
+
+    resultadoTirada.colorAviso = "#91042B";
+    resultadoTirada.jugadaValida = false;
+    return resultadoTirada;
 }
 
 //Metodo utilizado para ejecutar la accion de cada carta clara
@@ -533,6 +589,30 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
         resultadoTirada.requiereDecision = false;
         resultadoTirada.analizarStack = true;
         resultadoTirada.colorAviso = "#0C7527";
+
+        return resultadoTirada;
+    }
+
+    if(cartaElegida.getReverso()->getTipo() == TipoCarta::SUMARCANTIDAD && cartaElegida.getReverso()->getJerarquia() == 12){
+
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 1500;
+        resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getReverso()->getNombre() ;
+
+        this->pilaCentralCartas->push(cartaElegida);
+        this->pilaStacking->push(cartaElegida);
+        this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+
+        resultadoTirada.requiereDecision = false;
+        resultadoTirada.tiempoAnimacion = 2200;
+        resultadoTirada.jugadaValida = true;
+        resultadoTirada.colorAviso = "#0C7527";
+        resultadoTirada.analizarStack = false;
+
+        if(this->getJugadorActual()->getEstaObligado()){
+            this->getJugadorActual()->setEstaObligado(false);
+            this->getJugadorActual()->setTipoObligado(TipoCarta::Predeterminado);
+        }
 
         return resultadoTirada;
     }
