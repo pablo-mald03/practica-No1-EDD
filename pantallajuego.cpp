@@ -273,12 +273,28 @@ void PantallaJuego::on_btnPilaLateral_clicked()
         return;
     }
 
-    try{
+    capaBloqueo->setGeometry(this->rect());
+    capaBloqueo->show();
+    capaBloqueo->raise();
 
-        this->controladorPartida->desapilarCarta();
+    try{
+        //ResultadoJugada resultado = this->controladorPartida->tirarCarta(indice);
+
+        ResultadoJugada resultado = this->controladorPartida->desapilarCarta();
+
+        if (resultado.jugadaValida) {
+            capaBloqueo->hide();
+            return;
+        }
+
+        QTimer::singleShot(resultado.tiempoAnimacion, this, [this]() {
+            this->controladorPartida->obtenerDatosPartida();
+            capaBloqueo->hide();
+        });
 
     }catch(const std::runtime_error & ex){
         this->darMensajeJugador(ex.what(), "#91042B",2500);
+        capaBloqueo->hide();
     }
 
 

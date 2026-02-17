@@ -42,7 +42,8 @@ ResultadoJugada PartidaController::tirarCarta(int indice){
             }
 
             if(jugadaNormal.darMensaje){
-               reportarMensaje(jugadaNormal.mensajeJugador, "#0C7527", jugadaNormal.tiempoMensaje);
+                QString color = QString::fromStdString(jugadaNormal.colorAviso);
+               reportarMensaje(jugadaNormal.mensajeJugador, color, jugadaNormal.tiempoMensaje);
             }
 
             return jugadaNormal;
@@ -66,16 +67,17 @@ bool PartidaController::puedeDesapilar(){
 }
 
 //Metodo utilzado para que el usuario pueda desapilar una carta
-void PartidaController::desapilarCarta(){
+ResultadoJugada PartidaController::desapilarCarta(){
 
-    bool cartaDesapilada = this->gestorPartida->tomarCarta();
+    ResultadoJugada resultadoJugada = this->gestorPartida->tomarCarta();
 
-    if(cartaDesapilada){
+    if(resultadoJugada.jugadaValida){
         this->obtenerDatosPartida();
+        return resultadoJugada;
+
     }else{
         throw std::runtime_error("La pila de cartas ya esta vacia");
     }
-
 }
 
 

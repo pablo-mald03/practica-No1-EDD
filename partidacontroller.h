@@ -25,7 +25,7 @@ public:
     bool puedeDesapilar();
 
     //Metodo utilzado para desapilar las cartas y agregarselas al jugador
-    void desapilarCarta();
+    ResultadoJugada desapilarCarta();
 
 public slots:
 

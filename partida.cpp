@@ -91,7 +91,9 @@ void Partida::moverJugador(){
 }
 
 
-bool Partida::tomarCarta(){
+ResultadoJugada Partida::tomarCarta(){
+
+    ResultadoJugada resultado;
 
     try{
 
@@ -102,17 +104,74 @@ bool Partida::tomarCarta(){
 
         this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
 
-        return true;
+       // if(this->configuracion.esModoRobo())
+
+        resultado.jugadaValida = true;
+        return resultado;
+
+        /*
+
+        resultado.tiempoAnimacion = 2500;
+        resultado.tiempoMensaje = 2000;
+        resultado.darMensaje = true;
+        resultado.colorAviso = "#0C7527";
+        resultado.mensajeJugador = ""
+        */
+
+
     }catch(const std::runtime_error & ex){
-         return false;
+        resultado.jugadaValida = false;
+        return resultado;
     }
 }
+
+//Metodo que permite verificar si el jugador puede ganar con una carta negra
+bool Partida::puedeGanarConNegra(int indice){
+
+    bool tieneUltima = this->esUltimaCarta(this->getJugadorActual());
+
+    bool puedeGanarNegra  = this->configuracion.esGanarNegra();
+
+    if(tieneUltima && !this->estaFlip && !puedeGanarNegra){
+
+        Modelo * cartaActual = this->getJugadorActual()->getMazo()->getValor(indice).getAnverso();
+
+        if(cartaActual->getJerarquia() > 12){
+
+            return false;
+        }
+
+    } else if(tieneUltima && this->estaFlip && !puedeGanarNegra){
+
+        Modelo * cartaActual = this->getJugadorActual()->getMazo()->getValor(indice).getReverso();
+
+        if(cartaActual->getJerarquia() > 12){
+            return false;
+        }
+    }
+
+    return true;
+}
+
 //Metodo que permite ejecutar la tirada
 ResultadoJugada Partida::ejecutarTirada(int indice){
 
     bool puedeTirar = this->tieneCartaNecesaria();
     if(!puedeTirar){
         throw std::runtime_error("No tienes cartas para poder tirar. Saca de la pila");
+    }
+
+    bool puedeGanar = this->puedeGanarConNegra(indice);
+    if(!puedeGanar){
+
+        ResultadoJugada resultadoTirada;
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 1500;
+        resultadoTirada.mensajeJugador = std::string("Configuracion activada. NO PUEDES GANAR CON CARTA NEGRA ") ;
+        resultadoTirada.colorAviso = "#91042B";
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = false;
+        return resultadoTirada;
     }
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
@@ -177,11 +236,13 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
         resultadoTirada.darMensaje = true;
         resultadoTirada.tiempoMensaje = 1500;
         resultadoTirada.mensajeJugador = std::string("Se ha tirado la carta ") + cartaElegida.getAnverso()->getNombre();
-        resultadoTirada.tiempoAnimacion = 2000;
-        resultadoTirada.jugadaValida = true;
 
         this->pilaCentralCartas->push(cartaElegida);
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = true;
+        resultadoTirada.colorAviso = "#0C7527";
         return resultadoTirada;
     }
 
@@ -207,7 +268,7 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
 
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
-
+        resultadoTirada.colorAviso = "#0C7527";
         return resultadoTirada;
     }
 
@@ -215,7 +276,6 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
 
         resultadoTirada.darMensaje = true;
         resultadoTirada.tiempoMensaje = 3000;
-
         resultadoTirada.mensajeJugador = std::string("El ")+ this->listaJugadores.getActual()->getNombre() + std::string(" tiro la carta ") + cartaElegida.getAnverso()->getNombre() ;
 
         cartaElegida.getAnverso()->lanzarCarta(*this,this->listaJugadores);
@@ -225,13 +285,21 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
 
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
+        resultadoTirada.colorAviso = "#0C7527";
 
         return resultadoTirada;
     }
 
 
+    resultadoTirada.colorAviso = "#91042B";
     resultadoTirada.jugadaValida = false;
     return resultadoTirada;
+}
+
+//Metodo que permite saber si un jugador ya solo tiene una carta
+bool Partida::esUltimaCarta(Jugador * jugadorActual){
+    int longitud = jugadorActual->getMazo()->getLongitud();
+    return longitud == 1;
 }
 
 //Metodo utilizado para ejecutar la accion de cada carta oscura
@@ -248,11 +316,12 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
         resultadoTirada.darMensaje = true;
         resultadoTirada.tiempoMensaje = 1500;
         resultadoTirada.mensajeJugador = std::string("Se ha tirado la carta ") + cartaElegida.getReverso()->getNombre();
-        resultadoTirada.tiempoAnimacion = 2000;
-        resultadoTirada.jugadaValida = true;
 
         this->pilaCentralCartas->push(cartaElegida);
         this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.jugadaValida = true;
+        resultadoTirada.colorAviso = "#0C7527";
         return resultadoTirada;
     }
 
@@ -270,6 +339,7 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
 
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
+        resultadoTirada.colorAviso = "#0C7527";
 
         return resultadoTirada;
     }

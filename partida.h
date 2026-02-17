@@ -21,6 +21,7 @@ struct ResultadoJugada {
     int tiempoMensaje = 0;
     int tiempoAnimacion = 0;
     bool requiereDecision = false;
+    std::string colorAviso;
 };
 
 class Partida
@@ -95,6 +96,10 @@ private:
     bool tieneEnClaras();
     bool tieneEnOscuras();
 
+    //Metodo que permite corroborar si el jugador puede ganar con negra (Tipo de configuracion)
+
+    bool puedeGanarConNegra(int indice);
+
     //Metodos para verificar la jerarquia y el color de la carta
     bool esMismaClara(const Carta& cartaJugador, const Carta& cartaPila);
     bool esMismaOscura(const Carta& cartaJugador, const Carta& cartaPila);
@@ -138,13 +143,16 @@ public:
     bool tieneCartaNecesaria();
 
     //Metodo ejecutado cuando un jugador toma una carta y la agrega a su mazo
-    bool tomarCarta();
+    ResultadoJugada tomarCarta();
 
     //Metodo que sirve para cambiar la direccion (reversa)
     void cambiarDireccion();
 
     //Metodo que permite avanzar en la direccion indicada
     void moverJugador();
+
+    //Metodo que permite saber si el jugador ya solo tiene una carta
+    bool esUltimaCarta(Jugador * jugadorActual);
 };
 
 /*CREATED BY PABLO M*/
