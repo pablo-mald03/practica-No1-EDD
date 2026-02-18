@@ -117,6 +117,12 @@ private:
     ResultadoJugada accionCartaEspecialClara(int indice);
     ResultadoJugada accionCartaEspecialOscura(int indice);
 
+    //Metodo util para saber el color de la partida
+    void establecerColorPartida(TipoColor colorCarta);
+    //Metodo que retorna el color de la partida
+    TipoColor getColorPartida();
+
+
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);

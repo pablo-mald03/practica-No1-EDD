@@ -16,7 +16,7 @@
 /*CREATED BY PABLO M*/
 
 Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
-    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false), puedeMoverse(true)
+    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false), puedeMoverse(true),colorPartida("PREDETERMINADO")
 {
     generarJugadores();
     delete config;
@@ -31,6 +31,75 @@ Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
     repartirCartas();
     ordenCartas();
 
+}
+
+
+//Metodo que permite setear el color actual de la partida (MUY UTIL PARA LAS CARTAS ESPECIALES)
+void Partida::establecerColorPartida(TipoColor colorCarta){
+
+    switch (colorCarta) {
+    case TipoColor::AMARILLO:
+        this->colorPartida = "AMARILLO";
+        return;
+    case TipoColor::VERDE:
+        this->colorPartida = "VERDE";
+        return;
+    case TipoColor::ROJO:
+        this->colorPartida = "ROJO";
+        return;
+    case TipoColor::AZUL:
+        this->colorPartida = "AZUL";
+        return;
+    case TipoColor::NARANJA:
+        this->colorPartida = "NARANJA";
+        return;
+    case TipoColor::ROSA:
+        this->colorPartida = "ROSA";
+        return;
+    case TipoColor::VIOLETA:
+        this->colorPartida = "VIOLETA";
+        return;
+    case TipoColor::TURQUESA:
+        this->colorPartida = "TURQUESA";
+        return;
+
+    default:
+        this->colorPartida = "ROJO";
+        return;
+    }
+
+}
+
+//Metodo que retorna el color de la partida
+TipoColor Partida::getColorPartida(){
+
+    if (this->colorPartida == "AMARILLO") {
+        return TipoColor::AMARILLO;
+    }
+    else if(this->colorPartida == "VERDE"){
+        return TipoColor::VERDE;
+    }
+    else if(this->colorPartida == "ROJO"){
+        return TipoColor::ROJO;
+    }
+    else if(this->colorPartida == "AZUL"){
+        return TipoColor::AZUL;
+    }
+    else if(this->colorPartida == "NARANJA"){
+        return TipoColor::NARANJA;
+    }
+    else if(this->colorPartida == "ROSA"){
+        return TipoColor::ROSA;
+    }
+    else if(this->colorPartida == "VIOLETA"){
+        return TipoColor::VIOLETA;
+    }
+    else if(this->colorPartida == "TURQUESA"){
+        return TipoColor::TURQUESA;
+    }
+    else{
+        return TipoColor::PREDETERMINADO;
+    }
 }
 
 
