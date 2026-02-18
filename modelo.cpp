@@ -20,7 +20,7 @@ void Modelo::setLado(const std::string &_lado){
 std::string Modelo::getNombre()const{
     return this->nombre;
 }
-ColorCarta Modelo::getColor()const{
+ColorCarta Modelo::getColor() const{
     return this->color;
 }
 std::string Modelo::getLado()const{

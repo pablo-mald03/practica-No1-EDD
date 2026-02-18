@@ -244,7 +244,7 @@ void PartidaController::reportarMensaje(std::string mensaje, QString colorHex, i
 
 //Metodo que se encarga de retornar la informacion principal al iniciar la partida
 void PartidaController::obtenerDatosPartida(bool verificar){
-    emit datosPartida(this->gestorPartida->getJugadorActual(),this->gestorPartida->getDireccion(), this->gestorPartida->getCantidadPila(), this->gestorPartida->getCantidadVueltas(),verificar);
+    emit datosPartida(this->gestorPartida->getJugadorActual(),this->gestorPartida->getDireccion(), this->gestorPartida->getCantidadPila(), this->gestorPartida->getCantidadVueltas(),verificar,this->gestorPartida->getNombreColor());
     emit datosPilaCentral(this->gestorPartida->imagenPilaCentral());
     emit datosPilaLateral(this->gestorPartida->imagenPilaLateral(), this->gestorPartida->getCantidadPila());
 

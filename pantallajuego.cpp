@@ -268,12 +268,13 @@ void PantallaJuego::ejecutarSumaCartas(){
 }
 
 //Metodo que muestra los datos del jugador en pantalla
-void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion, int cartasPila, int vueltas, bool verificar){
+void PantallaJuego::mostrarDatosPantalla(Jugador* & jugadorActual, std::string direccion, int cartasPila, int vueltas, bool verificar, std::string colorPartida){
 
     this->ui->labelNombreJugador->setText(QString::fromStdString( jugadorActual->getNombre()));
     this->ui->labelVueltas->setText("Direccion: " + QString::fromStdString(direccion));
     this->ui->labelCantidadPila->setText("En pila: "+ QString::number(cartasPila));
     this->ui->labelVPartida->setText("Vueltas: "+ QString::number(vueltas));
+    this->ui->labelColor->setText(QString::fromStdString(colorPartida));
     dibujarMazo(jugadorActual, verificar);
 }
 

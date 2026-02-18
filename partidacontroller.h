@@ -53,7 +53,7 @@ public slots:
     void reportarMensaje(std::string mensaje, QString colorHex, int tiempo);
 
 signals:
-    void datosPartida(Jugador* &jugador,std::string direccion, int cartasPila, int vueltas, bool verificar);
+    void datosPartida(Jugador* &jugador,std::string direccion, int cartasPila, int vueltas, bool verificar, std::string colorPartida);
 
     void datosPilaCentral(std::string direccion);
 

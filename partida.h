@@ -122,6 +122,24 @@ private:
     //Metodo que retorna el color de la partida
     TipoColor getColorPartida();
 
+    //Metodo usado para definir el color principal
+    void  definirColorPrincipal();
+
+    //Metopdo que permite obtener un color aleatorio
+    TipoColor generarColorAleatorio();
+
+    /*=====APARTADO DE METODOS DE TIRADO DE CARTAS DE JERARQUIA <13*/
+    ResultadoJugada tirarCartaNumericaClara(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarBloqueoClara(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarCambioDireccionClara(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarSumaClara(Carta& cartaElegida, int indice);
+
+    ResultadoJugada tirarCartaNumericaOscura(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarSaltoOscura(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarCambioDireccionOscura(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarSumaOscura(Carta& cartaElegida, int indice);
+    /*====APARTADO DE METODOS DE TIRADO DE CARTAS DE JERARQUIA <13*/
+
 
 
 public:
@@ -192,6 +210,8 @@ public:
     //Metodo para volver a llenar la pila lateral si es que se queda sin cartas
     void llenarPilaLateral();
 
+    //Metodo que se retorna a front
+    std::string getNombreColor();
 };
 
 /*CREATED BY PABLO M*/
