@@ -368,17 +368,74 @@ ResultadoJugada Partida::ejecutarTirada(int indice){
 ResultadoJugada Partida::ejecutarDecision(int indice, int decision){
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
-
     ColorCarta color = cartaElegida.getAnverso()->getColor().getColorCarta();
 
+    if(!this->estaFlip){
+
+        //Tiro de comodin normal
+        if(cartaElegida.getAnverso()->getTipo() == TipoCarta::COLORCOMODIN && cartaElegida.getAnverso()->getJerarquia() == 14){
+            return this->tirarCartaComodinClara(cartaElegida,decision,indice);
+        }
+
+    }
+
     ResultadoJugada resultadoTirada;
-
-
     resultadoTirada.colorAviso = "#91042B";
     resultadoTirada.jugadaValida = false;
     return resultadoTirada;
 
 }
+
+//===================APARTADO DE METODOS DE TIRADO DE CARTAS ESPECIALES CLARAS =====================
+
+ResultadoJugada Partida::tirarCartaComodinClara(Carta& cartaElegida, int decision,int indice){
+    ResultadoJugada resultadoTirada;
+    resultadoTirada.darMensaje = true;
+    resultadoTirada.tiempoMensaje = 1500;
+
+    switch (decision) {
+    case 1:
+        resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR ROJO");
+        this->establecerColorPartida(TipoColor::ROJO);
+        break;
+    case 2:
+        resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR AZUL");
+        this->establecerColorPartida(TipoColor::AZUL);
+        break;
+    case 3:
+        resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR VERDE");
+        this->establecerColorPartida(TipoColor::VERDE);
+        break;
+    case 4:
+        resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR AMARILLO");
+        this->establecerColorPartida(TipoColor::AMARILLO);
+        break;
+    default:
+        resultadoTirada.colorAviso = "#91042B";
+        resultadoTirada.jugadaValida = false;
+        resultadoTirada.requiereDecision = false;
+        return resultadoTirada;
+    }
+
+
+    this->pilaCentralCartas->push(cartaElegida);
+    this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+
+    resultadoTirada.tiempoAnimacion = 2000;
+    resultadoTirada.jugadaValida = true;
+    resultadoTirada.colorAviso = "#0C7527";
+    resultadoTirada.requiereDecision = false;
+    resultadoTirada.analizarStack = true;
+
+    return resultadoTirada;
+}
+ResultadoJugada Partida::tirarCartaSumaComodinClara(Carta& cartaElegida, int decision,int indice){
+    ResultadoJugada resultadoTirada;
+
+    return resultadoTirada;
+}
+
+//===================FIN DEL APARTADO DE METODOS DE TIRADO DE CARTAS ESPECIALES CLARAS =====================
 
 //Metodo que se utiiza para poder ejecutar la accion de una carta especial de jerarquia 13 para 16 CLARA
 ResultadoJugada Partida::accionCartaEspecialClara(int indice){
@@ -396,6 +453,8 @@ ResultadoJugada Partida::accionCartaEspecialClara(int indice){
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.analizarStack = true;
+
+        this->setPuedeMoverse(false);
         return resultadoTirada;
     }
 
@@ -869,8 +928,9 @@ bool Partida::esUltimaCarta(Jugador * jugadorActual){
 //Metodo que verifica si la carta tirada pertenece al mismo color (en claro)
 bool Partida::esMismaClara(const Carta& cartaJugador, const Carta& cartaPila){
 
+    // Coincide color ACTIVO
     if(cartaJugador.getAnverso()->getColor().getColorCarta() ==
-        cartaPila.getAnverso()->getColor().getColorCarta()){
+        this->getColorPartida()){
         return true;
     }
 
@@ -880,21 +940,30 @@ bool Partida::esMismaClara(const Carta& cartaJugador, const Carta& cartaPila){
         return true;
     }
 
+    if(cartaJugador.getAnverso()->getJerarquia() > 13){
+        return true;
+    }
+
     return false;
 }
 
 //Metodo que verifica si la carta tirada pertenece al mismo color (en oscuro)
 bool Partida::esMismaOscura(const Carta& cartaJugador, const Carta& cartaPila){
 
-    // Coincide color
+    // Coincide color ACTIVO
     if(cartaJugador.getReverso()->getColor().getColorCarta() ==
-        cartaPila.getReverso()->getColor().getColorCarta()){
+        this->getColorPartida()){
         return true;
     }
 
     // Coincide jerarquia
     if(cartaJugador.getReverso()->getJerarquia() ==
         cartaPila.getReverso()->getJerarquia()){
+        return true;
+    }
+
+    //Se tira la carta especial
+    if(cartaJugador.getReverso()->getJerarquia() > 13){
         return true;
     }
 

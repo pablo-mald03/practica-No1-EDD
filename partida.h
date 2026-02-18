@@ -140,7 +140,19 @@ private:
     ResultadoJugada tirarSumaOscura(Carta& cartaElegida, int indice);
     /*====APARTADO DE METODOS DE TIRADO DE CARTAS DE JERARQUIA <13*/
 
+    /*=====APARTADO DE METODOS DE TIRADO DE CARTAS DE JERARQUIA >13*/
+    ResultadoJugada tirarCartaComodinClara(Carta& cartaElegida, int decision, int indice);
+    ResultadoJugada tirarCartaSumaComodinClara(Carta& cartaElegida, int decision,int indice);
 
+    ResultadoJugada tirarCartaComodinOscura(Carta& cartaElegida, int decision,int indice);
+    ResultadoJugada tirarCartaEternaOscura(Carta& cartaElegida, int decision,int indice);
+
+    /*====APARTADO DE METODOS DE TIRADO DE CARTAS DE JERARQUIA <13*/
+
+    /*========== APARTADO DE INTEGRACION DE LOGICA DE CARTAS ESPECIALES MIAS  BY P*/
+    ResultadoJugada tirarCartaEclipse(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarCartaEspia(Carta& cartaElegida, int indice);
+    /*========== APARTADO DE INTEGRACION DE LOGICA DE CARTAS ESPECIALES MIAS BY P*/
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
