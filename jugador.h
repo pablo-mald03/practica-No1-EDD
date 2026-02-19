@@ -50,6 +50,9 @@ public:
     bool menorQue(const Carta& a, const Carta& b,bool estaEnFlip);
     int prioridadJerarquia(const Carta& carta,bool estaEnFlip);
 
+    //Metodo de desorden que permite ejecutar un desorden con la carta eclipse
+    void desordenarCartas();
+
 };
 
 #endif // JUGADOR_H

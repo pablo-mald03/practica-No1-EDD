@@ -42,6 +42,27 @@ void Jugador::ordenarCartas(bool estaEnFlip){
 
 }
 
+//Metodo Fisher–Yates Shuffle (versión clásica con rand) Complejidad O(n)
+void Jugador::desordenarCartas(){
+
+    int longitud = this->mazo->getLongitud();
+
+    if(longitud < 2)
+        return;
+
+    for(int i = longitud - 1; i > 0; i--){
+
+        int j = rand() % (i + 1);
+
+        if(i != j){
+
+            Carta temp = this->mazo->getValor(i);
+            this->mazo->getValor(i) = this->mazo->getValor(j);
+            this->mazo->getValor(j) = temp;
+        }
+    }
+}
+
 //Metodo para definir la prioridad de cartas
 int Jugador::prioridadColor(const Carta& carta,bool estaEnFlip) {
 

@@ -106,8 +106,6 @@ private:
 
     //Metodo que permite repartir a cada jugador las cartas YA REVUELTAS
     void repartirCartas();
-    //Metodo que le dice a todos los jugadores que ordenen sus cartas
-    void ordenCartas();
 
     //Metodos privados que permiten verificar colores y numeros en base a la jerarquia
     bool tieneEnClaras();
@@ -168,7 +166,8 @@ private:
     /*=============== CARTA ESPECIAL DE CAMBIO DE FLIP*/
     ResultadoJugada tirarCartaReversa(Carta& cartaElegida, int indice, bool adelante);
 
-
+    //METODO IMPORTANTE EJECUTA EL PRIMER MOVIMIENTO DE LA PILA
+    void ejecutarPrimerMovimiento();
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
@@ -254,6 +253,12 @@ public:
     //Metodos utiles para poder saber si esta el efecto de eclipse
     void setEstaEclipse(bool flag);
     bool getEstaEclipse();
+
+    //Metodo que le dice a todos los jugadores que ordenen sus cartas
+    void ordenCartas();
+
+    //Metodo que le dice a todos los jugadores que desordenen sus cartas
+    void desordenarCartas();
 
 };
 

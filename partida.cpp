@@ -32,6 +32,7 @@ Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
 
     repartirCartas();
     ordenCartas();
+    ejecutarPrimerMovimiento();
     definirColorPrincipal();
 
 }
@@ -185,12 +186,24 @@ void Partida::ordenCartas(){
         this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
         this->listaJugadores.avanzar();
     }
+}
 
+//Metodo que saca la primera carta
+void Partida::ejecutarPrimerMovimiento(){
     //Saca la primera carta
-
     Carta cartaInicial = this->pilaLateralCartas->verTop();
     this->pilaCentralCartas->push(cartaInicial);
     this->pilaLateralCartas->pop();
+
+}
+
+//Metodo que avisa a cada jugador que desordene sus propias cartas (METODO DE CARTA ECLIPSE)
+void Partida::desordenarCartas(){
+    int totalJugadores = this->listaJugadores.getLongitud();
+    for (int i = 0; i < totalJugadores; i++) {
+        this->listaJugadores.getActual()->desordenarCartas();
+        this->listaJugadores.avanzar();
+    }
 }
 
 
@@ -404,23 +417,29 @@ ResultadoJugada Partida::tirarCartaEclipse(Carta& cartaElegida, int indice, bool
     resultadoTirada.darMensaje = true;
     resultadoTirada.tiempoMensaje = 2000;
 
-    if(adelante){
-        resultadoTirada.mensajeJugador = std::string("HAS TIRADO LA CARTA ") + cartaElegida.getAnverso()->getNombre();
+    Modelo* modeloActivo;
 
-        cartaElegida.getAnverso()->lanzarCarta(*this);
+    if(this->estaFlip){
+        modeloActivo = cartaElegida.getReverso();
+    }else{
+        modeloActivo = cartaElegida.getAnverso();
     }
-    else{
-        resultadoTirada.mensajeJugador = std::string("HAS TIRADO LA CARTA ") + cartaElegida.getReverso()->getNombre();
-        cartaElegida.getReverso()->lanzarCarta(*this);
-    }
+
+    resultadoTirada.mensajeJugador =
+        std::string("HAS TIRADO LA CARTA ") + modeloActivo->getNombre();
+
+    modeloActivo->lanzarCarta(*this);
 
     this->pilaCentralCartas->push(cartaElegida);
     this->listaJugadores.getActual()->getMazo()->eliminar(indice);
     this->inicioRonda = this->listaJugadores.getActual();
+
     TipoColor colorAleatorio = generarColorAleatorio();
     this->establecerColorPartida(colorAleatorio);
+    desordenarCartas();
+
     resultadoTirada.requiereDecision = false;
-    resultadoTirada.tiempoAnimacion = 3000;
+    resultadoTirada.tiempoAnimacion = 2500;
     resultadoTirada.jugadaValida = true;
     resultadoTirada.colorAviso = "#0A0909";
     resultadoTirada.analizarStack = true;
@@ -694,7 +713,7 @@ ResultadoJugada Partida::accionCartaEspecialOscura(int indice){
 
     //Tiro de carta eclipse oscura
     if(cartaElegida.getReverso()->getTipo() == TipoCarta::CARTAECLIPSE && cartaElegida.getReverso()->getJerarquia() == 15){
-        return this->tirarCartaEclipse(cartaElegida,indice, true);
+        return this->tirarCartaEclipse(cartaElegida,indice, false);
     }
 
     resultadoTirada.colorAviso = "#91042B";
@@ -1364,8 +1383,8 @@ void Partida::verificarVuelta(){
 
         if(this->estaEclpse){
             this->setEstaEclipse(false);
+            ordenCartas();
         }
-
         this->cantidadVueltas++;
     }
 }
@@ -1499,7 +1518,6 @@ int Partida::generarIndiceRandom(int limiteSuperior) {
 Jugador* & Partida::getJugadorActual(){
     return this->listaJugadores.getActual();
 }
-
 
 //==============APARTADO DE METODOS DE GENERACION DE CARTAS DEL JUEGO===================
 void Partida::generarCartasClaras(){
