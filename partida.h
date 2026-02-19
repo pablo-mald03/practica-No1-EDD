@@ -55,8 +55,8 @@ private:
     int vecesSumadasCarta;
 
     //Arreglos modelo de cartas
-    Modelo * modelosClaros[56];
-    Modelo * modelosOscuros[56];
+    Modelo * modelosClaros[60];
+    Modelo * modelosOscuros[60];
 
     //Lista provisional (UTIL SOLO DURANTE EL TIEMPO DE REVOLVER CARTAS Y AGREGAR)
     ListaEnlazada<Carta> * listadoCartas;

@@ -9,6 +9,7 @@
 #include "modelo.h"
 #include "multicolorsuma.h"
 #include"numerica.h"
+#include "reversa.h"
 #include "saltotodos.h"
 #include "sumacantidad.h"
 #include <QRandomGenerator>
@@ -405,12 +406,12 @@ ResultadoJugada Partida::tirarCartaEclipse(Carta& cartaElegida, int indice, bool
     resultadoTirada.tiempoMensaje = 2000;
 
     if(adelante){
-        resultadoTirada.mensajeJugador = std::string("HAS TIRADO LA CARTA") + cartaElegida.getAnverso()->getNombre();
+        resultadoTirada.mensajeJugador = std::string("HAS TIRADO LA CARTA ") + cartaElegida.getAnverso()->getNombre();
 
         cartaElegida.getAnverso()->lanzarCarta(*this);
     }
     else{
-        resultadoTirada.mensajeJugador = std::string("HAS TIRADO LA CARTA") + cartaElegida.getReverso()->getNombre();
+        resultadoTirada.mensajeJugador = std::string("HAS TIRADO LA CARTA ") + cartaElegida.getReverso()->getNombre();
         cartaElegida.getReverso()->lanzarCarta(*this);
     }
 
@@ -686,7 +687,9 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
 
     Modelo * modeloPila = this->pilaCentralCartas->verTop().getAnverso();
 
-    if(cartaElegida.getAnverso()->getJerarquia() <= 9 ){
+    int jerarquia = cartaElegida.getAnverso()->getJerarquia();
+
+    if(jerarquia>= 0 &&  jerarquia<= 9){
 
         if(cartaElegida.getAnverso()->getJerarquia() == modeloPila->getJerarquia()){
             return tirarCartaNumericaClara(cartaElegida, indice);
@@ -850,8 +853,9 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
 
     Modelo * modeloPila = this->pilaCentralCartas->verTop().getReverso();
 
+    int jerarquia = cartaElegida.getReverso()->getJerarquia();
 
-    if(cartaElegida.getReverso()->getJerarquia() <9 ){
+    if(jerarquia>= 0 &&  jerarquia<= 9){
 
         if(cartaElegida.getReverso()->getJerarquia() == modeloPila->getJerarquia()){
             return tirarCartaNumericaOscura(cartaElegida,indice);
@@ -1481,6 +1485,13 @@ void Partida::generarCartasClaras(){
     //Carta ESPIA MIA (P)
     this->modelosClaros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","claro",16);
 
+    //Carta reversa (P)
+    if(this->configuracion.esFlip()){
+        this->modelosClaros[56] = new Reversa(ColorCarta(TipoColor::AZUL),"Reversa Azul","claro",-1);
+        this->modelosClaros[57] = new Reversa(ColorCarta(TipoColor::AMARILLO),"Reversa Amarillo","claro",-1);
+        this->modelosClaros[58] = new Reversa(ColorCarta(TipoColor::ROJO),"Reversa Rojo","claro",-1);
+        this->modelosClaros[59] = new Reversa(ColorCarta(TipoColor::VERDE),"Reversa Verde","claro",-1);
+    }
 }
 
 //Metodo que permite generar las cartas negras cuando se requieren
@@ -1550,6 +1561,12 @@ void Partida::generarCartasOscuras(){
 
     //Carta ESPIA MIA (P)
     this->modelosOscuros[55] = new Espia(ColorCarta(TipoColor::PREDETERMINADO),"Espia","oscuro",16);
+
+    //Carta reversa
+    this->modelosOscuros[56] = new Reversa(ColorCarta(TipoColor::ROSA),"Reversa Rosa","oscuro",-1);
+    this->modelosOscuros[57] = new Reversa(ColorCarta(TipoColor::NARANJA),"Reversa Naranja","oscuro",-1);
+    this->modelosOscuros[58] = new Reversa(ColorCarta(TipoColor::VIOLETA),"Reversa Violeta","oscuro",-1);
+    this->modelosOscuros[59] = new Reversa(ColorCarta(TipoColor::TURQUESA),"Reversa Turquesa","oscuro",-1);
 
 }
 
@@ -1670,6 +1687,17 @@ void Partida::armarCartasNormal(ListaEnlazada<Carta>*& lista){
     for (int i = 0; i < 4; i++) {
         lista->insertarFrente(Carta(nullptr, this->modelosClaros[55], 16));
     }
+
+    if(this->configuracion.esFlip()){
+        //Generar carta de reversa (P)
+        for (int i = 0; i < 2; i++) {
+            lista->insertarFrente(Carta(nullptr, this->modelosClaros[56], -1));
+            lista->insertarFrente(Carta(nullptr, this->modelosClaros[57], -1));
+            lista->insertarFrente(Carta(nullptr, this->modelosClaros[58], -1));
+            lista->insertarFrente(Carta(nullptr, this->modelosClaros[59], -1));
+        }
+    }
+
 }
 
 //Metodo que permite armar las cartas del UNO FLIP
@@ -1783,6 +1811,14 @@ void Partida::armarCartasOscuras(ListaEnlazada<Carta>*& lista){
     //Generar carta espia MIA (P)
     for (int i = 0; i < 4; i++) {
         lista->insertarFrente(Carta( this->modelosOscuros[55],nullptr, 16));
+    }
+
+    //Generar carta de reversa (P)
+    for (int i = 0; i < 2; i++) {
+        lista->insertarFrente(Carta( this->modelosOscuros[56],nullptr, -1));
+        lista->insertarFrente(Carta(this->modelosOscuros[57],nullptr, -1));
+        lista->insertarFrente(Carta(this->modelosOscuros[58],nullptr, -1));
+        lista->insertarFrente(Carta(this->modelosOscuros[59],nullptr, -1));
     }
 
 }
