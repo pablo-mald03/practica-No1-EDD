@@ -346,7 +346,6 @@ ResultadoJugada Partida::ejecutarTirada(int indice){
 
         //Caso cuando se activo el flip (se dio la vuelta)
         if(cartaElegida.getReverso()->getJerarquia()< 13){
-
             bool coincide = this->esMismaOscura(cartaElegida,cartaSuperior);
 
             if(coincide){
@@ -446,31 +445,57 @@ void Partida::setColorJuegoSelect(ResultadoJugada &resultadoTirada, int decision
 
     resultadoTirada.jugadaValida = true;
 
-    switch (decision) {
-    case 1:
-        resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR ROJO");
-        this->establecerColorPartida(TipoColor::ROJO);
-        return;
-    case 2:
-        resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR AZUL");
-        this->establecerColorPartida(TipoColor::AZUL);
-        return;
-    case 3:
-        resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR VERDE");
-        this->establecerColorPartida(TipoColor::VERDE);
-        return;
-    case 4:
-        resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR AMARILLO");
-        this->establecerColorPartida(TipoColor::AMARILLO);
-        return;
-    default:
-        resultadoTirada.mensajeJugador = std::string("NO SE ESTABLECIO NINGUN COLOR");
-        resultadoTirada.colorAviso = "#91042B";
-        resultadoTirada.jugadaValida = false;
-        resultadoTirada.requiereDecision = false;
-        return;
+    if(!this->estaFlip){
+        switch (decision) {
+        case 1:
+            resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR ROJO");
+            this->establecerColorPartida(TipoColor::ROJO);
+            return;
+        case 2:
+            resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR AZUL");
+            this->establecerColorPartida(TipoColor::AZUL);
+            return;
+        case 3:
+            resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR VERDE");
+            this->establecerColorPartida(TipoColor::VERDE);
+            return;
+        case 4:
+            resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR AMARILLO");
+            this->establecerColorPartida(TipoColor::AMARILLO);
+            return;
+        default:
+            resultadoTirada.mensajeJugador = std::string("NO SE ESTABLECIO NINGUN COLOR");
+            resultadoTirada.colorAviso = "#91042B";
+            resultadoTirada.jugadaValida = false;
+            resultadoTirada.requiereDecision = false;
+            return;
+        }
+    }else{
+        switch (decision) {
+        case 1:
+            resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR NARANJA");
+            this->establecerColorPartida(TipoColor::NARANJA);
+            return;
+        case 2:
+            resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR VIOLETA");
+            this->establecerColorPartida(TipoColor::VIOLETA);
+            return;
+        case 3:
+            resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR TURQUESA");
+            this->establecerColorPartida(TipoColor::TURQUESA);
+            return;
+        case 4:
+            resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR ROSA");
+            this->establecerColorPartida(TipoColor::ROSA);
+            return;
+        default:
+            resultadoTirada.mensajeJugador = std::string("NO SE ESTABLECIO NINGUN COLOR");
+            resultadoTirada.colorAviso = "#91042B";
+            resultadoTirada.jugadaValida = false;
+            resultadoTirada.requiereDecision = false;
+            return;
+        }
     }
-
 }
 
 //Claras
@@ -689,9 +714,21 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
 
     int jerarquia = cartaElegida.getAnverso()->getJerarquia();
 
+    //Tiro de carta cambio de direccion de las cartas (reversa)
+    if(jerarquia == -1 && this->configuracion.esFlip() && cartaElegida.getAnverso()->getTipo() == TipoCarta::REVERSE){
+
+        if(jerarquia == modeloPila->getJerarquia()){
+            return tirarCartaReversa(cartaElegida, indice,true);
+        }
+
+        if(cartaElegida.getAnverso()->getColor().getColorCarta() == this->getColorPartida()){
+            return tirarCartaReversa(cartaElegida, indice,true);
+        }
+    }
+
     if(jerarquia>= 0 &&  jerarquia<= 9){
 
-        if(cartaElegida.getAnverso()->getJerarquia() == modeloPila->getJerarquia()){
+        if(jerarquia == modeloPila->getJerarquia()){
             return tirarCartaNumericaClara(cartaElegida, indice);
         }
 
@@ -700,9 +737,9 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
         }
     }
 
-    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CARTABLOQUEO && cartaElegida.getAnverso()->getJerarquia() == 10 ){
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CARTABLOQUEO && jerarquia == 10 ){
 
-        if(cartaElegida.getAnverso()->getJerarquia() == modeloPila->getJerarquia()){
+        if(jerarquia == modeloPila->getJerarquia()){
             return tirarBloqueoClara(cartaElegida, indice);
         }
 
@@ -711,9 +748,9 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
         }
     }
 
-    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CAMBIARDIRECCION && cartaElegida.getAnverso()->getJerarquia() == 11){
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CAMBIARDIRECCION && jerarquia == 11){
 
-        if(cartaElegida.getAnverso()->getJerarquia() == modeloPila->getJerarquia()){
+        if(jerarquia == modeloPila->getJerarquia()){
             return tirarCambioDireccionClara(cartaElegida, indice);
         }
 
@@ -722,9 +759,9 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
         }
     }
 
-    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::SUMARCANTIDAD && cartaElegida.getAnverso()->getJerarquia() == 12){
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::SUMARCANTIDAD && jerarquia == 12){
 
-        if(cartaElegida.getAnverso()->getJerarquia() == modeloPila->getJerarquia()){
+        if(jerarquia == modeloPila->getJerarquia()){
             return tirarSumaClara(cartaElegida, indice);
         }
 
@@ -740,6 +777,49 @@ ResultadoJugada Partida::ejecutarAccionCartaClara(int indice){
 }
 
 /*====================  METODOS EN LOS QUE SE TIRAN LAS CARTAS =================*/
+ResultadoJugada Partida::tirarCartaReversa(Carta& cartaElegida, int indice, bool adelante){
+
+    ResultadoJugada resultadoTirada;
+
+    Modelo* modeloActivo = adelante ? cartaElegida.getAnverso() : cartaElegida.getReverso();
+
+    if(adelante){
+        resultadoTirada.mensajeJugador = std::string("SE HA TIRADO LA CARTA ") + modeloActivo->getNombre();
+    }else{
+        resultadoTirada.mensajeJugador = std::string("SE HA TIRADO LA CARTA ") + modeloActivo->getNombre();
+    }
+
+    resultadoTirada.darMensaje = true;
+    resultadoTirada.tiempoMensaje = 1500;
+
+    modeloActivo->lanzarCarta(*this);
+
+    Modelo* modeloActual;
+
+    if(this->estaFlip){
+        modeloActual = cartaElegida.getReverso();
+    }else{
+        modeloActual = cartaElegida.getAnverso();
+    }
+
+    TipoColor colorFinal = (modeloActual->getJerarquia() >= 13)
+                               ? this->generarColorAleatorio()
+                               : modeloActual->getColor().getColorCarta();
+
+    this->establecerColorPartida(colorFinal);
+    this->ordenCartas();
+
+    this->pilaCentralCartas->push(cartaElegida);
+    this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+
+    resultadoTirada.tiempoAnimacion = 2000;
+    resultadoTirada.jugadaValida = true;
+    resultadoTirada.colorAviso = "#0C7527";
+    resultadoTirada.requiereDecision = false;
+    resultadoTirada.analizarStack = true;
+    return  resultadoTirada;
+}
+
 ResultadoJugada Partida::tirarCartaNumericaClara(Carta& cartaElegida, int indice){
 
     ResultadoJugada resultadoTirada;
@@ -855,9 +935,21 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
 
     int jerarquia = cartaElegida.getReverso()->getJerarquia();
 
+    //Tiro de carta cambio de direccion de las cartas (reversa)
+    if(jerarquia == -1 && this->configuracion.esFlip() && cartaElegida.getReverso()->getTipo() == TipoCarta::REVERSE){
+
+        if(jerarquia == modeloPila->getJerarquia()){
+            return tirarCartaReversa(cartaElegida, indice,false);
+        }
+
+        if(cartaElegida.getReverso()->getColor().getColorCarta() == this->getColorPartida()){
+            return tirarCartaReversa(cartaElegida, indice,false);
+        }
+    }
+
     if(jerarquia>= 0 &&  jerarquia<= 9){
 
-        if(cartaElegida.getReverso()->getJerarquia() == modeloPila->getJerarquia()){
+        if(jerarquia == modeloPila->getJerarquia()){
             return tirarCartaNumericaOscura(cartaElegida,indice);
         }
 
@@ -866,9 +958,9 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
         }
     }
 
-    if(cartaElegida.getReverso()->getTipo() == TipoCarta::CAMBIARDIRECCION && cartaElegida.getReverso()->getJerarquia() == 11){
+    if(cartaElegida.getReverso()->getTipo() == TipoCarta::CAMBIARDIRECCION && jerarquia == 11){
 
-        if(cartaElegida.getReverso()->getJerarquia() == modeloPila->getJerarquia()){
+        if(jerarquia == modeloPila->getJerarquia()){
             return tirarCambioDireccionOscura(cartaElegida,indice);
         }
 
@@ -877,10 +969,10 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
         }
     }
 
-    if(cartaElegida.getReverso()->getTipo() == TipoCarta::SUMARCANTIDAD && cartaElegida.getReverso()->getJerarquia() == 12){
+    if(cartaElegida.getReverso()->getTipo() == TipoCarta::SUMARCANTIDAD && jerarquia == 12){
 
 
-        if(cartaElegida.getReverso()->getJerarquia() == modeloPila->getJerarquia()){
+        if(jerarquia == modeloPila->getJerarquia()){
             return tirarSumaOscura(cartaElegida,indice);
         }
 
@@ -905,7 +997,7 @@ ResultadoJugada Partida::tirarCartaNumericaOscura(Carta& cartaElegida, int indic
     resultadoTirada.darMensaje = true;
     resultadoTirada.tiempoMensaje = 1500;
     resultadoTirada.mensajeJugador = std::string("Se ha tirado la carta ") + cartaElegida.getReverso()->getNombre();
-    TipoColor color = cartaElegida.getAnverso()->getColor().getColorCarta();
+    TipoColor color = cartaElegida.getReverso()->getColor().getColorCarta();
     this->establecerColorPartida(color);
     this->pilaCentralCartas->push(cartaElegida);
     this->listaJugadores.getActual()->getMazo()->eliminar(indice);
@@ -929,7 +1021,7 @@ ResultadoJugada Partida::tirarCambioDireccionOscura(Carta& cartaElegida, int ind
     resultadoTirada.darMensaje = true;
     resultadoTirada.tiempoMensaje = 3000;
     resultadoTirada.mensajeJugador = std::string("El ")+ this->listaJugadores.getActual()->getNombre() + std::string(" tiro la carta ") + cartaElegida.getReverso()->getNombre() ;
-    TipoColor color = cartaElegida.getAnverso()->getColor().getColorCarta();
+    TipoColor color = cartaElegida.getReverso()->getColor().getColorCarta();
     this->establecerColorPartida(color);
     cartaElegida.getReverso()->lanzarCarta(*this,this->listaJugadores);
     this->pilaCentralCartas->push(cartaElegida);
@@ -952,18 +1044,19 @@ ResultadoJugada Partida::tirarSumaOscura(Carta& cartaElegida, int indice){
     resultadoTirada.darMensaje = true;
     resultadoTirada.tiempoMensaje = 1500;
     resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getReverso()->getNombre() ;
-    TipoColor color = cartaElegida.getAnverso()->getColor().getColorCarta();
+    TipoColor color = cartaElegida.getReverso()->getColor().getColorCarta();
     this->establecerColorPartida(color);
     this->pilaCentralCartas->push(cartaElegida);
     this->pilaStacking->push(cartaElegida);
     this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+    qDebug()<<"Desapila carta suma";
 
     resultadoTirada.requiereDecision = false;
     resultadoTirada.tiempoAnimacion = 2200;
     resultadoTirada.jugadaValida = true;
     resultadoTirada.colorAviso = "#0C7527";
     resultadoTirada.analizarStack = false;
-    //(P)
+
     if(this->getJugadorActual()->getEstaObligado()){
         this->getJugadorActual()->setEstaObligado(false);
         this->getJugadorActual()->setTipoObligado(TipoCarta::Predeterminado);
@@ -1243,7 +1336,7 @@ bool Partida::tieneEnOscuras(){
         }
 
         // Es comodin
-        if(cartaJugador.getReverso()->getJerarquia() > 13){
+        if(cartaJugador.getReverso()->getJerarquia() >= 13){
             return true;
         }
     }
@@ -1506,7 +1599,6 @@ void Partida::generarCartasOscuras(){
     int j = 0;
     //=======INICIALIZACION CARTAS NUMERICAS=====
     //Inicializacion de cartas numericas rosas
-
     for (int i = 0; i < 10; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::ROSA),arregloNombres[j],"oscuro",j,j);
         j++;
@@ -1516,17 +1608,20 @@ void Partida::generarCartasOscuras(){
     //Inicializacion de cartas numericas naranjas
     for (int i = 10; i < 20; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::NARANJA),arregloNombres[j],"oscuro",j,j);
+        j++;
     }
 
     j = 0;
     //Inicializacion de cartas numericas turquesas
     for (int i = 20; i < 30; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::TURQUESA),arregloNombres[j],"oscuro",j,j);
+        j++;
     }
     j = 0;
     //Inicializacion de cartas numericas violetas
     for (int i = 30; i < 40; i++) {
         this->modelosOscuros[i] = new Numerica(ColorCarta(TipoColor::VIOLETA),arregloNombres[j],"oscuro",j,j);
+        j++;
     }
 
     //=======FIN INICIALIZACION CARTAS NUMERICAS=====
@@ -1742,7 +1837,8 @@ void Partida::armarCartasOscuras(ListaEnlazada<Carta>*& lista){
     //Generacion de cartas numericas
     for (int i = 0; i < 40; i++) {
 
-        lista->insertarFrente(Carta(this->modelosOscuros[i],nullptr, modeloIndex));
+        lista->insertarAtras(Carta(this->modelosOscuros[i],nullptr, modeloIndex));
+
         modeloIndex++;
         if(modeloIndex >= 10){
             modeloIndex = 0;
@@ -1756,7 +1852,7 @@ void Partida::armarCartasOscuras(ListaEnlazada<Carta>*& lista){
     do {
         //Evita enumerar el cero
         if (j % 10 != 0) {
-            lista->insertarFrente(Carta(this->modelosOscuros[j],nullptr, modeloIndex));
+            lista->insertarAtras(Carta(this->modelosOscuros[j],nullptr, modeloIndex));
             modeloIndex++;
         }
 
@@ -1770,55 +1866,55 @@ void Partida::armarCartasOscuras(ListaEnlazada<Carta>*& lista){
 
     //Generacion de las cartas +2
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[40],nullptr, 12));
-        lista->insertarFrente(Carta( this->modelosOscuros[41], nullptr,12));
-        lista->insertarFrente(Carta(this->modelosOscuros[42], nullptr, 12));
-        lista->insertarFrente(Carta( this->modelosOscuros[43], nullptr,12));
+        lista->insertarAtras(Carta( this->modelosOscuros[40],nullptr, 12));
+        lista->insertarAtras(Carta( this->modelosOscuros[41], nullptr,12));
+        lista->insertarAtras(Carta(this->modelosOscuros[42], nullptr, 12));
+        lista->insertarAtras(Carta( this->modelosOscuros[43], nullptr,12));
     }
 
 
     //Generacion de las cartas cambio de direccion
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[44],nullptr, 11));
-        lista->insertarFrente(Carta(this->modelosOscuros[45], nullptr,11));
-        lista->insertarFrente(Carta( this->modelosOscuros[46],nullptr, 11));
-        lista->insertarFrente(Carta(this->modelosOscuros[47],nullptr, 11));
+        lista->insertarAtras(Carta( this->modelosOscuros[44],nullptr, 11));
+        lista->insertarAtras(Carta(this->modelosOscuros[45], nullptr,11));
+        lista->insertarAtras(Carta( this->modelosOscuros[46],nullptr, 11));
+        lista->insertarAtras(Carta(this->modelosOscuros[47],nullptr, 11));
     }
 
     //Generacion de las cartas cambio de salto total
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[48],nullptr, 10));
-        lista->insertarFrente(Carta( this->modelosOscuros[49],nullptr, 10));
-        lista->insertarFrente(Carta( this->modelosOscuros[50],nullptr, 10));
-        lista->insertarFrente(Carta( this->modelosOscuros[51],nullptr, 10));
+        lista->insertarAtras(Carta( this->modelosOscuros[48],nullptr, 10));
+        lista->insertarAtras(Carta( this->modelosOscuros[49],nullptr, 10));
+        lista->insertarAtras(Carta( this->modelosOscuros[50],nullptr, 10));
+        lista->insertarAtras(Carta( this->modelosOscuros[51],nullptr, 10));
     }
 
     //Generar carta multicolor suma
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[52],nullptr, 13));
+        lista->insertarAtras(Carta( this->modelosOscuros[52],nullptr, 13));
     }
 
     //Cartas comodin color eterno
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[53],nullptr, 14));
+        lista->insertarAtras(Carta( this->modelosOscuros[53],nullptr, 14));
     }
 
     //Generar carta eclipse MIA (P)
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[54],nullptr, 15));
+        lista->insertarAtras(Carta( this->modelosOscuros[54],nullptr, 15));
     }
 
     //Generar carta espia MIA (P)
     for (int i = 0; i < 4; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[55],nullptr, 16));
+        lista->insertarAtras(Carta( this->modelosOscuros[55],nullptr, 16));
     }
 
     //Generar carta de reversa (P)
     for (int i = 0; i < 2; i++) {
-        lista->insertarFrente(Carta( this->modelosOscuros[56],nullptr, -1));
-        lista->insertarFrente(Carta(this->modelosOscuros[57],nullptr, -1));
-        lista->insertarFrente(Carta(this->modelosOscuros[58],nullptr, -1));
-        lista->insertarFrente(Carta(this->modelosOscuros[59],nullptr, -1));
+        lista->insertarAtras(Carta( this->modelosOscuros[56],nullptr, -1));
+        lista->insertarAtras(Carta(this->modelosOscuros[57],nullptr, -1));
+        lista->insertarAtras(Carta(this->modelosOscuros[58],nullptr, -1));
+        lista->insertarAtras(Carta(this->modelosOscuros[59],nullptr, -1));
     }
 
 }

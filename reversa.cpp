@@ -1,5 +1,6 @@
 #include "reversa.h"
-
+#include"partida.h"
+#include"jugador.h"
 Reversa::Reversa(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia)
     :Modelo(_colorRef,_nombre,_lado,TipoCarta::REVERSE,_jerarquia)
 {
@@ -18,9 +19,18 @@ void Reversa::lanzarCarta(ListaCircular<Jugador*> & jugador){
 //Caso donde la carta debe interactuar con la partida
 void Reversa::lanzarCarta(Partida & partidaActual) {
 
+    bool estaFlip = partidaActual.getEstaFlip();
+    if(partidaActual.getConfiguracion().esFlip()){
+
+        if(!estaFlip){
+            partidaActual.setEstaFlip(true);
+        }else{
+            partidaActual.setEstaFlip(false);
+        }
+    }
 }
 
-//Caso donde la carta debe interactuar con la partida y un jugador x
+//Caso donde la carta debe interactuar con la partida y la lista de jugadores x
 void Reversa::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
 
 }

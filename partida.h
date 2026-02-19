@@ -165,6 +165,10 @@ private:
     ResultadoJugada tirarCartaEspia(Carta& cartaElegida, int indice, bool adelante);
     /*========== APARTADO DE INTEGRACION DE LOGICA DE CARTAS ESPECIALES MIAS BY P*/
 
+    /*=============== CARTA ESPECIAL DE CAMBIO DE FLIP*/
+    ResultadoJugada tirarCartaReversa(Carta& cartaElegida, int indice, bool adelante);
+
+
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
