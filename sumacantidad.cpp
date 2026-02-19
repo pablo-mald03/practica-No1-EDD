@@ -1,7 +1,6 @@
 #include "sumacantidad.h"
 #include"jugador.h"
 #include"partida.h"
-#include"QDebug"
 
 SumaCantidad::SumaCantidad(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia, int _valor)
     :Modelo(_colorRef,_nombre,_lado,TipoCarta::SUMARCANTIDAD, _jerarquia),valorSuma(_valor)
@@ -47,6 +46,7 @@ void SumaCantidad::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> 
         pilaLateral->pop();
     }
 
+    partidaActual.setVecesSumadasCarta(this->valorSuma);
 }
 
 

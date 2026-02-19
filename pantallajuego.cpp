@@ -347,6 +347,7 @@ void PantallaJuego::onCartaPresionada(int indice) {
                 return;
             }
 
+
             //METODO QUE SE ENCARGA DE HACER LA EJECUCION CUANDO EL JUGADOR DEBE ELEGIR UNA CARTA
             ResultadoJugada resultadoDecision = this->controladorPartida->decisionJugador(indice, seleccion);
 

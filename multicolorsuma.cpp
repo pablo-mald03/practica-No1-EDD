@@ -1,4 +1,6 @@
 #include "multicolorsuma.h"
+#include"jugador.h"
+#include"partida.h"
 
 MultiColorSuma::MultiColorSuma(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia, int _valor)
     :Modelo(_colorRef,_nombre,_lado,TipoCarta::SUMAMULTICOLOR,_jerarquia),valorSuma(_valor)  {}
@@ -38,6 +40,23 @@ void MultiColorSuma::lanzarCarta(Partida & partidaActual) {
 
 //Caso donde la carta debe interactuar con la partida y un jugador x
 void MultiColorSuma::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
+
+    ListaEnlazada<Carta> * listaCartas = jugador.getActual()->getMazo();
+
+    Pila<Carta> * pilaLateral = partidaActual.getPilaLateral();
+
+    for (int i = 0; i < this->valorSuma; i++) {
+        if (pilaLateral->estaVacia()) {
+            partidaActual.llenarPilaLateral();
+        }
+
+        if (pilaLateral->estaVacia()) break;
+
+        Carta cartaDesapilada = pilaLateral->verTop();
+        listaCartas->insertarFrente(cartaDesapilada);
+        pilaLateral->pop();
+    }
+    partidaActual.setVecesSumadasCarta(this->valorSuma);
 
 }
 

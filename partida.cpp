@@ -16,7 +16,8 @@
 /*CREATED BY PABLO M*/
 
 Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
-    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false), puedeMoverse(true),colorPartida("PREDETERMINADO")
+    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false), puedeMoverse(true),colorPartida("PREDETERMINADO"),vecesSumadasCarta(0), puedeRetar(false)
+
 {
     generarJugadores();
     delete config;
@@ -371,14 +372,19 @@ ResultadoJugada Partida::ejecutarDecision(int indice, int decision){
     ColorCarta color = cartaElegida.getAnverso()->getColor().getColorCarta();
 
     if(!this->estaFlip){
-
         //Tiro de comodin normal
+
         if(cartaElegida.getAnverso()->getTipo() == TipoCarta::COLORCOMODIN && cartaElegida.getAnverso()->getJerarquia() == 14){
             return this->tirarCartaComodinClara(cartaElegida,decision,indice);
         }
 
-    }
+        if(cartaElegida.getAnverso()->getTipo() == TipoCarta::SUMAMULTICOLOR && cartaElegida.getAnverso()->getJerarquia() == 13){
+            return this->tirarCartaSumaComodinClara(cartaElegida,decision,indice);
+        }
 
+    }else{
+
+    }
     ResultadoJugada resultadoTirada;
     resultadoTirada.colorAviso = "#91042B";
     resultadoTirada.jugadaValida = false;
@@ -388,35 +394,48 @@ ResultadoJugada Partida::ejecutarDecision(int indice, int decision){
 
 //===================APARTADO DE METODOS DE TIRADO DE CARTAS ESPECIALES CLARAS =====================
 
-ResultadoJugada Partida::tirarCartaComodinClara(Carta& cartaElegida, int decision,int indice){
-    ResultadoJugada resultadoTirada;
-    resultadoTirada.darMensaje = true;
-    resultadoTirada.tiempoMensaje = 1500;
+//Metodo que permite setear el color acorde al parametro elegido por el usuario
+void Partida::setColorJuegoSelect(ResultadoJugada &resultadoTirada, int decision){
+
+    resultadoTirada.jugadaValida = true;
 
     switch (decision) {
     case 1:
         resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR ROJO");
         this->establecerColorPartida(TipoColor::ROJO);
-        break;
+        return;
     case 2:
         resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR AZUL");
         this->establecerColorPartida(TipoColor::AZUL);
-        break;
+        return;
     case 3:
         resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR VERDE");
         this->establecerColorPartida(TipoColor::VERDE);
-        break;
+        return;
     case 4:
         resultadoTirada.mensajeJugador = std::string("SE DEBEN TIRAR CARTAS DE COLOR AMARILLO");
         this->establecerColorPartida(TipoColor::AMARILLO);
-        break;
+        return;
     default:
+        resultadoTirada.mensajeJugador = std::string("NO SE ESTABLECIO NINGUN COLOR");
         resultadoTirada.colorAviso = "#91042B";
         resultadoTirada.jugadaValida = false;
         resultadoTirada.requiereDecision = false;
-        return resultadoTirada;
+        return;
     }
 
+}
+
+ResultadoJugada Partida::tirarCartaComodinClara(Carta& cartaElegida, int decision,int indice){
+    ResultadoJugada resultadoTirada;
+    resultadoTirada.darMensaje = true;
+    resultadoTirada.tiempoMensaje = 1500;
+
+    this->setColorJuegoSelect(resultadoTirada,decision);
+
+    if(!resultadoTirada.jugadaValida){
+        return resultadoTirada;
+    }
 
     this->pilaCentralCartas->push(cartaElegida);
     this->listaJugadores.getActual()->getMazo()->eliminar(indice);
@@ -432,6 +451,35 @@ ResultadoJugada Partida::tirarCartaComodinClara(Carta& cartaElegida, int decisio
 ResultadoJugada Partida::tirarCartaSumaComodinClara(Carta& cartaElegida, int decision,int indice){
     ResultadoJugada resultadoTirada;
 
+    resultadoTirada.darMensaje = true;
+    resultadoTirada.tiempoMensaje = 1500;
+
+    this->setColorJuegoSelect(resultadoTirada,decision);
+
+    if(!resultadoTirada.jugadaValida){
+
+        return resultadoTirada;
+    }
+
+    resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getAnverso()->getNombre();
+
+    this->pilaCentralCartas->push(cartaElegida);
+    this->pilaStacking->push(cartaElegida);
+    this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+
+    if(this->getJugadorActual()->getEstaObligado()){
+        this->getJugadorActual()->setEstaObligado(false);
+        this->getJugadorActual()->setTipoObligado(TipoCarta::Predeterminado);
+    }
+
+    qDebug()<<"apila: "<<this->pilaStacking->getLongitud();
+
+    resultadoTirada.requiereDecision = false;
+    resultadoTirada.tiempoAnimacion = 2200;
+    resultadoTirada.jugadaValida = true;
+    resultadoTirada.colorAviso = "#0C7527";
+    resultadoTirada.analizarStack = false;
+
     return resultadoTirada;
 }
 
@@ -445,6 +493,7 @@ ResultadoJugada Partida::accionCartaEspecialClara(int indice){
 
     ResultadoJugada resultadoTirada;
 
+    //Opcion cuando se tira una carta comodin
     if(cartaElegida.getAnverso()->getTipo() == TipoCarta::COLORCOMODIN && cartaElegida.getAnverso()->getJerarquia() == 14){
 
         resultadoTirada.darMensaje = false;
@@ -453,6 +502,22 @@ ResultadoJugada Partida::accionCartaEspecialClara(int indice){
         resultadoTirada.tiempoAnimacion = 2000;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.analizarStack = true;
+
+        this->setPuedeMoverse(false);
+        return resultadoTirada;
+    }
+
+    //Opcion cuando se tira una carta comodin que suma una cantidad
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::SUMAMULTICOLOR && cartaElegida.getAnverso()->getJerarquia() == 13){
+
+        resultadoTirada.darMensaje = true;
+        resultadoTirada.tiempoMensaje = 2000;
+        resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getAnverso()->getNombre() ;
+        resultadoTirada.requiereDecision = true;
+        resultadoTirada.tiempoAnimacion = 3000;
+        resultadoTirada.jugadaValida = true;
+        resultadoTirada.colorAviso = "#0C7527";
+        resultadoTirada.analizarStack = false;
 
         this->setPuedeMoverse(false);
         return resultadoTirada;
@@ -641,11 +706,7 @@ ResultadoJugada Partida::tirarSumaClara(Carta& cartaElegida, int indice){
     }
 
     return resultadoTirada;
-
-    return  resultadoTirada;
 }
-
-
 
 /*==================== FIN DE LOS METODOS EN LOS QUE SE TIRAN LAS CARTAS =================*/
 
@@ -790,8 +851,6 @@ ResultadoJugada Partida::aplicarAcumuladas(){
 
         Carta cartaApilada = this->pilaStacking->verTop();
 
-        resultado.mensajeJugador = std::string("Se te han sumado ") + std::to_string(cantidad*2) + " cartas ";
-
         while(!this->pilaStacking->estaVacia()){
 
             Carta cartaDesapilada = this->pilaStacking->verTop();
@@ -806,12 +865,17 @@ ResultadoJugada Partida::aplicarAcumuladas(){
             this->pilaStacking->pop();
         }
 
+        int vecesSuma = this->getVecesSumadasCarta();
+        resultado.mensajeJugador = std::string("Se le han sumado ") + std::to_string(cantidad * vecesSuma) + " cartas";
+
         this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
 
         resultado.jugadaValida = true;
         resultado.tiempoAnimacion = 3000;
         resultado.colorAviso = "#091787";
         resultado.analizarStack = false;
+
+        this->setVecesSumadasCarta(0);
         return resultado;
 
     }
@@ -820,6 +884,7 @@ ResultadoJugada Partida::aplicarAcumuladas(){
         throw std::runtime_error("No se pudo desapilar el stack");
     }
 
+    this->setVecesSumadasCarta(0);
     resultado.jugadaValida = false;
     return resultado;
 }
@@ -940,7 +1005,7 @@ bool Partida::esMismaClara(const Carta& cartaJugador, const Carta& cartaPila){
         return true;
     }
 
-    if(cartaJugador.getAnverso()->getJerarquia() > 13){
+    if(cartaJugador.getAnverso()->getJerarquia() >= 13){
         return true;
     }
 
@@ -963,7 +1028,7 @@ bool Partida::esMismaOscura(const Carta& cartaJugador, const Carta& cartaPila){
     }
 
     //Se tira la carta especial
-    if(cartaJugador.getReverso()->getJerarquia() > 13){
+    if(cartaJugador.getReverso()->getJerarquia() >= 13){
         return true;
     }
 
@@ -1093,8 +1158,25 @@ ConfiguracionPartida Partida::getConfiguracion(){
     return this->configuracion;
 }
 
+//Metodo util para frontend para que pueda saber el color en el que esta la partida
 std::string Partida::getNombreColor(){
     return this->colorPartida;
+}
+
+//Metodos que permiten determinar si se puede robar
+void Partida::setPuedeRetar(bool flag){
+    this->puedeRetar = flag;
+}
+bool Partida::getPuedeRetar(){
+    return this->puedeRetar;
+}
+
+//Metodos getter y setter
+void Partida::setVecesSumadasCarta(int veces){
+    this->vecesSumadasCarta = veces;
+}
+int Partida::getVecesSumadasCarta(){
+    return this->vecesSumadasCarta;
 }
 
 //====================Fin de la SUBREGION Metodos getter y setter=================

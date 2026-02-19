@@ -25,6 +25,8 @@ struct ResultadoJugada {
     bool analizarStack = false;
 };
 
+//CREATED BY (P)
+
 class Partida
 {
 private:
@@ -37,11 +39,17 @@ private:
     //Flag que permite saber si se puede mover
     bool puedeMoverse;
 
+    //Flag que permite evaluar cuando se va a retar
+    bool puedeRetar;
+
     //Flag que permite saber si se cambio al lado flip
     bool estaFlip;
 
     //Atributo que permite saber el color en el que esta la partida
     std::string colorPartida;
+
+    //Atributo que SOLAMENTE SIRVE PARA INDICAR CUANTAS VECES SE SUMO UNA CARTA STACKEADA
+    int vecesSumadasCarta;
 
     //Arreglos modelo de cartas
     Modelo * modelosClaros[56];
@@ -154,10 +162,10 @@ private:
     ResultadoJugada tirarCartaEspia(Carta& cartaElegida, int indice);
     /*========== APARTADO DE INTEGRACION DE LOGICA DE CARTAS ESPECIALES MIAS BY P*/
 
+
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
     ~Partida();
-
 
     //Apartado de comunicacion de backend con las acciones que deba ejecutar frontend
     Jugador* & getJugadorActual();
@@ -172,7 +180,6 @@ public:
 
     //Permite pasar al siguiente jugador
     void ejecutarMovimiento();
-
 
     //Metodo UNICO QUE PERMITE INTERACTUAR CON TODA LA LOGICA DEL BACKEND
     ResultadoJugada ejecutarTirada(int indice);
@@ -224,6 +231,18 @@ public:
 
     //Metodo que se retorna a front
     std::string getNombreColor();
+
+    //======REGION DE METODOS UTILES PARA PODER RETAR CARTA MAS 4
+    void setPuedeRetar(bool flag);
+    bool getPuedeRetar();
+    //======FIN DE LA REGION
+
+    //Metodo que permite setear el valor actual de color acorde al parametro elegido
+    void setColorJuegoSelect(ResultadoJugada &resultadoTirada, int decision);
+
+    //Metodos utiles para poder saber cuantas cartas se han sumado
+    void setVecesSumadasCarta(int veces);
+    int getVecesSumadasCarta();
 };
 
 /*CREATED BY PABLO M*/

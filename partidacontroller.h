@@ -45,7 +45,11 @@ public:
     //Metodo que le obliga al jugador a solo tirar un tipo
     void obligarJugador();
 
+    //Ejecuta la decision del jugador al elegir un color
     ResultadoJugada decisionJugador(int indice, int decision);
+
+    //Metodo que permite setear el color de la partida de fonra independiente
+    void setearColorPartida(int decision);
 
 public slots:
 

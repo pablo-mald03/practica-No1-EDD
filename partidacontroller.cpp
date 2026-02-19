@@ -88,6 +88,42 @@ void PartidaController::obligarJugador(){
 
 }
 
+//Metodo que permite setear el color elegido por el usuario de forma independiente
+void PartidaController::setearColorPartida(int decision){
+
+    try{
+        //Metodo principal
+        ResultadoJugada jugadaNormal;
+
+        jugadaNormal.darMensaje = true;
+        jugadaNormal.tiempoMensaje = 1500;
+        jugadaNormal.jugadaValida = true;
+
+        this->gestorPartida->setColorJuegoSelect(jugadaNormal, decision);
+
+        if (jugadaNormal.jugadaValida) {
+
+            jugadaNormal.analizarStack = false;
+
+            //Acciones antes de refrescar
+            this->obtenerDatosPartida(jugadaNormal.analizarStack);
+
+            if(jugadaNormal.darMensaje){
+                QString color = QString::fromStdString(jugadaNormal.colorAviso);
+                reportarMensaje(jugadaNormal.mensajeJugador, color, jugadaNormal.tiempoMensaje);
+            }
+
+            return;
+
+        } else {
+            reportarMensaje("No se pudo establecer el color", "#91042B", 2500);
+        }
+
+    }catch(const std::runtime_error & ex){
+        reportarMensaje(ex.what(), "#91042B", 2500);
+    }
+}
+
 //Metodo que permite verificar si tiene las cartas para volver a stackear
 bool PartidaController::tieneParaStackear(){
 
@@ -155,7 +191,7 @@ ResultadoJugada PartidaController::decisionJugador(int indice, int decision){
             return jugadaNormal;
 
         } else {
-            reportarMensaje("Esa carta no se puede tirar", "#91042B", 2500);
+            reportarMensaje("No se pudo tomar la decision", "#91042B", 2500);
         }
 
     }catch(const std::runtime_error & ex){
