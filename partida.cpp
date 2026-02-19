@@ -891,7 +891,6 @@ ResultadoJugada Partida::tirarBloqueoClara(Carta& cartaElegida, int indice){
     return  resultadoTirada;
 }
 
-
 ResultadoJugada Partida::tirarCambioDireccionClara(Carta& cartaElegida, int indice){
 
     ResultadoJugada resultadoTirada;
@@ -977,6 +976,17 @@ ResultadoJugada Partida::ejecutarAccionCartaOscura(int indice){
         }
     }
 
+    if(cartaElegida.getReverso()->getTipo() == TipoCarta::SALTOTOTAL && jerarquia == 10){
+
+        if(jerarquia == modeloPila->getJerarquia()){
+            return tirarSaltoOscura(cartaElegida,indice);
+        }
+
+        if(cartaElegida.getReverso()->getColor().getColorCarta() == this->getColorPartida()){
+            return tirarSaltoOscura(cartaElegida,indice);
+        }
+    }
+
     if(cartaElegida.getReverso()->getTipo() == TipoCarta::CAMBIARDIRECCION && jerarquia == 11){
 
         if(jerarquia == modeloPila->getJerarquia()){
@@ -1029,9 +1039,25 @@ ResultadoJugada Partida::tirarCartaNumericaOscura(Carta& cartaElegida, int indic
 
 }
 ResultadoJugada Partida::tirarSaltoOscura(Carta& cartaElegida, int indice){
-//PENDIENTE
+
     ResultadoJugada resultadoTirada;
-    return resultadoTirada;
+    resultadoTirada.darMensaje = true;
+    resultadoTirada.tiempoMensaje = 3000;
+    resultadoTirada.mensajeJugador = std::string("TIRASTE LA CARTA ")+ cartaElegida.getReverso()->getNombre() + ". TU TURNO!" ;
+    TipoColor color = cartaElegida.getReverso()->getColor().getColorCarta();
+    this->establecerColorPartida(color);
+    cartaElegida.getReverso()->lanzarCarta(*this,this->listaJugadores);
+    this->pilaCentralCartas->push(cartaElegida);
+    this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+
+    this->setPuedeMoverse(false);
+
+    resultadoTirada.requiereDecision = false;
+    resultadoTirada.tiempoAnimacion = 2000;
+    resultadoTirada.jugadaValida = true;
+    resultadoTirada.colorAviso = "#0C7527";
+    resultadoTirada.analizarStack = true;
+    return  resultadoTirada;
 }
 
 ResultadoJugada Partida::tirarCambioDireccionOscura(Carta& cartaElegida, int indice){

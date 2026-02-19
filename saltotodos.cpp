@@ -1,4 +1,6 @@
 #include "saltotodos.h"
+#include"partida.h"
+#include"jugador.h"
 
 SaltoTodos::SaltoTodos(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia)
     :Modelo(_colorRef,_nombre,_lado,TipoCarta::SALTOTOTAL,_jerarquia)
@@ -42,6 +44,9 @@ void SaltoTodos::lanzarCarta(Partida & partidaActual) {
 //Caso donde la carta debe interactuar con la partida y un jugador x
 void SaltoTodos::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
 
+    for (int i = 0; i < jugador.getLongitud(); i++) {
+        partidaActual.ejecutarMovimiento();
+    }
 }
 
 

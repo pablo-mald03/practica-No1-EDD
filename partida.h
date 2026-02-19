@@ -98,9 +98,6 @@ private:
     //Metodos que sirven para poder barajear y mezclar las cartas
     void barajarCartas(ListaEnlazada<Carta> *& lista);
 
-    //Metodo para verificar si ya se dio una vuelta
-    void verificarVuelta();
-
     //Metodo para limpiar las cosas en el destructor
     void limpiarReferencias();
 
@@ -183,6 +180,9 @@ public:
     int getCantidadVueltas();
     std::string imagenPilaCentral();
     std::string imagenPilaLateral();
+
+    //Metodo para verificar si ya se dio una vuelta
+    void verificarVuelta();
 
     //Permite pasar al siguiente jugador
     void ejecutarMovimiento();
