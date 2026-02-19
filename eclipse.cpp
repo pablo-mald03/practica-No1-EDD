@@ -1,4 +1,5 @@
 #include "eclipse.h"
+#include"partida.h"
 
 Eclipse::Eclipse(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia)
     :Modelo(_colorRef,_nombre,_lado,TipoCarta::CARTAECLIPSE,_jerarquia)
@@ -28,7 +29,7 @@ void Eclipse::lanzarCarta(ListaCircular<Jugador*> & jugador){
 
 //Caso donde la carta debe interactuar con la partida
 void Eclipse::lanzarCarta(Partida & partidaActual) {
-
+    partidaActual.setEstaEclipse(true);
 }
 
 //Caso donde la carta debe interactuar con la partida y un jugador x

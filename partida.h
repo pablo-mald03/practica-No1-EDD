@@ -48,6 +48,9 @@ private:
     //Atributo que permite saber el color en el que esta la partida
     std::string colorPartida;
 
+    //Atributo que permite crear la accion de la carta ECLIPSE (MIA P)
+    bool estaEclpse;
+
     //Atributo que SOLAMENTE SIRVE PARA INDICAR CUANTAS VECES SE SUMO UNA CARTA STACKEADA
     int vecesSumadasCarta;
 
@@ -152,14 +155,14 @@ private:
     ResultadoJugada tirarCartaComodinClara(Carta& cartaElegida, int decision, int indice);
     ResultadoJugada tirarCartaSumaComodinClara(Carta& cartaElegida, int decision,int indice);
 
-    ResultadoJugada tirarCartaComodinOscura(Carta& cartaElegida, int decision,int indice);
+    ResultadoJugada tirarCartaSumaComodinOscura(Carta& cartaElegida, int decision,int indice);
     ResultadoJugada tirarCartaEternaOscura(Carta& cartaElegida, int decision,int indice);
 
     /*====APARTADO DE METODOS DE TIRADO DE CARTAS DE JERARQUIA <13*/
 
     /*========== APARTADO DE INTEGRACION DE LOGICA DE CARTAS ESPECIALES MIAS  BY P*/
-    ResultadoJugada tirarCartaEclipse(Carta& cartaElegida, int indice);
-    ResultadoJugada tirarCartaEspia(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarCartaEclipse(Carta& cartaElegida, int indice, bool adelante);
+    ResultadoJugada tirarCartaEspia(Carta& cartaElegida, int indice, bool adelante);
     /*========== APARTADO DE INTEGRACION DE LOGICA DE CARTAS ESPECIALES MIAS BY P*/
 
 
@@ -243,6 +246,11 @@ public:
     //Metodos utiles para poder saber cuantas cartas se han sumado
     void setVecesSumadasCarta(int veces);
     int getVecesSumadasCarta();
+
+    //Metodos utiles para poder saber si esta el efecto de eclipse
+    void setEstaEclipse(bool flag);
+    bool getEstaEclipse();
+
 };
 
 /*CREATED BY PABLO M*/

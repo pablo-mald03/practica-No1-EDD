@@ -14,7 +14,7 @@ PartidaController::~PartidaController(){
     delete this->gestorPartida;
     this->gestorPartida = nullptr;
 }
-
+//(P)
 //Metodo que permite saber si el backend esta stackeando
 bool PartidaController::estaStackeando(){
 
@@ -36,7 +36,7 @@ ResultadoJugada PartidaController::aplicarCartasStackeadas(){
 
     ResultadoJugada resultado;
 
-    try{
+    try{ //(P)
         //Metodo principal
         resultado = this->gestorPartida->aplicarAcumuladas();
 
@@ -87,7 +87,7 @@ void PartidaController::obligarJugador(){
     }
 
 }
-
+//(P)
 //Metodo que permite setear el color elegido por el usuario de forma independiente
 void PartidaController::setearColorPartida(int decision){
 
@@ -124,10 +124,15 @@ void PartidaController::setearColorPartida(int decision){
     }
 }
 
+//Metodo que permite saber si esta activado el eclipse
+bool PartidaController::getEstaEclipse(){
+    return this->gestorPartida->getEstaEclipse();
+}
+
 //Metodo que permite verificar si tiene las cartas para volver a stackear
 bool PartidaController::tieneParaStackear(){
 
-    Pila<Carta> * pilaStack = this->gestorPartida->getPilaStack();
+    Pila<Carta> * pilaStack = this->gestorPartida->getPilaStack();//(P)
 
     Carta cartaEnStack = pilaStack->verTop();
 
@@ -155,7 +160,7 @@ std::string PartidaController::getMensajeStacking(){
 
     }else{
         return std::string("Hay ") + std::to_string(cantidad) + std::string(" de cartas ")+ pilaStack->verTop().getReverso()->getNombre();
-    }
+    }//(P)
 }
 
 //Metodo que comunica a front que hacer si se esta en modo flip
@@ -249,6 +254,11 @@ bool PartidaController::puedeDesapilar(){
     return this->gestorPartida->tieneCartaNecesaria();
 }
 
+//Metodo util para saber si se puede establecer flip
+bool PartidaController::permiteFlip(){
+    return this->gestorPartida->getConfiguracion().esFlip();
+}
+
 //Metodo utilzado para que el usuario pueda desapilar una carta
 ResultadoJugada PartidaController::desapilarCarta(){
 
@@ -277,7 +287,7 @@ ResultadoJugada PartidaController::desapilarCarta(){
 void PartidaController::reportarMensaje(std::string mensaje, QString colorHex, int tiempo){
     emit darMensaje(mensaje,colorHex, tiempo);
 }
-
+//(P)
 //Metodo que se encarga de retornar la informacion principal al iniciar la partida
 void PartidaController::obtenerDatosPartida(bool verificar){
     emit datosPartida(this->gestorPartida->getJugadorActual(),this->gestorPartida->getDireccion(), this->gestorPartida->getCantidadPila(), this->gestorPartida->getCantidadVueltas(),verificar,this->gestorPartida->getNombreColor());

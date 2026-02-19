@@ -305,14 +305,32 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual, bool verificar){
         bool estaEnFlip = this->controladorPartida->estaModoFlip();
 
         CartaDeckUI* visual = nullptr;
-        if(!estaEnFlip){
-            visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getAnverso()->getPathImagen()));
-        }else{
-            visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getReverso()->getPathImagen()));
+
+        bool estaEclipse = this->controladorPartida->getEstaEclipse();
+
+        if(!estaEclipse){
+            if(!estaEnFlip){
+                visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getAnverso()->getPathImagen()));
+            }else{
+                visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getReverso()->getPathImagen()));
+            }
+        }
+        else
+        {
+            if(estaEnFlip){
+                visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getAnverso()->getPathImagen()));
+            }else{
+                bool permiteFlip = this->controladorPartida->permiteFlip();
+                if(!permiteFlip){
+                    visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getReverso()->getReversoModelo()));
+                }
+                else{
+                    visual = new CartaDeckUI(i, QString::fromStdString(cartaDeck.getReverso()->getPathImagen()));
+                }
+            }
         }
 
         connect(visual, &CartaDeckUI::cartaClickeda, this, &PantallaJuego::onCartaPresionada);
-
         escena->addItem(visual);
         visual->setPos(xActual + (i * separacion), 30);
         visual->setZValue(i);

@@ -51,6 +51,11 @@ public:
     //Metodo que permite setear el color de la partida de fonra independiente
     void setearColorPartida(int decision);
 
+    //Metodo que permite saber si esta activado el eclipse
+    bool getEstaEclipse();
+
+    bool permiteFlip();
+
 public slots:
 
     void obtenerDatosPartida(bool verificar);
