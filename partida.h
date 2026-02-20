@@ -274,6 +274,12 @@ public:
 
     //Metodo que permite saber si algun jugador de la partida esta en UNO
     bool alguienEnUno();
+
+    //Metodo que permite gritar UNO al jugador
+    std::string gritarUno(std::string texto);
+
+    //Metodo para penalizar a los jugadores al gritar UNO
+    void penalizarJugador(Jugador * &jugadorParam);
 };
 
 /*CREATED BY PABLO M*/

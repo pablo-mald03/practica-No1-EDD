@@ -28,6 +28,9 @@ private:
     //Flag que permite determinar si el jugador esta propenso a quedar en UNO
     bool propensoUno;
 
+    //Flag que le permite al jugador declararse en UNO
+    bool dijoUno;
+
 public:
     Jugador(const std::string _nombre, int codigo);
     ~Jugador();
@@ -79,6 +82,10 @@ public:
 
     //Metodo que permite evaluar si el jugador actual esta propenso a uno (PARA PODER ACTIVAR EL BOTON)
     bool estaPropensoUno();
+    /*===========Region de metodos getter y setter para saber si el jugador dijo UNO*/
+    void setDijoUno(bool flag);
+    bool getDijoUno();
+    /*===========Region de metodos getter y setter para saber si el jugador dijo UNO*/
 
 };
 

@@ -179,6 +179,61 @@ TipoColor Partida::getColorPartida(){
     }
 }
 
+/*===============APARTADO DE METODOS QUE PERMITEN VALIDAR EL JUGADOR EN UNO===============*/
+std::string Partida::gritarUno(std::string texto){
+
+    for (int i = 0; i < texto.length(); i++) {
+        texto[i] = std::tolower(texto[i]);
+    }
+
+    if (texto != "uno") {
+        throw std::runtime_error("¡DEBES ESCRIBIR LA PALABRA \" UNO \"!");
+    }
+
+    bool dijoAnteriorUno = this->pickJugadorAnterior()->getDijoUno();
+    qDebug()<<"jugador propenso: "<<this->getJugadorActual()->estaPropensoUno();
+
+    if(this->getJugadorActual()->estaPropensoUno()){
+        this->getJugadorActual()->setDijoUno(true);
+        return std::string("¡EL JUGADOR ")+ this->getJugadorActual()->getNombre() +std::string(" HA GRITADO \" UNO \"!");
+    }
+    else if (!dijoAnteriorUno){
+        //Penalizacion al jugador que no dijo UNO
+        Jugador * jugadorAnteriorGrito = this->pickJugadorAnterior();
+        this->penalizarJugador(jugadorAnteriorGrito);
+        return std::string("¡EL ")+ this->pickJugadorAnterior()->getNombre() +std::string(" HA SIDO PENALIZADO +2 CARTAS");
+
+    }else if(dijoAnteriorUno){
+        //Penalizacion al jugador que quizo penalizar al anterior
+        Jugador * jugadoActualGrito = this->getJugadorActual();
+        this->penalizarJugador(jugadoActualGrito);
+        return std::string("¡HAS SIDO PENALIZADO EL ")+ this->pickJugadorAnterior()->getNombre() +std::string(" YA GRITO \" UNO \"!");
+    }
+
+    throw std::runtime_error("¡NO SE EJECUTO LA ACCION DE GRITO \" UNO \"!");
+}
+
+//Metodo que permite penalizar al jugador acorde a la accion determinada( METODO COMPLEMENTARIO)
+void Partida::penalizarJugador(Jugador * &jugadorParam){
+
+    Pila<Carta> * pilaLateral = this->getPilaLateral();
+
+    for (int i = 0; i < 2; i++) {
+        if (pilaLateral->estaVacia()) {
+            this->llenarPilaLateral();
+        }
+
+        if (pilaLateral->estaVacia()) break;
+
+        Carta cartaDesapilada = pilaLateral->verTop();
+        jugadorParam->getMazo()->insertarFrente(cartaDesapilada);
+        pilaLateral->pop();
+    }
+
+    jugadorParam->ordenarCartas(this->estaFlip);
+}
+
+/*===============FIN DEL APARTADO DE METODOS QUE PERMITEN VALIDAR EL JUGADOR EN UNO===============*/
 
 //==============APARTADO DE METODOS PARA REPARTIR LAS CARTAS A LOS JUGADORES===================
 //Metodo encargado de repartir las cartas complejidad O(n)
@@ -599,7 +654,7 @@ void Partida::setColorJuegoSelect(ResultadoJugada &resultadoTirada, int decision
 ResultadoJugada Partida::tirarCartaComodinClara(Carta& cartaElegida, int decision,int indice){
     ResultadoJugada resultadoTirada;
     resultadoTirada.darMensaje = true;
-    resultadoTirada.tiempoMensaje = 1500;
+    resultadoTirada.tiempoMensaje = 2000;
 
     this->setColorJuegoSelect(resultadoTirada,decision);
 
@@ -610,7 +665,7 @@ ResultadoJugada Partida::tirarCartaComodinClara(Carta& cartaElegida, int decisio
     this->pilaCentralCartas->push(cartaElegida);
     this->listaJugadores.getActual()->getMazo()->eliminar(indice);
 
-    resultadoTirada.tiempoAnimacion = 2000;
+    resultadoTirada.tiempoAnimacion = 2500;
     resultadoTirada.jugadaValida = true;
     resultadoTirada.colorAviso = "#0C7527";
     resultadoTirada.requiereDecision = false;
@@ -622,7 +677,7 @@ ResultadoJugada Partida::tirarCartaSumaComodinClara(Carta& cartaElegida, int dec
     ResultadoJugada resultadoTirada;
 
     resultadoTirada.darMensaje = true;
-    resultadoTirada.tiempoMensaje = 1500;
+    resultadoTirada.tiempoMensaje = 2000;
 
     this->setColorJuegoSelect(resultadoTirada,decision);
 
@@ -643,7 +698,7 @@ ResultadoJugada Partida::tirarCartaSumaComodinClara(Carta& cartaElegida, int dec
     }
 
     resultadoTirada.requiereDecision = false;
-    resultadoTirada.tiempoAnimacion = 2200;
+    resultadoTirada.tiempoAnimacion = 2500;
     resultadoTirada.jugadaValida = true;
     resultadoTirada.colorAviso = "#0C7527";
     resultadoTirada.analizarStack = false;
@@ -657,7 +712,7 @@ ResultadoJugada Partida::tirarCartaSumaComodinOscura(Carta& cartaElegida, int de
     ResultadoJugada resultadoTirada;
 
     resultadoTirada.darMensaje = true;
-    resultadoTirada.tiempoMensaje = 1500;
+    resultadoTirada.tiempoMensaje = 2000;
 
     this->setColorJuegoSelect(resultadoTirada,decision);
 
@@ -678,7 +733,7 @@ ResultadoJugada Partida::tirarCartaSumaComodinOscura(Carta& cartaElegida, int de
     }
 
     resultadoTirada.requiereDecision = false;
-    resultadoTirada.tiempoAnimacion = 2200;
+    resultadoTirada.tiempoAnimacion = 2500;
     resultadoTirada.jugadaValida = true;
     resultadoTirada.colorAviso = "#0C7527";
     resultadoTirada.analizarStack = false;
@@ -724,9 +779,10 @@ ResultadoJugada Partida::accionCartaEspecialClara(int indice){
     if(cartaElegida.getAnverso()->getTipo() == TipoCarta::COLORCOMODIN && cartaElegida.getAnverso()->getJerarquia() == 14){
 
         resultadoTirada.darMensaje = false;
-        resultadoTirada.tiempoMensaje = 3000;
+        resultadoTirada.tiempoMensaje = 2000;
+        resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getAnverso()->getNombre() ;
         resultadoTirada.requiereDecision = true;
-        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.tiempoAnimacion = 3000;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.analizarStack = true;
 
@@ -1205,7 +1261,7 @@ ResultadoJugada Partida::aplicarAcumuladas(){
     ResultadoJugada resultado;
     try{
 
-        resultado.tiempoMensaje = 2500;
+        resultado.tiempoMensaje = 2000;
         resultado.darMensaje = true;
         int cantidad = this->pilaStacking->getLongitud();
 
@@ -1231,7 +1287,7 @@ ResultadoJugada Partida::aplicarAcumuladas(){
         this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
 
         resultado.jugadaValida = true;
-        resultado.tiempoAnimacion = 3000;
+        resultado.tiempoAnimacion = 2500;
         resultado.colorAviso = "#091787";
         resultado.analizarStack = false;
 
@@ -1525,17 +1581,16 @@ Jugador * Partida::pickJugadorAnterior(){
 }
 
 //Metodo que permite determinar si ALGUN JUGADOR ESTA EN UNO
-bool Partida::alguienEnUno(){
+bool Partida::alguienEnUno() {
 
-    for (int i = 0; i < this->listaJugadores.getLongitud()-1; ++i) {
+    for (int i = 0; i < listaJugadores.getLongitud(); ++i) {
+        Jugador* jugadorEvaluado = listaJugadores.obtenerEn(i);
 
-        Jugador * jugadorEvaluado = this->listaJugadores.obtenerEn(i);
 
-        if(jugadorEvaluado->faltaUna()){
+        if (jugadorEvaluado->getMazo()->getLongitud() == 1 && !jugadorEvaluado->getDijoUno()) {
             return true;
         }
     }
-
     return false;
 }
 

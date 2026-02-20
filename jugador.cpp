@@ -3,21 +3,32 @@
 
 Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codigo(_codigo),
     estaObligado(false),tipoObligado(TipoCarta::Predeterminado),
-    obligadoSacar(false), colorObligado(TipoColor::PREDETERMINADO), propensoUno(false)
+    obligadoSacar(false), colorObligado(TipoColor::PREDETERMINADO), propensoUno(false),
+    dijoUno(false)
 {
     this->mazo = new ListaEnlazada<Carta>();
 
 }
 
+//Metodos getter y setter para evaluar si el jugador dijo UNO
+void Jugador::setDijoUno(bool flag){
+    this->dijoUno = flag;
+}
+bool Jugador::getDijoUno(){
+    return this->dijoUno;
+}
 
 //Metodo que permite autoevaluar si el jugador esta propenso a quedarse a UNO
 void Jugador::evaluarPropensoUno(){
 
     int longitudMazo = this->mazo->getLongitud();
-    if(longitudMazo -1 == 1){
+    if(longitudMazo - 1 <= 1){
         this->propensoUno = true;
     }else{
         this->propensoUno = false;
+        if(this->dijoUno){
+            this->dijoUno = false;
+        }
     }
 }
 
@@ -28,7 +39,15 @@ bool Jugador::estaPropensoUno(){
 
 //Metodo que permite saber si el jugador esta en UNO (SOLO LE QUEDA UNA CARTA)
 bool Jugador::faltaUna(){
-    return this->mazo->getLongitud() == 1;
+
+    bool leFaltaUna = this->mazo->getLongitud() <= 1;
+
+    if(!leFaltaUna){
+        this->propensoUno = false;
+        this->dijoUno = false;
+    }
+
+    return leFaltaUna;
 }
 
 //Metodo utilizado para odenar las cartas de cada jugador (ordenamiento burbuja normal) O(n cuadrado)

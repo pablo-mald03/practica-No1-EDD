@@ -44,6 +44,9 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
 
 //Metodo que permite evaluar si por lo menos uno de los jugadores esta en UNO
 void PantallaJuego::evaluarJugadoresEnUno(){
+
+    this->controladorPartida->refrescarEvaluacionUno();
+
     bool jugadorPropenso = this->controladorPartida->jugadorPropensoUno();
     bool alguienUno = this->controladorPartida->alguienEstaEnUno();
 
@@ -476,7 +479,7 @@ void PantallaJuego::on_btnPilaLateral_clicked()
 //Boton para gritar UNO
 void PantallaJuego::on_btnUNO_clicked()
 {
-
-
+    QString textoLimpio = ui->textoUNO->text().trimmed();
+    this->controladorPartida->gritarUno(textoLimpio);
 }
 

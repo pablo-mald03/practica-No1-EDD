@@ -63,6 +63,13 @@ public:
     //Metodo que evalua si minimo uno de los jugadores en partida esta en UNO (Para habilitar el boton)
     bool alguienEstaEnUno();
 
+    //Metodo que permite ejecutar la accion de poder gritar UNO
+    void gritarUno(QString mensaje);
+
+    //Metodo que permite evaluar si el  jugador esta propenso cada que refresca
+    void refrescarEvaluacionUno();
+
+
 public slots:
 
     void obtenerDatosPartida(bool verificar);

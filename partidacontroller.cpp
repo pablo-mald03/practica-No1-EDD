@@ -15,9 +15,14 @@ PartidaController::~PartidaController(){
     this->gestorPartida = nullptr;
 }
 
+//Metodo que evalua constantemente si el jugador esta propenso
+void PartidaController::refrescarEvaluacionUno(){
+    this->gestorPartida->getJugadorActual()->evaluarPropensoUno();
+}
+
 //Metodo que permite evaluar en todo momento si el jugador esta propenso a quedar en UNO
 bool PartidaController::jugadorPropensoUno(){
-    return this->gestorPartida->getJugadorActual()->estaPropensoUno();
+    return this->gestorPartida->getJugadorActual()->estaPropensoUno() && this->gestorPartida->tieneCartaNecesaria();
 }
 
 //Metodo que permite evaluar si POR LO  MENOS ALGUN JUGADOR ESTA en UNO
@@ -261,6 +266,22 @@ ResultadoJugada PartidaController::tirarCarta(int indice){
 
     return jugadaNormal;
 }
+
+//Metodo utilizado para que el jugador grite UNO
+void PartidaController::gritarUno(QString mensaje){
+
+    try{
+
+        std::string mensajeString = mensaje.toStdString();
+        std::string mensajeAccion = this->gestorPartida->gritarUno(mensajeString);
+        reportarMensaje(mensajeAccion, "#0C7527", 2500);
+
+    }catch(const std::runtime_error & ex){
+        reportarMensaje(ex.what(), "#91042B", 2500);
+    }
+
+}
+
 //Metodo util para verificar si puede desapilar
 bool PartidaController::puedeDesapilar(){
     return this->gestorPartida->tieneCartaNecesaria();
