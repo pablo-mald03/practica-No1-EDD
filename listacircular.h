@@ -40,7 +40,7 @@ public:
     T& pickAnterior();
 
     //Metodo para dar vuelta (integracion directa)
-    void darVuelta(int pasos);
+    T& obtenerEn(int indice);
 
 };
 

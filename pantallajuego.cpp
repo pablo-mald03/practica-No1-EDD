@@ -42,6 +42,20 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
     this->capaBloqueo->hide();
 }
 
+//Metodo que permite evaluar si por lo menos uno de los jugadores esta en UNO
+void PantallaJuego::evaluarJugadoresEnUno(){
+    bool jugadorPropenso = this->controladorPartida->jugadorPropensoUno();
+    bool alguienUno = this->controladorPartida->alguienEstaEnUno();
+
+    if(jugadorPropenso || alguienUno){
+        this->ui->btnUNO->setEnabled(true);
+        this->ui->textoUNO->setEnabled(true);
+    }else{
+        this->ui->btnUNO->setEnabled(false);
+        this->ui->textoUNO->setEnabled(false);
+    }
+}
+
 //Metodo que permite iniciar el timer que puede dar mensajes durante un tiempo
 void PantallaJuego::instanciarTimer(){
     timerMensaje = new QTimer(this);
@@ -337,6 +351,7 @@ void PantallaJuego::dibujarMazo(Jugador* & jugadorActual, bool verificar){
     }
 
     this->verificarStacking(verificar);
+    this->evaluarJugadoresEnUno();
 }
 
 //Metodo que permite que la carta envie su signal para reportar que el jugador la quiere tirar
@@ -454,6 +469,13 @@ void PantallaJuego::on_btnPilaLateral_clicked()
         this->darMensajeJugador(ex.what(), "#91042B",2500);
         capaBloqueo->hide();
     }
+
+
+}
+
+//Boton para gritar UNO
+void PantallaJuego::on_btnUNO_clicked()
+{
 
 
 }

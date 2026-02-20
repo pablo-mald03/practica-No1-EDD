@@ -1436,7 +1436,7 @@ bool Partida::tieneEnClaras(){
         }
 
         // Es comodin o carta especial superior
-        if(cartaJugador.getAnverso()->getJerarquia() > 13){
+        if(cartaJugador.getAnverso()->getJerarquia() >= 13){
             return true;
         }
     }
@@ -1485,6 +1485,8 @@ bool Partida::tieneEnOscuras(){
 //Metodo que permite ejecutar la tirada
 void Partida::ejecutarMovimiento(){
 
+    this->getJugadorActual()->evaluarPropensoUno();
+
     if(this->direccion == "Derecha" && puedeMoverse){
         this->listaJugadores.avanzar();
         this->verificarVuelta();
@@ -1506,6 +1508,35 @@ Jugador * Partida::pickJugadorSiguiente(){
     }
 
     throw std::runtime_error(std::string( "No se ha podido obgener el jugador siguiente "));
+}
+
+//Metodo que permite tomar el jugador que estaba atras
+Jugador * Partida::pickJugadorAnterior(){
+
+    if(this->direccion == "Derecha"){
+        return this->listaJugadores.pickAnterior();
+    }
+    else if(this->direccion == "Izquierda"){
+
+        return this->listaJugadores.pickSiguiente();
+    }
+
+    throw std::runtime_error(std::string( "No se ha podido obgener el jugador anterior "));
+}
+
+//Metodo que permite determinar si ALGUN JUGADOR ESTA EN UNO
+bool Partida::alguienEnUno(){
+
+    for (int i = 0; i < this->listaJugadores.getLongitud()-1; ++i) {
+
+        Jugador * jugadorEvaluado = this->listaJugadores.obtenerEn(i);
+
+        if(jugadorEvaluado->faltaUna()){
+            return true;
+        }
+    }
+
+    return false;
 }
 
 //Metodo que permite verificar si ya se ha dado una vuelta

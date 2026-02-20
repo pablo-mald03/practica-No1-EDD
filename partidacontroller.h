@@ -54,7 +54,14 @@ public:
     //Metodo que permite saber si esta activado el eclipse
     bool getEstaEclipse();
 
+    //Metodo que permite evaluar si la partida admite cambiar a FLIP
     bool permiteFlip();
+
+    //Metodo que permite evaluar en todo momento si el jugador esta propenso a quedar en UNO
+    bool jugadorPropensoUno();
+
+    //Metodo que evalua si minimo uno de los jugadores en partida esta en UNO (Para habilitar el boton)
+    bool alguienEstaEnUno();
 
 public slots:
 

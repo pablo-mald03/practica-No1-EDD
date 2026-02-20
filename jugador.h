@@ -25,6 +25,9 @@ private:
     bool obligadoSacar;
     TipoColor colorObligado;
 
+    //Flag que permite determinar si el jugador esta propenso a quedar en UNO
+    bool propensoUno;
+
 public:
     Jugador(const std::string _nombre, int codigo);
     ~Jugador();
@@ -67,6 +70,15 @@ public:
     void desordenarCartas();
     //Metodo que permite saber el color al que esta obligado a sacar el jugador
     std::string saberColorObligado(TipoColor colorCarta);
+
+    //Metodo que permite saber si esta en UNO
+    bool faltaUna();
+
+    //Metodo que permite autoevaluar si el jugador esta propenso a quedarse a UNO
+    void evaluarPropensoUno();
+
+    //Metodo que permite evaluar si el jugador actual esta propenso a uno (PARA PODER ACTIVAR EL BOTON)
+    bool estaPropensoUno();
 
 };
 

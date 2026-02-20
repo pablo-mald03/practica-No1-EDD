@@ -268,6 +268,12 @@ public:
 
     //Metodo que permite retornar el siguiente jugador
     Jugador * pickJugadorSiguiente();
+
+    //Metodo que permite retornar el jugador anterior
+    Jugador * pickJugadorAnterior();
+
+    //Metodo que permite saber si algun jugador de la partida esta en UNO
+    bool alguienEnUno();
 };
 
 /*CREATED BY PABLO M*/

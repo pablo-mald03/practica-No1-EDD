@@ -3,10 +3,32 @@
 
 Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codigo(_codigo),
     estaObligado(false),tipoObligado(TipoCarta::Predeterminado),
-    obligadoSacar(false), colorObligado(TipoColor::PREDETERMINADO)
+    obligadoSacar(false), colorObligado(TipoColor::PREDETERMINADO), propensoUno(false)
 {
     this->mazo = new ListaEnlazada<Carta>();
 
+}
+
+
+//Metodo que permite autoevaluar si el jugador esta propenso a quedarse a UNO
+void Jugador::evaluarPropensoUno(){
+
+    int longitudMazo = this->mazo->getLongitud();
+    if(longitudMazo -1 == 1){
+        this->propensoUno = true;
+    }else{
+        this->propensoUno = false;
+    }
+}
+
+//Metodo que evalua si el jugador esta propenso a quedar en UNO
+bool Jugador::estaPropensoUno(){
+    return this->propensoUno;
+}
+
+//Metodo que permite saber si el jugador esta en UNO (SOLO LE QUEDA UNA CARTA)
+bool Jugador::faltaUna(){
+    return this->mazo->getLongitud() == 1;
 }
 
 //Metodo utilizado para odenar las cartas de cada jugador (ordenamiento burbuja normal) O(n cuadrado)

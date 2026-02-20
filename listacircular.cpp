@@ -153,27 +153,21 @@ T& ListaCircular<T>::pickAnterior()
     return actualTurno->getAnterior()->getDato();
 }
 
-//Metodo que permite dar vueltas en la lista a gusto (Util para la carta de salto total)
+//Metodo que permite obtener un dato en cualquier indice
+//RESTRICCION: SI SE PONE UN INDICE SUPERIOR AL LIMITE SE APLICA EL MODULO PARA EVITAR DAR MUCHAS VUELTAS INNECESARIAS
+/*Basado en lo visto en clase de Laboratorio*/
 template<typename T>
-void ListaCircular<T>::darVuelta(int pasos)
+T& ListaCircular<T>::obtenerEn(int indice)
 {
     if (esVacia())
         throw std::runtime_error("La lista esta vacía");
 
-    if (longitud == 0)
-        return;
-
-    // Normalizar pasos para no dar vueltas innecesarias
-    pasos = pasos % longitud;
-
-    if (pasos > 0) {
-        for (int i = 0; i < pasos; i++)
-            actualTurno = actualTurno->getSiguiente();
+    int posicionReal = indice % longitud;
+    if (posicionReal < 0) {
+        posicionReal += longitud;
     }
-    else {
-        for (int i = 0; i < -pasos; i++)
-            actualTurno = actualTurno->getAnterior();
-    }
+
+    return buscarNodo(posicionReal)->getDato();
 }
 
 //Destructor de todos los nodos

@@ -14,6 +14,18 @@ PartidaController::~PartidaController(){
     delete this->gestorPartida;
     this->gestorPartida = nullptr;
 }
+
+//Metodo que permite evaluar en todo momento si el jugador esta propenso a quedar en UNO
+bool PartidaController::jugadorPropensoUno(){
+    return this->gestorPartida->getJugadorActual()->estaPropensoUno();
+}
+
+//Metodo que permite evaluar si POR LO  MENOS ALGUN JUGADOR ESTA en UNO
+bool PartidaController::alguienEstaEnUno(){
+    return this->gestorPartida->alguienEnUno();
+}
+
+
 //(P)
 //Metodo que permite saber si el backend esta stackeando
 bool PartidaController::estaStackeando(){

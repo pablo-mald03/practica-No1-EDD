@@ -70,7 +70,11 @@ private:
     //Metodo de front que permite preguntarle al jugador si va a seguir stackeando
     bool mostrarConfirmacionStacking(std::string mensaje);
 
+    //Metodo que permite elegir un color al tirar comodines
     int mostrarSelectorColor(bool estaFlip);
+
+    //Metodo que permite evaluar si por lo menos uno de los jugadores esta en UNO
+    void evaluarJugadoresEnUno();
 
 signals:
     void solicitarSalida();
@@ -78,6 +82,7 @@ private slots:
     void on_btnRetorno_clicked();
 
     void on_btnPilaLateral_clicked();
+    void on_btnUNO_clicked();
 };
 
 #endif // PANTALLAJUEGO_H
