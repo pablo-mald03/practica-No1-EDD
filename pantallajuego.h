@@ -76,6 +76,9 @@ private:
     //Metodo que permite evaluar si por lo menos uno de los jugadores esta en UNO
     void evaluarJugadoresEnUno();
 
+    //Metodo que permite ejecutar la mecanica de la carta espia
+    void mostrarMazoTemporal();
+
 signals:
     void solicitarSalida();
 private slots:

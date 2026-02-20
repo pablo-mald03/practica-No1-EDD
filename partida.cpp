@@ -685,7 +685,7 @@ ResultadoJugada Partida::tirarCartaSumaComodinClara(Carta& cartaElegida, int dec
 
         return resultadoTirada;
     }
-
+//(P)
     resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getAnverso()->getNombre();
 
     this->pilaCentralCartas->push(cartaElegida);
@@ -1586,8 +1586,7 @@ bool Partida::alguienEnUno() {
     for (int i = 0; i < listaJugadores.getLongitud(); ++i) {
         Jugador* jugadorEvaluado = listaJugadores.obtenerEn(i);
 
-
-        if (jugadorEvaluado->getMazo()->getLongitud() == 1 && !jugadorEvaluado->getDijoUno()) {
+        if (jugadorEvaluado->getMazo()->getLongitud() == 1) {
             return true;
         }
     }
@@ -1654,6 +1653,11 @@ void Partida::setEstaEclipse(bool flag){
 }
 bool Partida::getEstaEclipse(){
     return this->estaEclpse;
+}
+
+//Metodo que permite retornar la lista de jugadores para la mecanica de CARTA ESPIA MIA (P)
+ListaCircular<Jugador*> Partida::getListaJugadoresPartida(){
+    return this->listaJugadores;
 }
 
 //====================Fin de la SUBREGION Metodos getter y setter=================
@@ -2217,7 +2221,7 @@ void Partida::limpiarReferencias(){
         for(int i = 0; i < 56; i++)
             delete modelosOscuros[i];
     }
-
+//(P)
     delete this->pilaCentralCartas;
     delete this->pilaLateralCartas;
 

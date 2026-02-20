@@ -69,6 +69,8 @@ public:
     //Metodo que permite evaluar si el  jugador esta propenso cada que refresca
     void refrescarEvaluacionUno();
 
+    //Metodo que permite retornar la lista de jugadores
+    ListaCircular<Jugador*> getListaJugadores();
 
 public slots:
 

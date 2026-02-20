@@ -7,6 +7,7 @@
 #include"carta.h"
 #include<QTimer>
 #include "selectorcolordialog.h"
+#include "vermazodialog.h"
 
 //CREATED BY PABLO M
 
@@ -42,6 +43,17 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
     this->capaBloqueo->hide();
 }
 
+//Metodo que permite tirar la carta ESPIA Mecanica mia (P)
+void PantallaJuego::mostrarMazoTemporal()
+{
+    ListaCircular<Jugador*> lista = this->controladorPartida->getListaJugadores();
+
+    bool flip = this->controladorPartida->estaModoFlip();
+
+    VerMazoDialog dlg(lista, flip, this);
+    dlg.exec();
+}
+
 //Metodo que permite evaluar si por lo menos uno de los jugadores esta en UNO
 void PantallaJuego::evaluarJugadoresEnUno(){
 
@@ -58,7 +70,7 @@ void PantallaJuego::evaluarJugadoresEnUno(){
         this->ui->textoUNO->setEnabled(false);
     }
 }
-
+//(P)
 //Metodo que permite iniciar el timer que puede dar mensajes durante un tiempo
 void PantallaJuego::instanciarTimer(){
     timerMensaje = new QTimer(this);
@@ -95,7 +107,7 @@ void PantallaJuego::darMensajeJugador(std::string mensaje, QString colorHex, int
     this->ui->labelMensajes->setStyleSheet(
         "color: " + colorHex + "; font-size: 20px; font-weight: bold; font-family: \"Segoe UI\", Arial; background: transparent;padding: 2px; margin-bottom: 5px;");
     timerMensaje->start(tiempo);
-
+//(P)
 }
 
 //Metodo que permite inicializar el widget del mazo
@@ -136,7 +148,7 @@ void PantallaJuego::prepararInterfazCartas() {
     this->ui->labelStackedImg->setStyleSheet(
         "QLabel:disabled { color: white; }"
         );
-
+//(P)
     actualizarBarajaLateral(":/assets/mediaGame/ReversoCarta.png", 1);
 }
 
@@ -162,7 +174,7 @@ void PantallaJuego::actualizarBarajaLateral(std::string rutaImagenPila, int long
         this->ui->btnPilaLateral->setEnabled(false);
         return;
     }
-
+//(P)
     this->ui->btnPilaLateral->setEnabled(true);
     QPixmap pix(QString::fromStdString(rutaImagenPila));
 
@@ -192,7 +204,7 @@ void PantallaJuego::verificarStacking(bool evaluar){
     if(!estaStacking){
         return;
     }
-
+//(P)
     bool puedeStackear = this->controladorPartida->puedeStackear();
 
     if(!puedeStackear){
@@ -216,7 +228,7 @@ void PantallaJuego::verificarStacking(bool evaluar){
         ejecutarSumaCartas();
         return;
     }
-
+//(P)
     this->darMensajeJugador("Selecciona tu carta para poder stackearla", "#0C7527",2000);
     this->controladorPartida->obligarJugador();
 }
@@ -467,7 +479,7 @@ void PantallaJuego::on_btnPilaLateral_clicked()
             this->controladorPartida->obtenerDatosPartida(true);
             capaBloqueo->hide();
         });
-
+//(P)
     }catch(const std::runtime_error & ex){
         this->darMensajeJugador(ex.what(), "#91042B",2500);
         capaBloqueo->hide();
@@ -481,5 +493,6 @@ void PantallaJuego::on_btnUNO_clicked()
 {
     QString textoLimpio = ui->textoUNO->text().trimmed();
     this->controladorPartida->gritarUno(textoLimpio);
+    this->ui->textoUNO->clear();
 }
 

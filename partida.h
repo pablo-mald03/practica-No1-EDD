@@ -280,6 +280,9 @@ public:
 
     //Metodo para penalizar a los jugadores al gritar UNO
     void penalizarJugador(Jugador * &jugadorParam);
+
+    //Metodo que permite retornar la lista de jugadores en la partida
+    ListaCircular<Jugador*> getListaJugadoresPartida();
 };
 
 /*CREATED BY PABLO M*/

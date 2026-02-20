@@ -42,6 +42,7 @@ qt_add_executable(PracticaNo1
     saltotodos.h saltotodos.cpp
     pila.h pila.cpp
     selectorcolordialog.h selectorcolordialog.cpp selectorcolordialog.ui
+    vermazodialog.h vermazodialog.cpp vermazodialog.ui
 
 
 

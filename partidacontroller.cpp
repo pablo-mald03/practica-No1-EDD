@@ -15,6 +15,11 @@ PartidaController::~PartidaController(){
     this->gestorPartida = nullptr;
 }
 
+//Metodo que permite retornar la lista de jugadores para la mecanica de CARTA ESPIA MIA (P)
+ListaCircular<Jugador*> PartidaController::getListaJugadores(){
+    return this->gestorPartida->getListaJugadoresPartida();
+}
+
 //Metodo que evalua constantemente si el jugador esta propenso
 void PartidaController::refrescarEvaluacionUno(){
     this->gestorPartida->getJugadorActual()->evaluarPropensoUno();
