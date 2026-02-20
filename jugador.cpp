@@ -1,7 +1,9 @@
 #include "jugador.h"
 #include"QDebug"
 
-Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codigo(_codigo), estaObligado(false),tipoObligado(TipoCarta::Predeterminado)
+Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codigo(_codigo),
+    estaObligado(false),tipoObligado(TipoCarta::Predeterminado),
+    obligadoSacar(false), colorObligado(TipoColor::PREDETERMINADO)
 {
     this->mazo = new ListaEnlazada<Carta>();
 
@@ -61,6 +63,37 @@ void Jugador::desordenarCartas(){
             this->mazo->getValor(j) = temp;
         }
     }
+}
+
+//Metodo para saber el color que esta obligado a sacar
+std::string Jugador::saberColorObligado(TipoColor colorCarta){
+
+    if(!this->obligadoSacar){
+        return "CUALQUIERA";
+    }
+
+    //(P)
+    switch (colorCarta) {
+    case TipoColor::AMARILLO:
+        return "AMARILLO";
+    case TipoColor::VERDE:
+        return "VERDE";
+    case TipoColor::ROJO:
+        return "ROJO";
+    case TipoColor::AZUL:
+        return "AZUL";
+    case TipoColor::NARANJA:
+        return "NARANJA";
+    case TipoColor::ROSA:
+        return "ROSA";
+    case TipoColor::VIOLETA:
+        return "VIOLETA";
+    case TipoColor::TURQUESA:
+        return "TURQUESA";
+    default:
+        return "PREDETERMINADO";
+    }
+
 }
 
 //Metodo para definir la prioridad de cartas
@@ -140,6 +173,27 @@ void Jugador::setEstaObligado(bool flag){
     this->estaObligado = flag;
 }
 //=======Fin de los Metodos que permiten saber si se esta obligado a tirar un color o carta=======
+
+
+//=======Metodos que permiten saber si se esta obligado a tirar un color o carta=======
+TipoColor Jugador::getColorObligado(){
+    return this->colorObligado;
+}
+
+bool Jugador::getObligadoSacar(){
+    return this->obligadoSacar;
+}
+
+void Jugador::setColorObligado(TipoColor tipo){
+    this->colorObligado = tipo;
+}
+
+void Jugador::setObligadoSacar(bool flag){
+    this->obligadoSacar = flag;
+}
+//=======Fin de los Metodos que permiten saber si se esta obligado a tirar un color o carta=======
+
+
 
 //Sobrecarga del operador igual
 bool Jugador::operator==(const Jugador& otro) const{

@@ -25,7 +25,6 @@ void Numerica::lanzarCarta(Partida & partidaActual) {
 
 //Caso donde la carta debe interactuar con la partida y un jugador x
 void Numerica::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
-
 }
 
 

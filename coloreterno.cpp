@@ -1,4 +1,6 @@
 #include "coloreterno.h"
+#include"partida.h"
+#include"jugador.h"
 
 ColorEterno::ColorEterno(const ColorCarta&_colorRef, const std::string &_nombre,const std::string &_lado,int _jerarquia)
     :Modelo(_colorRef,_nombre,_lado,TipoCarta::ETERNA,_jerarquia) {}
@@ -30,6 +32,8 @@ void ColorEterno::lanzarCarta(Partida & partidaActual) {
 //Caso donde la carta debe interactuar con la partida y un jugador x
 void ColorEterno::lanzarCarta(Partida & partidaActual, ListaCircular<Jugador*> & jugador) {
 
+    Jugador * jugadorSiguiente = partidaActual.pickJugadorSiguiente();
+    jugadorSiguiente->setObligadoSacar(true);
 }
 
 

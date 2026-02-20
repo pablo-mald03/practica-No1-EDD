@@ -166,6 +166,12 @@ private:
     //METODO IMPORTANTE EJECUTA EL PRIMER MOVIMIENTO DE LA PILA
     void ejecutarPrimerMovimiento();
 
+    //Metodo que permite saber si el jugador puede o no continuar su juego (esta obligado a un color)
+    void evaluarObligacionColor(ResultadoJugada &resultado, Carta &cartaTomada);
+
+    //Metodo que permite retornar el color en base a la decision tomada
+    TipoColor getColorDecision(int decision);
+
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
     ~Partida();
@@ -260,6 +266,8 @@ public:
     //Metodo que le dice a todos los jugadores que desordenen sus cartas
     void desordenarCartas();
 
+    //Metodo que permite retornar el siguiente jugador
+    Jugador * pickJugadorSiguiente();
 };
 
 /*CREATED BY PABLO M*/

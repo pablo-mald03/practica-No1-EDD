@@ -21,6 +21,10 @@ private:
     TipoCarta tipoObligado;
     bool estaObligado;
 
+    //Atributo que permite saber si el jugador esta obligado a sacar caratas hasta un color
+    bool obligadoSacar;
+    TipoColor colorObligado;
+
 public:
     Jugador(const std::string _nombre, int codigo);
     ~Jugador();
@@ -35,12 +39,21 @@ public:
     //Metodo que permite obtener el mazo
     ListaEnlazada<Carta> * getMazo();
 
-    //Metodos que permiten saber si se esta obligado a tirar un color o carta
+    //===========REGION Metodos que permiten saber si se esta obligado a tirar un color o carta
     TipoCarta getTipoObligado();
     bool getEstaObligado();
-
     void setTipoObligado(TipoCarta tipo);
     void setEstaObligado(bool flag);
+    //===========REGION Metodos que permiten saber si se esta obligado a tirar un color o carta
+
+
+    //========REGION Metodos que permiten saber si el jugador esta obligado a sacar un color
+    TipoColor getColorObligado();
+    bool getObligadoSacar();
+    void setColorObligado(TipoColor tipo);
+    void setObligadoSacar(bool flag);
+
+    //========REGION Metodos que permiten saber si el jugador esta obligado a sacar un color
 
     //Metodo para ordenar cartas
     void ordenarCartas(bool estaEnFlip);
@@ -52,6 +65,8 @@ public:
 
     //Metodo de desorden que permite ejecutar un desorden con la carta eclipse
     void desordenarCartas();
+    //Metodo que permite saber el color al que esta obligado a sacar el jugador
+    std::string saberColorObligado(TipoColor colorCarta);
 
 };
 

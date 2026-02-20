@@ -101,8 +101,6 @@ void Partida:: definirColorPrincipal(){
 
 }
 
-
-
 //Metodo que permite obtener un color aleatorio cuando sale una carta especial
 TipoColor Partida::generarColorAleatorio() {
     std::random_device rd;
@@ -124,6 +122,27 @@ TipoColor Partida::generarColorAleatorio() {
         case 2: return TipoColor::ROSA;
         case 3: return TipoColor::VIOLETA;
         default: return TipoColor::TURQUESA;
+        }
+    }
+}
+
+//Metodo que permite retornar el color en base a la decision tomada
+TipoColor Partida::getColorDecision(int decision) {
+
+    if (this->estaFlip) {
+
+        switch(decision) {
+        case 1: return TipoColor::NARANJA;
+        case 2: return TipoColor::ROSA;
+        case 3: return TipoColor::VIOLETA;
+        default: return TipoColor::TURQUESA;
+        }
+    } else {
+        switch(decision) {
+        case 1: return TipoColor::AMARILLO;
+        case 2: return TipoColor::VERDE;
+        case 3: return TipoColor::ROJO;
+        default: return TipoColor::AZUL;
         }
     }
 }
@@ -244,6 +263,11 @@ ResultadoJugada Partida::tomarCarta(){
 
         resultado.analizarStack = true;
 
+        if(this->getJugadorActual()->getObligadoSacar()){
+            this->evaluarObligacionColor(resultado, cartaTomada);
+            return resultado;
+        }
+
         if(this->configuracion.esModoRobo()){
             resultado.jugadaValida = true;
             return resultado;
@@ -260,6 +284,50 @@ ResultadoJugada Partida::tomarCarta(){
     }catch(const std::runtime_error & ex){
         resultado.jugadaValida = false;
         return resultado;
+    }
+}
+
+
+//Metodo auxiliar que permite saber que se va a determinar cuando el jugador esta obligado a sacar una carta
+void Partida::evaluarObligacionColor(ResultadoJugada &resultado, Carta &cartaTomada){
+
+    TipoColor colorObligado = this->getJugadorActual()->getColorObligado();
+    resultado.tiempoAnimacion = 2500;
+    resultado.tiempoMensaje = 2000;
+    resultado.darMensaje = true;
+    resultado.jugadaValida = true;
+
+    Jugador * jugadorActual = this->getJugadorActual();
+
+
+    if(!this->estaFlip){
+        if(cartaTomada.getAnverso()->getColor() == colorObligado){
+            jugadorActual->setObligadoSacar(false);
+            jugadorActual->setColorObligado(TipoColor::PREDETERMINADO);
+            resultado.colorAviso = "#0C7527";
+            resultado.mensajeJugador = "Saliste del efecto de Color Eterno";
+
+            return;
+        }else{
+            std::string mensajeColor = this->getJugadorActual()->saberColorObligado(colorObligado);
+            resultado.colorAviso = "#91042B";
+            resultado.mensajeJugador = "ESTAS OBLIGADO A SACAR UNA CARTA DE COLOR " + mensajeColor;
+            return;
+        }
+    }else{
+        if(cartaTomada.getReverso()->getColor() == colorObligado){
+            jugadorActual->setObligadoSacar(false);
+            jugadorActual->setColorObligado(TipoColor::PREDETERMINADO);
+            resultado.colorAviso = "#0C7527";
+            resultado.mensajeJugador = "Saliste del efecto de Color Eterno";
+
+            return;
+        }else{
+            std::string mensajeColor = this->getJugadorActual()->saberColorObligado(colorObligado);
+            resultado.colorAviso = "#91042B";
+            resultado.mensajeJugador = "ESTAS OBLIGADO A SACAR UNA CARTA DE COLOR " + mensajeColor;
+            return;
+        }
     }
 }
 
@@ -293,6 +361,14 @@ bool Partida::puedeGanarConNegra(int indice){
 
 //Metodo que permite ejecutar la tirada
 ResultadoJugada Partida::ejecutarTirada(int indice){
+
+    //Condicion que hace efecto solo si el jugador esta obligado a sacar un color
+    if(this->getJugadorActual()->getObligadoSacar()){
+        TipoColor colorObligado = this->getJugadorActual()->getColorObligado();
+        std::string mensajeColor = this->getJugadorActual()->saberColorObligado(colorObligado);
+
+        throw std::runtime_error(std::string( "ESTAS OBLIGADO A SACAR UNA CARTA COLOR: ") + mensajeColor);
+    }
 
     bool puedeTirar = this->tieneCartaNecesaria();
     if(!puedeTirar){
@@ -331,7 +407,6 @@ ResultadoJugada Partida::ejecutarTirada(int indice){
             }
         }
     }
-
 
     Carta cartaElegida = this->listaJugadores.getActual()->getMazo()->verValor(indice);
 
@@ -384,21 +459,24 @@ ResultadoJugada Partida::ejecutarDecision(int indice, int decision){
 
     if(!this->estaFlip){
 
+        //Opcion cuando se tira la carta comodin
         if(cartaElegida.getAnverso()->getTipo() == TipoCarta::COLORCOMODIN && cartaElegida.getAnverso()->getJerarquia() == 14){
             return this->tirarCartaComodinClara(cartaElegida,decision,indice);
         }
-
+        //Opcion cuando se tira la multicolor clara
         if(cartaElegida.getAnverso()->getTipo() == TipoCarta::SUMAMULTICOLOR && cartaElegida.getAnverso()->getJerarquia() == 13){
             return this->tirarCartaSumaComodinClara(cartaElegida,decision,indice);
         }
     }else{
 
+        //Opcion cuando se tira la multicolor oscura
         if(cartaElegida.getReverso()->getTipo() == TipoCarta::SUMAMULTICOLOR && cartaElegida.getReverso()->getJerarquia() == 13){
             return this->tirarCartaSumaComodinOscura(cartaElegida,decision,indice);
         }
 
-        if(cartaElegida.getReverso()->getTipo() == TipoCarta::SUMAMULTICOLOR && cartaElegida.getReverso()->getJerarquia() == 13){
-            return this->tirarCartaSumaComodinOscura(cartaElegida,decision,indice);
+        //Opcion cuando se tira LA CARTA COLOR ETERNO
+        if(cartaElegida.getReverso()->getTipo() == TipoCarta::ETERNA && cartaElegida.getReverso()->getJerarquia() == 14){
+            return this->tirarCartaEternaOscura(cartaElegida,decision,indice);
         }
     }
     ResultadoJugada resultadoTirada;
@@ -613,10 +691,20 @@ ResultadoJugada Partida::tirarCartaEternaOscura(Carta& cartaElegida, int decisio
     ResultadoJugada resultadoTirada;
 
     resultadoTirada.requiereDecision = false;
-    resultadoTirada.tiempoAnimacion = 2200;
+    resultadoTirada.tiempoMensaje = 2000;
+    resultadoTirada.tiempoAnimacion = 2500;
     resultadoTirada.jugadaValida = true;
     resultadoTirada.colorAviso = "#0C7527";
-    resultadoTirada.analizarStack = false;
+    resultadoTirada.analizarStack = true;
+
+    resultadoTirada.darMensaje = true;
+    cartaElegida.getReverso()->lanzarCarta(*this,this->listaJugadores);
+
+    Jugador * jugadorSiguiente = this->pickJugadorSiguiente();
+    TipoColor colorObligado = this->getColorDecision(decision);
+    jugadorSiguiente->setColorObligado(colorObligado);
+
+    resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getReverso()->getNombre();
 
     return resultadoTirada;
 }
@@ -681,28 +769,28 @@ ResultadoJugada Partida::accionCartaEspecialOscura(int indice){
 
     ResultadoJugada resultadoTirada;
 
-    //Opcion cuando se tira una carta comodin
-    /*if(cartaElegida.getReverso()->getTipo() == TipoCarta:: && cartaElegida.getReverso()->getJerarquia() == 14){
+    //Opcion cuando se tira LA CARTA COLOR ETERNO
+    if(cartaElegida.getReverso()->getTipo() == TipoCarta::ETERNA && cartaElegida.getReverso()->getJerarquia() == 14){
 
         resultadoTirada.darMensaje = false;
-        resultadoTirada.tiempoMensaje = 3000;
+        resultadoTirada.tiempoMensaje = 2000;
         resultadoTirada.requiereDecision = true;
-        resultadoTirada.tiempoAnimacion = 2000;
+        resultadoTirada.tiempoAnimacion = 2500;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.analizarStack = true;
 
         this->setPuedeMoverse(false);
         return resultadoTirada;
-    }*/
+    }
 
     //Opcion cuando se tira una carta comodin que suma una cantidad
     if(cartaElegida.getReverso()->getTipo() == TipoCarta::SUMAMULTICOLOR && cartaElegida.getReverso()->getJerarquia() == 13){
 
         resultadoTirada.darMensaje = true;
         resultadoTirada.tiempoMensaje = 2000;
-        resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getReverso()->getNombre() ;
+        resultadoTirada.mensajeJugador = std::string("Tiraste una carta ") + cartaElegida.getReverso()->getNombre();
         resultadoTirada.requiereDecision = true;
-        resultadoTirada.tiempoAnimacion = 3000;
+        resultadoTirada.tiempoAnimacion = 3500;
         resultadoTirada.jugadaValida = true;
         resultadoTirada.colorAviso = "#0C7527";
         resultadoTirada.analizarStack = false;
@@ -809,7 +897,7 @@ ResultadoJugada Partida::tirarCartaReversa(Carta& cartaElegida, int indice, bool
     }
 
     resultadoTirada.darMensaje = true;
-    resultadoTirada.tiempoMensaje = 1500;
+    resultadoTirada.tiempoMensaje = 2000;
 
     modeloActivo->lanzarCarta(*this);
 
@@ -831,7 +919,7 @@ ResultadoJugada Partida::tirarCartaReversa(Carta& cartaElegida, int indice, bool
     this->pilaCentralCartas->push(cartaElegida);
     this->listaJugadores.getActual()->getMazo()->eliminar(indice);
 
-    resultadoTirada.tiempoAnimacion = 2000;
+    resultadoTirada.tiempoAnimacion = 2500;
     resultadoTirada.jugadaValida = true;
     resultadoTirada.colorAviso = "#0C7527";
     resultadoTirada.requiereDecision = false;
@@ -1094,7 +1182,6 @@ ResultadoJugada Partida::tirarSumaOscura(Carta& cartaElegida, int indice){
     this->pilaCentralCartas->push(cartaElegida);
     this->pilaStacking->push(cartaElegida);
     this->listaJugadores.getActual()->getMazo()->eliminar(indice);
-    qDebug()<<"Desapila carta suma";
 
     resultadoTirada.requiereDecision = false;
     resultadoTirada.tiempoAnimacion = 2200;
@@ -1312,6 +1399,11 @@ bool Partida::esMismaOscura(const Carta& cartaJugador, const Carta& cartaPila){
 //Metodo que le permite saber al programa si el usuario tiene la carta con el color necesario
 bool Partida::tieneCartaNecesaria(){
 
+    //Solo deja desapilar si en dado caso esta bajo el efecto de la carta de COLOR ETERNO
+    if(this->getJugadorActual()->getObligadoSacar()){
+        return false;
+    }
+
     if(!this->estaFlip){
         return tieneEnClaras();
     }else{
@@ -1401,6 +1493,19 @@ void Partida::ejecutarMovimiento(){
         this->listaJugadores.retroceder();
         this->verificarVuelta();
     }
+}
+
+//Metodo que permite tomar el jugador siguiente al turno
+Jugador * Partida::pickJugadorSiguiente(){
+
+    if(this->direccion == "Derecha"){
+        return this->listaJugadores.pickSiguiente();
+    }
+    else if(this->direccion == "Izquierda"){
+        return this->listaJugadores.pickAnterior();
+    }
+
+    throw std::runtime_error(std::string( "No se ha podido obgener el jugador siguiente "));
 }
 
 //Metodo que permite verificar si ya se ha dado una vuelta
