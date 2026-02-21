@@ -70,7 +70,7 @@ public:
     void refrescarEvaluacionUno();
 
     //Metodo que permite retornar la lista de jugadores
-    ListaCircular<Jugador*> getListaJugadores();
+    ListaCircular<Jugador*>& getListaJugadores();
 
 public slots:
 

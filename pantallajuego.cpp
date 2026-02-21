@@ -46,11 +46,9 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
 //Metodo que permite tirar la carta ESPIA Mecanica mia (P)
 void PantallaJuego::mostrarMazoTemporal()
 {
-    ListaCircular<Jugador*> lista = this->controladorPartida->getListaJugadores();
-
     bool flip = this->controladorPartida->estaModoFlip();
-
-    VerMazoDialog dlg(lista, flip, this);
+    qDebug()<<"si quiere iniciar";
+    VerMazoDialog dlg(this->controladorPartida->getListaJugadores(), flip, this);
     dlg.exec();
 }
 
@@ -384,6 +382,13 @@ void PantallaJuego::onCartaPresionada(int indice) {
             return;
         }
 
+        if(resultado.esEspia){
+            this->mostrarMazoTemporal();
+            this->controladorPartida->obtenerDatosPartida(true);
+            capaBloqueo->hide();
+            return;
+        }
+
         if (resultado.requiereDecision) {
             capaBloqueo->hide();
             bool flip = this->controladorPartida->estaModoFlip();
@@ -484,8 +489,6 @@ void PantallaJuego::on_btnPilaLateral_clicked()
         this->darMensajeJugador(ex.what(), "#91042B",2500);
         capaBloqueo->hide();
     }
-
-
 }
 
 //Boton para gritar UNO

@@ -19,7 +19,7 @@ class VerMazoDialog : public QDialog
 
 public:
     explicit VerMazoDialog(
-        ListaCircular<Jugador*> jugadores,
+        ListaCircular<Jugador*> &jugadores,
         bool modoFlip,
         QWidget *parent = nullptr
         );
@@ -28,7 +28,8 @@ public:
 private:
     Ui::VerMazoDialog *ui;
 
-    ListaCircular<Jugador*> listaJugadores;
+    ListaCircular<Jugador*> &listaJugadores;
+
     bool estaFlip;
 
     QGraphicsScene* escena;
@@ -40,6 +41,9 @@ private:
     void cargarJugadores();
     void mostrarMazoJugador(int indice);
     void dibujarMazo(Jugador* jugadorActual);
+
+    //Metodo que permite Desreferenciar el mazo
+    void setReferenciaMazo();
 };
 
 #endif // VERMAZODIALOG_H

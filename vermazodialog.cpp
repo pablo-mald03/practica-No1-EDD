@@ -1,9 +1,10 @@
 #include "vermazodialog.h"
 #include "cartadeckui.h"
 #include "ui_vermazodialog.h"
+#include"qdebug.h"
 
 VerMazoDialog::VerMazoDialog(
-    ListaCircular<Jugador*> jugadores,
+    ListaCircular<Jugador*> &jugadores,
     bool modoFlip,
     QWidget *parent)
     : QDialog(parent),
@@ -24,7 +25,11 @@ VerMazoDialog::VerMazoDialog(
         "stop:1 #800F44"
         ");"
         "}"
-        );
+    );
+
+    ui->scrollArea->setWidgetResizable(true);
+    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     ui->stackedWidget->setCurrentIndex(0);
     cargarJugadores();
@@ -41,8 +46,9 @@ void VerMazoDialog::inicializarVistaMazo()
     vista->setStyleSheet("background: transparent; border: none;");
     vista->setRenderHint(QPainter::Antialiasing);
 
-    vista->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    vista->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vista->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    vista->setDragMode(QGraphicsView::ScrollHandDrag);
 
     QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->widgetCartas->layout());
 
@@ -58,54 +64,50 @@ void VerMazoDialog::inicializarVistaMazo()
 //Metodo que permite seleccionar
 void VerMazoDialog::cargarJugadores()
 {
-    QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->widgetJugadores->layout());
+    QHBoxLayout* layout =
+        qobject_cast<QHBoxLayout*>(ui->scrollAreaWidgetContents->layout());
 
-    if(!layout) {
-        layout = new QVBoxLayout(ui->widgetJugadores);
-        ui->widgetJugadores->setLayout(layout);
+    if (!layout) {
+        qDebug() << "ERROR: scrollAreaWidgetContents no tiene layout";
+        return;
     }
 
-    layout->setAlignment(Qt::AlignTop);
+    layout->setAlignment(Qt::AlignLeft);
+    layout->setSpacing(20);
 
-    for(int i = 0; i < listaJugadores.getLongitud(); i++)
+    QLayoutItem* item;
+    while ((item = layout->takeAt(0)) != nullptr) {
+        delete item->widget();
+        delete item;
+    }
+
+    for (int i = 0; i < listaJugadores.getLongitud(); i++)
     {
         QPushButton* btn = new QPushButton(
-            QString::fromStdString(listaJugadores.obtenerEn(i)->getNombre())
+            QString::fromStdString(
+                listaJugadores.obtenerConstanteEn(i)->getNombre()
+                )
             );
 
-        btn->setProperty("indiceJugador", i);
+        btn->setFixedSize(160, 160);
 
-        btn->setMinimumHeight(50);
-
-        btn->setStyleSheet(
-            "QPushButton {"
-            "background-color: #353b48;"
-            "color: white;"
-            "border-radius: 10px;"
-            "font-size: 16px;"
-            "}"
-            "QPushButton:hover {"
-            "background-color: #40739e;"
-            "}"
-            );
-
-        connect(btn, &QPushButton::clicked, this, [this, btn]() {
-            int indice = btn->property("indiceJugador").toInt();
-            mostrarMazoJugador(indice);
+        connect(btn, &QPushButton::clicked, this, [this, i]() {
+            mostrarMazoJugador(i);
         });
 
         layout->addWidget(btn);
     }
+
+    layout->addStretch();
 }
 
 //Metodo que permite mostrar el mazo del jugador seleccionado
 void VerMazoDialog::mostrarMazoJugador(int indice)
 {
     jugadorSeleccionado = indice;
-
     ui->stackedWidget->setCurrentIndex(1);
-
-    dibujarMazo(listaJugadores.obtenerEn(indice));
+    Jugador* jugador = listaJugadores.obtenerConstanteEn(indice);
+    dibujarMazo(jugador);
 
     QTimer::singleShot(5000, this, [this]() {
         this->accept();
@@ -119,38 +121,29 @@ void VerMazoDialog::dibujarMazo(Jugador* jugadorActual)
     int total = jugadorActual->getMazo()->getLongitud();
     if(total == 0) return;
 
-    double anchoContenedor = vista->viewport()->width();
-    if(anchoContenedor < 1241) anchoContenedor = 1241;
+    const double anchoCarta = 100.0;
+    const double altoCarta  = 150.0;
+    const double separacion = 30.0;
 
-    double anchoCarta = 135.0;
-    double ideal = (total > 1) ?
-                       (anchoContenedor - 30 - anchoCarta) / (total - 1) : 0;
+    double anchoTotal = (anchoCarta * total) +
+                        (separacion * (total - 1));
 
-    double separacion = (total > 1) ?
-                            qBound(25.0, ideal, 85.0) : 0;
-
-    double anchoTotal = anchoCarta + (total - 1) * separacion;
-    double xActual = (anchoContenedor - anchoTotal) / 2.0;
-
-    escena->setSceneRect(0, 0, anchoContenedor, 240);
+    escena->setSceneRect(0, 0, anchoTotal + 40, 190);
 
     for(int i = 0; i < total; ++i)
     {
         Carta carta = jugadorActual->getMazo()->getValor(i);
 
-        QString pathImagen;
-
-        if(!estaFlip)
-            pathImagen = QString::fromStdString(
-                carta.getAnverso()->getPathImagen());
-        else
-            pathImagen = QString::fromStdString(
-                carta.getReverso()->getPathImagen());
+        QString pathImagen = !estaFlip
+                                 ? QString::fromStdString(carta.getAnverso()->getPathImagen())
+                                 : QString::fromStdString(carta.getReverso()->getPathImagen());
 
         CartaDeckUI* visual = new CartaDeckUI(i, pathImagen);
 
+        visual->setScale(0.75);
+
         escena->addItem(visual);
-        visual->setPos(xActual + (i * separacion), 30);
+        visual->setPos(20 + i * (anchoCarta + separacion), 20);
         visual->setZValue(i);
     }
 }

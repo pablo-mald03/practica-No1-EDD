@@ -23,6 +23,7 @@ struct ResultadoJugada {
     bool requiereDecision = false;
     std::string colorAviso;
     bool analizarStack = false;
+    bool esEspia = false;
 };
 
 //CREATED BY (P)
@@ -156,8 +157,8 @@ private:
     /*====APARTADO DE METODOS DE TIRADO DE CARTAS DE JERARQUIA <13*/
 
     /*========== APARTADO DE INTEGRACION DE LOGICA DE CARTAS ESPECIALES MIAS  BY P*/
-    ResultadoJugada tirarCartaEclipse(Carta& cartaElegida, int indice, bool adelante);
-    ResultadoJugada tirarCartaEspia(Carta& cartaElegida, int indice, bool adelante);
+    ResultadoJugada tirarCartaEclipse(Carta& cartaElegida, int indice);
+    ResultadoJugada tirarCartaEspia(Carta& cartaElegida, int indice);
     /*========== APARTADO DE INTEGRACION DE LOGICA DE CARTAS ESPECIALES MIAS BY P*/
 
     /*=============== CARTA ESPECIAL DE CAMBIO DE FLIP*/
@@ -282,7 +283,7 @@ public:
     void penalizarJugador(Jugador * &jugadorParam);
 
     //Metodo que permite retornar la lista de jugadores en la partida
-    ListaCircular<Jugador*> getListaJugadoresPartida();
+    ListaCircular<Jugador*>& getListaJugadoresPartida();
 };
 
 /*CREATED BY PABLO M*/

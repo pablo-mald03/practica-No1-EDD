@@ -33,6 +33,8 @@ private:
 
 public:
     Jugador(const std::string _nombre, int codigo);
+    //Constructor copia
+    Jugador(const Jugador& otro);
     ~Jugador();
 
     //Sobrecarga del operador igual

@@ -10,6 +10,21 @@ Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codig
 
 }
 
+//Constructor copia
+Jugador::Jugador(const Jugador& otro)
+    : nombre(otro.nombre),
+    codigo(otro.codigo),
+    estaObligado(otro.estaObligado),
+    tipoObligado(otro.tipoObligado),
+    obligadoSacar(otro.obligadoSacar),
+    colorObligado(otro.colorObligado),
+    propensoUno(otro.propensoUno),
+    dijoUno(otro.dijoUno)
+{
+    this->mazo = new ListaEnlazada<Carta>(*otro.mazo);
+}
+
+
 //Metodos getter y setter para evaluar si el jugador dijo UNO
 void Jugador::setDijoUno(bool flag){
     this->dijoUno = flag;

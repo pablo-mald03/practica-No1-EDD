@@ -48,6 +48,27 @@ Nodo<T> * ListaCircular<T>::buscarNodo(int indice) const{
     return actual;
 }
 
+template<typename T>
+T ListaCircular<T>::obtenerConstanteEn(int indice) const
+{
+    if (esVacia())
+        throw std::runtime_error("La lista esta vacia");
+
+    int posicionReal = indice % longitud;
+
+    if (posicionReal < 0)
+        posicionReal += longitud;
+
+    Nodo<T>* actual = cabeza;
+
+    for (int i = 0; i < posicionReal; i++)
+    {
+        actual = actual->getSiguiente();
+    }
+
+    return actual->getDato();
+}
+
 //metodo que permite insertar al final. Es el caso base que se seguira en todo el juego
 template<typename T>
 void ListaCircular<T>::insertar(const T&valor){

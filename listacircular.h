@@ -42,6 +42,9 @@ public:
     //Metodo para dar vuelta (integracion directa)
     T& obtenerEn(int indice);
 
+    //Metodo para obtener constante
+    T obtenerConstanteEn(int indice) const;
+
 };
 
 #endif // LISTACIRCULAR_H

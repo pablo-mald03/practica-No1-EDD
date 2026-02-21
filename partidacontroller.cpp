@@ -16,7 +16,7 @@ PartidaController::~PartidaController(){
 }
 
 //Metodo que permite retornar la lista de jugadores para la mecanica de CARTA ESPIA MIA (P)
-ListaCircular<Jugador*> PartidaController::getListaJugadores(){
+ListaCircular<Jugador*>& PartidaController::getListaJugadores(){
     return this->gestorPartida->getListaJugadoresPartida();
 }
 

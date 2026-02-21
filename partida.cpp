@@ -191,7 +191,7 @@ std::string Partida::gritarUno(std::string texto){
     }
 
     bool dijoAnteriorUno = this->pickJugadorAnterior()->getDijoUno();
-    qDebug()<<"jugador propenso: "<<this->getJugadorActual()->estaPropensoUno();
+
 
     if(this->getJugadorActual()->estaPropensoUno()){
         this->getJugadorActual()->setDijoUno(true);
@@ -542,8 +542,8 @@ ResultadoJugada Partida::ejecutarDecision(int indice, int decision){
 }
 
 //============== APARTADO DE MIS CARTAS ESPECIALES CREADAS POR MI (P) ==============
-
-ResultadoJugada Partida::tirarCartaEclipse(Carta& cartaElegida, int indice, bool adelante){
+//Tirado de mi carta eclipse
+ResultadoJugada Partida::tirarCartaEclipse(Carta& cartaElegida, int indice){
 
     ResultadoJugada resultadoTirada;
 
@@ -580,14 +580,40 @@ ResultadoJugada Partida::tirarCartaEclipse(Carta& cartaElegida, int indice, bool
     return resultadoTirada;
 
 }
-ResultadoJugada Partida::tirarCartaEspia(Carta& cartaElegida, int indice, bool adelante){
+//Tirado de mi carta espia
+ResultadoJugada Partida::tirarCartaEspia(Carta& cartaElegida, int indice){
 
     ResultadoJugada resultadoTirada;
-    resultadoTirada.colorAviso = "#91042B";
-    resultadoTirada.jugadaValida = false;
+
+    resultadoTirada.darMensaje = true;
+    resultadoTirada.tiempoMensaje = 2500;
+
+    Modelo* modeloActivo;
+
+    if(this->estaFlip){
+        modeloActivo = cartaElegida.getReverso();
+    }else{
+        modeloActivo = cartaElegida.getAnverso();
+    }
+
+    resultadoTirada.mensajeJugador =
+        std::string("HAS TIRADO LA CARTA ") + modeloActivo->getNombre();
+
+    modeloActivo->lanzarCarta(*this);
+
+    this->pilaCentralCartas->push(cartaElegida);
+    this->listaJugadores.getActual()->getMazo()->eliminar(indice);
+    TipoColor colorAleatorio = generarColorAleatorio();
+    this->establecerColorPartida(colorAleatorio);
+
+    resultadoTirada.requiereDecision = false;
+    resultadoTirada.esEspia = true;
+    resultadoTirada.tiempoAnimacion = 3000;
+    resultadoTirada.jugadaValida = true;
+    resultadoTirada.colorAviso = "#0A0909";
+    resultadoTirada.analizarStack = true;
 
     return resultadoTirada;
-
 }
 
 //===================APARTADO DE METODOS DE TIRADO DE CARTAS ESPECIALES CLARAS =====================
@@ -808,7 +834,12 @@ ResultadoJugada Partida::accionCartaEspecialClara(int indice){
 
     //Tiro de carta eclipse clara
     if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CARTAECLIPSE && cartaElegida.getAnverso()->getJerarquia() == 15){
-        return this->tirarCartaEclipse(cartaElegida,indice, true);
+        return this->tirarCartaEclipse(cartaElegida,indice);
+    }
+
+    //Tiro de carta espia clara (MIA)
+    if(cartaElegida.getAnverso()->getTipo() == TipoCarta::CARTAESPIA && cartaElegida.getAnverso()->getJerarquia() == 16){
+        return this->tirarCartaEspia(cartaElegida,indice);
     }
 
     resultadoTirada.colorAviso = "#91042B";
@@ -855,9 +886,14 @@ ResultadoJugada Partida::accionCartaEspecialOscura(int indice){
         return resultadoTirada;
     }
 
-    //Tiro de carta eclipse oscura
+    //Tiro de carta eclipse oscura (MIA) (P)
     if(cartaElegida.getReverso()->getTipo() == TipoCarta::CARTAECLIPSE && cartaElegida.getReverso()->getJerarquia() == 15){
-        return this->tirarCartaEclipse(cartaElegida,indice, false);
+        return this->tirarCartaEclipse(cartaElegida,indice);
+    }
+
+    //Tiro de carta espia oscura (MIA) (P)
+    if(cartaElegida.getReverso()->getTipo() == TipoCarta::CARTAESPIA && cartaElegida.getReverso()->getJerarquia() == 16){
+        return this->tirarCartaEspia(cartaElegida,indice);
     }
 
     resultadoTirada.colorAviso = "#91042B";
@@ -1656,7 +1692,7 @@ bool Partida::getEstaEclipse(){
 }
 
 //Metodo que permite retornar la lista de jugadores para la mecanica de CARTA ESPIA MIA (P)
-ListaCircular<Jugador*> Partida::getListaJugadoresPartida(){
+ListaCircular<Jugador*>& Partida::getListaJugadoresPartida(){
     return this->listaJugadores;
 }
 
