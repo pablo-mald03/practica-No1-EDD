@@ -72,6 +72,9 @@ public:
     //Metodo que permite retornar la lista de jugadores
     ListaCircular<Jugador*>& getListaJugadores();
 
+    //Metodo que permite mover a la lista desde el front (CASO MUY ESPECIAL CUANDO ES ESPIA)
+    void aplicarMovimiento();
+
 public slots:
 
     void obtenerDatosPartida(bool verificar);

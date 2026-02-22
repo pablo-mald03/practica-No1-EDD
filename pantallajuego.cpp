@@ -47,9 +47,10 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
 void PantallaJuego::mostrarMazoTemporal()
 {
     bool flip = this->controladorPartida->estaModoFlip();
-    qDebug()<<"si quiere iniciar";
     VerMazoDialog dlg(this->controladorPartida->getListaJugadores(), flip, this);
     dlg.exec();
+
+    this->controladorPartida->aplicarMovimiento();
 }
 
 //Metodo que permite evaluar si por lo menos uno de los jugadores esta en UNO

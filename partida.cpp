@@ -605,6 +605,7 @@ ResultadoJugada Partida::tirarCartaEspia(Carta& cartaElegida, int indice){
     this->listaJugadores.getActual()->getMazo()->eliminar(indice);
     TipoColor colorAleatorio = generarColorAleatorio();
     this->establecerColorPartida(colorAleatorio);
+    this->setPuedeMoverse(false);
 
     resultadoTirada.requiereDecision = false;
     resultadoTirada.esEspia = true;

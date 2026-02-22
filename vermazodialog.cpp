@@ -83,6 +83,10 @@ void VerMazoDialog::cargarJugadores()
 
     for (int i = 0; i < listaJugadores.getLongitud(); i++)
     {
+        if(listaJugadores.getActual() == listaJugadores.obtenerEn(i)){
+            continue;
+        }
+
         QPushButton* btn = new QPushButton(
             QString::fromStdString(
                 listaJugadores.obtenerConstanteEn(i)->getNombre()
@@ -130,6 +134,7 @@ void VerMazoDialog::dibujarMazo(Jugador* jugadorActual)
 
     escena->setSceneRect(0, 0, anchoTotal + 40, 190);
 
+    this->ui->label_2->setText("Cartas del " + QString::fromStdString(jugadorActual->getNombre()));
     for(int i = 0; i < total; ++i)
     {
         Carta carta = jugadorActual->getMazo()->getValor(i);

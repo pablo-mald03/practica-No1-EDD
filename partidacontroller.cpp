@@ -52,6 +52,10 @@ bool PartidaController::estaStackeando(){
 
     return true;
 }
+//METODO EXCLUSIVO DE LA CARTA ESPIA QUE EJECUTA MOVIMIENTO DESPUES
+void PartidaController::aplicarMovimiento(){
+    this->gestorPartida->ejecutarMovimiento();
+}
 
 //Metodo que permite dar el aviso para que se apliquen todas las cartas del stack al jugador
 ResultadoJugada PartidaController::aplicarCartasStackeadas(){
