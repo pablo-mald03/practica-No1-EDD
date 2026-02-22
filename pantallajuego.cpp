@@ -137,13 +137,11 @@ void PantallaJuego::inicializarVistaMazo(){
     escena = new QGraphicsScene(this);
     vista = new QGraphicsView(escena, this);
 
-    // Alineación centrada para que el SceneRect(0,0,ancho,240) se vea bien
     vista->setAlignment(Qt::AlignCenter);
 
     vista->setStyleSheet("background: transparent; border: none;");
     vista->setRenderHint(QPainter::Antialiasing);
 
-    // Evitamos scrollbars que alteran el ancho disponible
     vista->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     vista->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
