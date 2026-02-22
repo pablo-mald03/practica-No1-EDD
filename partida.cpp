@@ -134,8 +134,8 @@ TipoColor Partida::getColorDecision(int decision) {
         switch(decision) {
         case 1: return TipoColor::NARANJA;
         case 2: return TipoColor::ROSA;
-        case 3: return TipoColor::VIOLETA;
-        default: return TipoColor::TURQUESA;
+        case 3: return TipoColor::TURQUESA;
+        default: return TipoColor::VIOLETA;
         }
     } else {
         switch(decision) {
@@ -190,27 +190,29 @@ std::string Partida::gritarUno(std::string texto){
         throw std::runtime_error("¡DEBES ESCRIBIR LA PALABRA \" UNO \"!");
     }
 
-    bool dijoAnteriorUno = this->pickJugadorAnterior()->getDijoUno();
+    Jugador* actual = getJugadorActual();
+    Jugador* anterior = this->pickJugadorAnterior();
 
-
-    if(this->getJugadorActual()->estaPropensoUno()){
-        this->getJugadorActual()->setDijoUno(true);
-        return std::string("¡EL JUGADOR ")+ this->getJugadorActual()->getNombre() +std::string(" HA GRITADO \" UNO \"!");
+    if (actual->estaPropensoUno()) {
+        if (actual->getDijoUno()) {
+            return "¡ YA HAS GRITADO \"UNO\"!";
+        }
+        actual->setDijoUno(true);
+        return "¡EL JUGADOR " + actual->getNombre() +" HA GRITADO \"UNO\"!";
     }
-    else if (!dijoAnteriorUno){
-        //Penalizacion al jugador que no dijo UNO
-        Jugador * jugadorAnteriorGrito = this->pickJugadorAnterior();
-        this->penalizarJugador(jugadorAnteriorGrito);
-        return std::string("¡EL ")+ this->pickJugadorAnterior()->getNombre() +std::string(" HA SIDO PENALIZADO +2 CARTAS");
-
-    }else if(dijoAnteriorUno){
-        //Penalizacion al jugador que quizo penalizar al anterior
-        Jugador * jugadoActualGrito = this->getJugadorActual();
-        this->penalizarJugador(jugadoActualGrito);
-        return std::string("¡HAS SIDO PENALIZADO EL ")+ this->pickJugadorAnterior()->getNombre() +std::string(" YA GRITO \" UNO \"!");
+    // Si el anterior está en UNO y NO lo dijo
+    if (anterior->estaPropensoUno() && !anterior->getDijoUno()) {
+        this->penalizarJugador(anterior);
+        return "¡EL " + anterior->getNombre() +" HA SIDO PENALIZADO +2 CARTAS!";
+    }
+    // Si el anterior sí lo dijo
+    if (anterior->estaPropensoUno() && anterior->getDijoUno()) {
+        this->penalizarJugador(actual);
+        return "¡PENALIZADO EL ANTERIOR YA DIJO \"UNO\"!";
     }
 
-    throw std::runtime_error("¡NO SE EJECUTO LA ACCION DE GRITO \" UNO \"!");
+    penalizarJugador(actual);
+    return "¡REPORTE FALSO! RECIBES +2 CARTAS.";
 }
 
 //Metodo que permite penalizar al jugador acorde a la accion determinada( METODO COMPLEMENTARIO)

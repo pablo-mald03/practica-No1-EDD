@@ -284,6 +284,7 @@ void PartidaController::gritarUno(QString mensaje){
         std::string mensajeString = mensaje.toStdString();
         std::string mensajeAccion = this->gestorPartida->gritarUno(mensajeString);
         reportarMensaje(mensajeAccion, "#0C7527", 2500);
+        this->obtenerDatosPartida(true);
 
     }catch(const std::runtime_error & ex){
         reportarMensaje(ex.what(), "#91042B", 2500);
