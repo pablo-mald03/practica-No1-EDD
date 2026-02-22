@@ -43,6 +43,29 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
     this->capaBloqueo->hide();
 }
 
+
+//Metodo que permite verificar si el jugador anterior gano la partida (P)
+void PantallaJuego::analizarGanador()
+{
+    bool yaGanaron = this->controladorPartida->jugadorGano();
+
+    if(!yaGanaron){
+        return;
+    }
+
+    capaBloqueo->setGeometry(this->rect());
+    capaBloqueo->show();
+    capaBloqueo->raise();
+
+    this->controladorPartida->darMensajeGanador();
+
+
+    QTimer::singleShot(4050, this, [this]() {
+        capaBloqueo->hide();
+        emit solicitarSalida();
+    });
+}
+
 //Metodo que permite tirar la carta ESPIA Mecanica mia (P)
 void PantallaJuego::mostrarMazoTemporal()
 {
@@ -387,6 +410,7 @@ void PantallaJuego::onCartaPresionada(int indice) {
             this->mostrarMazoTemporal();
             this->controladorPartida->obtenerDatosPartida(true);
             capaBloqueo->hide();
+            analizarGanador();
             return;
         }
 
@@ -413,15 +437,15 @@ void PantallaJuego::onCartaPresionada(int indice) {
             QTimer::singleShot(resultadoDecision.tiempoAnimacion, this, [this]() {
                 this->controladorPartida->obtenerDatosPartida(true);
                 capaBloqueo->hide();
+                analizarGanador();
             });
-
-
             return;
         }
 
         QTimer::singleShot(resultado.tiempoAnimacion, this, [this]() {
             this->controladorPartida->obtenerDatosPartida(true);
             capaBloqueo->hide();
+            analizarGanador();
         });
 
     }catch(const std::runtime_error & ex){

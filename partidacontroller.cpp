@@ -292,6 +292,20 @@ void PartidaController::gritarUno(QString mensaje){
 
 }
 
+//======METODOS QUE RETORNAN SI EL JUGADOR YA GANO (METODOS COMPLEMENTARIOS)========
+bool PartidaController::jugadorGano(){
+    Jugador * jugadorAnterior = this->gestorPartida->pickJugadorAnterior();
+    return jugadorAnterior->getMazo()->getLongitud() == 0;
+}
+
+void PartidaController::darMensajeGanador(){
+    Jugador * jugadorAnterior = this->gestorPartida->pickJugadorAnterior();
+    std::string mensaje = std::string("!EL ") + jugadorAnterior->getNombre() + std::string(" HA GANADO LA PARTIDA!");
+    reportarMensaje(mensaje, "#0C7527", 4000);
+}
+
+//======METODOS QUE RETORNAN SI EL JUGADOR YA GANO (METODOS COMPLEMENTARIOS)========
+
 //Metodo util para verificar si puede desapilar
 bool PartidaController::puedeDesapilar(){
     return this->gestorPartida->tieneCartaNecesaria();

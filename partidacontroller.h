@@ -75,6 +75,12 @@ public:
     //Metodo que permite mover a la lista desde el front (CASO MUY ESPECIAL CUANDO ES ESPIA)
     void aplicarMovimiento();
 
+    //Metodo que permite retornar si el jugador ya gano
+    bool jugadorGano();
+
+    //Metodo que permite retornar el mensaje para el jugador ganador
+    void darMensajeGanador();
+
 public slots:
 
     void obtenerDatosPartida(bool verificar);

@@ -79,6 +79,9 @@ private:
     //Metodo que permite ejecutar la mecanica de la carta espia
     void mostrarMazoTemporal();
 
+    //Metodo que permite analizar si el jugador gano la partida
+    void analizarGanador();
+
 signals:
     void solicitarSalida();
 private slots:
