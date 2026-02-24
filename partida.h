@@ -284,6 +284,9 @@ public:
 
     //Metodo que permite retornar la lista de jugadores en la partida
     ListaCircular<Jugador*>& getListaJugadoresPartida();
+
+    //Metodo que permite verificar si la pila esta vacia
+    void verificarPilaLateral();
 };
 
 /*CREATED BY PABLO M*/

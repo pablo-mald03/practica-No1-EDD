@@ -263,7 +263,13 @@ ResultadoJugada PartidaController::tirarCarta(int indice){
             return jugadaNormal;
 
         } else {
-           reportarMensaje("Esa carta no se puede tirar", "#91042B", 2500);
+
+            if(jugadaNormal.darMensaje){
+                QString color = QString::fromStdString(jugadaNormal.colorAviso);
+                reportarMensaje(jugadaNormal.mensajeJugador, color, jugadaNormal.tiempoMensaje);
+            }else{
+                reportarMensaje("Esa carta no se puede tirar", "#91042B", 2500);
+            }
         }
 
     }catch(const std::runtime_error & ex){
