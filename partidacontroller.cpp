@@ -350,6 +350,39 @@ ResultadoJugada PartidaController::desapilarCarta(){
 void PartidaController::reportarMensaje(std::string mensaje, QString colorHex, int tiempo){
     emit darMensaje(mensaje,colorHex, tiempo);
 }
+
+//======APARTADO DONDE EL JUGADOR PUEDE RETAR O NO
+bool PartidaController::puedeRetar(){
+    return this->gestorPartida->getConfiguracion().esRetoMas4();
+}
+
+bool PartidaController::estaStackeandoComodin(){
+    Carta cartaStack = this->gestorPartida->getPilaStack()->verTop();
+
+    bool esFlip = this->estaModoFlip();
+
+    if(!esFlip){
+        return cartaStack.getAnverso()->getJerarquia() == 13;
+    }else{
+        return cartaStack.getReverso()->getJerarquia() == 13;
+    }
+}
+
+//Metodo que obliga al jugador actual a retar
+void PartidaController::obligarRetar(){
+    this->gestorPartida->obligarJugadorRetar();
+}
+
+//Metodo que permite ejecutar el reto al jugador anterior
+void PartidaController::retarJugador(){
+    std::string mensaje = this->gestorPartida->ejecutarReto();
+    this->obtenerDatosPartida(false);
+    reportarMensaje(mensaje, "#091787", 2000);
+}
+
+//======APARTADO DONDE EL JUGADOR PUEDE RETAR O NO
+
+
 //(P)
 //Metodo que se encarga de retornar la informacion principal al iniciar la partida
 void PartidaController::obtenerDatosPartida(bool verificar){

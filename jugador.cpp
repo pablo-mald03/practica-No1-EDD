@@ -4,7 +4,7 @@
 Jugador::Jugador(const std::string _nombre, int _codigo): nombre(_nombre), codigo(_codigo),
     estaObligado(false),tipoObligado(TipoCarta::Predeterminado),
     obligadoSacar(false), colorObligado(TipoColor::PREDETERMINADO), propensoUno(false),
-    dijoUno(false)
+    dijoUno(false),obligadoRetar(false)
 {
     this->mazo = new ListaEnlazada<Carta>();
 
@@ -24,6 +24,13 @@ Jugador::Jugador(const Jugador& otro)
     this->mazo = new ListaEnlazada<Carta>(*otro.mazo);
 }
 
+//Metodos getter y setter para saber si el jugador esta obligado a retar
+bool Jugador::getObligadoRetar(){
+    return  this->obligadoRetar;
+}
+void Jugador::setObligadoRetar(bool flag){
+    this->obligadoRetar = flag;
+}
 
 //Metodos getter y setter para evaluar si el jugador dijo UNO
 void Jugador::setDijoUno(bool flag){

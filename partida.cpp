@@ -17,7 +17,7 @@
 /*CREATED BY PABLO M*/
 
 Partida::Partida(int _cantidadJugadores,DatosConfiguracion* &config)
-    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false), puedeMoverse(true),colorPartida("PREDETERMINADO"),vecesSumadasCarta(0), puedeRetar(false), estaEclpse(false)
+    :cantidadJugadores(_cantidadJugadores),listaJugadores(), configuracion(config), direccion("Derecha"), cantidadVueltas(0), estaFlip(false), puedeMoverse(true),colorPartida("PREDETERMINADO"),colorAnterior(TipoColor::PREDETERMINADO),vecesSumadasCarta(0), puedeRetar(false), estaEclpse(false)
 
 {
     generarJugadores();
@@ -98,6 +98,7 @@ void Partida:: definirColorPrincipal(){
 
     TipoColor colorAleatorio = generarColorAleatorio();
     this->establecerColorPartida(colorAleatorio);
+    this->colorAnterior = colorAleatorio;
 
 }
 
@@ -441,6 +442,10 @@ ResultadoJugada Partida::ejecutarTirada(int indice){
         std::string mensajeColor = this->getJugadorActual()->saberColorObligado(colorObligado);
 
         throw std::runtime_error(std::string( "OBLIGADO A SACAR CARTA COLOR: ") + mensajeColor);
+    }
+
+    if(this->getJugadorActual()->getObligadoRetar()){
+        throw std::runtime_error(std::string( "ESTAS OBLIGADO A RETAR!"));
     }
 
     bool puedeGanar = this->puedeGanarConNegra(indice);
@@ -849,7 +854,7 @@ ResultadoJugada Partida::accionCartaEspecialClara(int indice){
         resultadoTirada.jugadaValida = true;
         resultadoTirada.colorAviso = "#0C7527";
         resultadoTirada.analizarStack = false;
-
+        this->colorAnterior = this->getColorPartida();
         this->setPuedeMoverse(false);
         return resultadoTirada;
     }
@@ -903,6 +908,7 @@ ResultadoJugada Partida::accionCartaEspecialOscura(int indice){
         resultadoTirada.jugadaValida = true;
         resultadoTirada.colorAviso = "#0C7527";
         resultadoTirada.analizarStack = false;
+        this->colorAnterior = this->getColorPartida();
 
         this->setPuedeMoverse(false);
         return resultadoTirada;
@@ -1616,6 +1622,126 @@ bool Partida::tieneEnOscuras(){
     return false;
 }
 
+
+//===================SUBAPARTADO QUE PERMITE VERIFICAR SI EL JUGADOR PUEDE RETAR====================
+
+//Metodo que obliga al jugador a retar
+void Partida::obligarJugadorRetar(){
+    this->getJugadorActual()->setObligadoRetar(true);
+}
+
+//Metodo que permite ejecutar la mecanica de RETO MAS 4 (aplica tambien para flip)
+std::string Partida::ejecutarReto(){
+
+    bool movio = false;
+
+    Jugador * jugadorPerjudicado = this->jugadorSumar(movio);
+
+    std::string mensaje = "";
+
+    int cantidad = this->pilaStacking->getLongitud();
+
+    Carta cartaApilada = this->pilaStacking->verTop();
+
+    while(!this->pilaStacking->estaVacia()){
+
+        Carta cartaDesapilada = this->pilaStacking->verTop();
+
+        if(!this->estaFlip){
+            cartaDesapilada.getAnverso()->lanzarCarta(*this, this->listaJugadores);
+        }
+        else{
+            cartaDesapilada.getReverso()->lanzarCarta(*this, this->listaJugadores);
+        }
+
+        this->pilaStacking->pop();
+    }
+    int extras = 2;
+
+    while(extras >0){
+
+        Carta cartaDesapilada = this->pilaLateralCartas->verTop();
+
+        if (this->pilaLateralCartas->estaVacia()) {
+            this->llenarPilaLateral();
+        }
+
+        jugadorPerjudicado->getMazo()->insertarFrente(cartaDesapilada);
+
+        this->pilaLateralCartas->pop();
+        extras--;
+    }
+
+    int vecesSuma = this->getVecesSumadasCarta();
+    mensaje = std::string("El ") + jugadorPerjudicado->getNombre() +std::string(" robo ") + std::to_string(cantidad * vecesSuma + 2) + " cartas" ;
+
+    this->listaJugadores.getActual()->ordenarCartas(this->estaFlip);
+    this->setVecesSumadasCarta(0);
+
+    if(movio){
+        this->regresarActual();
+    }
+
+    this->getJugadorActual()->setObligadoRetar(false);
+    return mensaje;
+}
+
+//Metodo auxiliar que retorna a que jugador se le va a sumar la carta
+Jugador *  Partida::jugadorSumar(bool &movio){
+
+    Jugador * jugadorAnterior = this->pickJugadorAnterior();
+
+    for (int i = 0; i < jugadorAnterior->getMazo()->getLongitud(); ++i) {
+
+        Carta cartaObtenida = jugadorAnterior->getMazo()->getValor(i);
+
+        if(this->estaFlip){
+
+            if(cartaObtenida.getReverso()->getColor().getColorCarta() == this->colorAnterior){
+                movio = true;
+                this->movimientoAtras();
+                return jugadorAnterior;
+            }
+        }else{
+            if(cartaObtenida.getAnverso()->getColor().getColorCarta() == this->colorAnterior){
+                movio = true;
+                this->movimientoAtras();
+                return jugadorAnterior;
+            }
+        }
+    }
+
+    movio = false;
+    return this->getJugadorActual();
+}
+
+//Metodo que permite ejecutar un movimiento provisional
+
+void Partida::movimientoAtras(){
+    this->getJugadorActual()->evaluarPropensoUno();
+
+    if(this->direccion == "Derecha"){
+        this->listaJugadores.retroceder();
+    }
+    else if(this->direccion == "Izquierda"){
+        this->listaJugadores.avanzar();
+    }
+}
+
+//Metodo que permite reindexar a la referencia anterior
+void Partida::regresarActual(){
+
+    this->getJugadorActual()->evaluarPropensoUno();
+
+    if(this->direccion == "Derecha"){
+        this->listaJugadores.avanzar();
+    }
+    else if(this->direccion == "Izquierda"){
+        this->listaJugadores.retroceder();
+    }
+}
+
+//===================FIN DEL SUBAPARTADO QUE PERMITE VERIFICAR SI EL JUGADOR PUEDE RETAR====================
 
 //Metodo que permite ejecutar la tirada
 void Partida::ejecutarMovimiento(){

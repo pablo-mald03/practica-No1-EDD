@@ -31,6 +31,9 @@ private:
     //Flag que le permite al jugador declararse en UNO
     bool dijoUno;
 
+    //Atributo que permite obligar al jugador a retar
+    bool obligadoRetar;
+
 public:
     Jugador(const std::string _nombre, int codigo);
     //Constructor copia
@@ -88,6 +91,11 @@ public:
     void setDijoUno(bool flag);
     bool getDijoUno();
     /*===========Region de metodos getter y setter para saber si el jugador dijo UNO*/
+
+    //===========REGION Metodos que permiten saber si se esta obligado a retar
+    bool getObligadoRetar();
+    void setObligadoRetar(bool flag);
+    //===========REGION Metodos que permiten saber si se esta obligado a retar
 
 };
 

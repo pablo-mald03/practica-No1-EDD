@@ -82,6 +82,9 @@ private:
     //Metodo que permite analizar si el jugador gano la partida
     void analizarGanador();
 
+    //Metodo que permite verificar si el jugador quiere retar
+    bool analizarReto();
+
 signals:
     void solicitarSalida();
 private slots:
@@ -89,6 +92,7 @@ private slots:
 
     void on_btnPilaLateral_clicked();
     void on_btnUNO_clicked();
+    void on_btnRetar_clicked();
 };
 
 #endif // PANTALLAJUEGO_H

@@ -81,6 +81,18 @@ public:
     //Metodo que permite retornar el mensaje para el jugador ganador
     void darMensajeGanador();
 
+    //Metodo que permite verificar si el jugador puede retar
+    bool puedeRetar();
+
+    //Metodo que verifica si esta stackeando comodines
+    bool estaStackeandoComodin();
+
+    //Metodo que permite obligar al jugador a retar
+    void obligarRetar();
+
+    //Metodo para retar al jugador anterior
+    void retarJugador();
+
 public slots:
 
     void obtenerDatosPartida(bool verificar);

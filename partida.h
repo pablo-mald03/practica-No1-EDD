@@ -77,6 +77,9 @@ private:
     //Referencia al puntero para contabilizar una vuelta dada
     Nodo<Jugador*> inicioRonda = nullptr;
 
+    //Atributo que permite almacenar el color anterior
+    TipoColor colorAnterior;
+
     //Metodos propios de la clase para hacer funcionar la partida
     void generarJugadores();
     int generarIndiceRandom(int limiteSuperior);
@@ -172,6 +175,10 @@ private:
 
     //Metodo que permite retornar el color en base a la decision tomada
     TipoColor getColorDecision(int decision);
+
+    //Metodos que permite ejecutar un movimiento provisional
+    void movimientoAtras();
+    void regresarActual();
 
 public:
     Partida(int _cantidadJugadores,DatosConfiguracion* &config);
@@ -287,6 +294,13 @@ public:
 
     //Metodo que permite verificar si la pila esta vacia
     void verificarPilaLateral();
+    //Metodo que obliga al jugador a retar
+    void obligarJugadorRetar();
+    //Metodo que ejecuta el reto de las cartas stackeadas
+    std::string ejecutarReto();
+    //Metodo que le suma las cartas al jugador respectivo
+    Jugador *  jugadorSumar(bool &movio);
+
 };
 
 /*CREATED BY PABLO M*/

@@ -43,6 +43,36 @@ PantallaJuego::PantallaJuego(int _cantidad,bool &estaConfigurando,DatosConfigura
     this->capaBloqueo->hide();
 }
 
+//Metodo que permite verificar si el jugador puede retar al jugador anterior (se asume que pasa por el stackeo)
+bool PantallaJuego::analizarReto(){
+    bool puedeRetar = this->controladorPartida->puedeRetar();
+    if(!puedeRetar){
+        this->ui->btnRetar->setEnabled(false);
+        return false;
+    }
+
+    bool stackeandoComodin = this->controladorPartida->estaStackeandoComodin();
+
+    if(!stackeandoComodin){
+        this->ui->btnRetar->setEnabled(false);
+        return false;
+    }
+
+    std::string mensaje = "Deseas retar al jugador anterior?";
+
+    bool decisionReto = mostrarConfirmacionStacking(mensaje);
+
+    if(!decisionReto){
+        this->ui->btnRetar->setEnabled(false);
+        return false;
+    }
+
+    //(P)
+    this->darMensajeJugador("Presiona el boton de RETAR!", "#0C7527",2000);
+    this->ui->btnRetar->setEnabled(true);
+    this->controladorPartida->obligarRetar();
+    return true;
+}
 
 //Metodo que permite verificar si el jugador anterior gano la partida (P)
 void PantallaJuego::analizarGanador()
@@ -222,12 +252,18 @@ void PantallaJuego::verificarStacking(bool evaluar){
     bool estaStacking =  this->controladorPartida->estaStackeando();
 
     if(!estaStacking){
+        this->ui->btnRetar->setEnabled(false);
         return;
     }
 //(P)
     bool puedeStackear = this->controladorPartida->puedeStackear();
 
     if(!puedeStackear){
+
+        bool reto = analizarReto();
+        if(reto){
+            return;
+        }
         ejecutarSumaCartas();
         return;
     }
@@ -235,10 +271,18 @@ void PantallaJuego::verificarStacking(bool evaluar){
     bool tieneCartasNecesarias = this->controladorPartida->tieneParaStackear();
 
     if(!tieneCartasNecesarias){
+        bool reto = analizarReto();
+        if(reto){
+            return;
+        }
         ejecutarSumaCartas();
         return;
     }
 
+    bool reto = analizarReto();
+    if(reto){
+        return;
+    }
     //Si llega hasta aca es porque si puede decidir si seguir stackeando
     std::string mensaje = this->controladorPartida->getMensajeStacking();
 
@@ -520,5 +564,12 @@ void PantallaJuego::on_btnUNO_clicked()
     QString textoLimpio = ui->textoUNO->text().trimmed();
     this->controladorPartida->gritarUno(textoLimpio);
     this->ui->textoUNO->clear();
+}
+
+//Accion que permite retar al jugador anterior
+void PantallaJuego::on_btnRetar_clicked()
+{
+    this->controladorPartida->retarJugador();
+    this->ui->btnRetar->setEnabled(false);
 }
 
