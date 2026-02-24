@@ -27,24 +27,21 @@ Crear un archivo llamado `build.sh` en la raíz del proyecto con el siguiente co
 #!/bin/bash
 
 echo "===================================="
-echo " Compilando PracticaNo1 (Qt6 + CMake)"
+echo " Compilando PracticaNo1 :) (Qt6 + CMake)"
 echo "===================================="
 
-# Verificar que CMakeLists.txt exista
 if [ ! -f "CMakeLists.txt" ]; then
     echo "Error: No se encontró CMakeLists.txt en esta carpeta."
     exit 1
 fi
 
-# Limpiar build anterior
 rm -rf build
-
-# Crear nueva carpeta build
 mkdir build
 cd build
 
 echo "Generando proyecto con CMake..."
-cmake ..
+
+cmake -DCMAKE_PREFIX_PATH=$HOME/Qt/6.10.2/gcc_64 ..
 
 if [ $? -ne 0 ]; then
     echo "Error en configuración CMake."
@@ -61,7 +58,6 @@ fi
 
 echo "------------------------------------"
 echo " Compilación exitosa."
-echo " Ejecutable disponible en:"
 echo " $(pwd)/PracticaNo1"
 echo "------------------------------------"
 
@@ -73,10 +69,11 @@ echo "------------------------------------"
 Abre tu terminal en el directorio donde clonaste mi repositorio 
 y ejecuta:
 
+```
 chmod +x build.sh
 
 ./build.sh
-
+```
 
 ##Si no tienes QT en tu pc sigue los pasos:
 
@@ -84,10 +81,16 @@ Debido a que mi proyecto esta en QT este pide que este instalado entonces sigue 
 
 ##Compilacion en linux:
 
-sudo apt install qt6-base-dev qt6-base-dev-tools
+```
+sudo apt update
 
-qmake6 --version o cmake --version
+sudo apt install qt6-base-dev qt6-base-dev-tools cmake build-essential
 
+qmake6 --version 
+
+cmake --version
+
+```
 
 ## Compilación en Windows
 
@@ -97,7 +100,7 @@ qmake6 --version o cmake --version
    https://www.qt.io/download
 
 2. Abrir Qt Creator.
-3. Abrir el proyecto (CMakeLists.txt).
+3. Abrir el proyecto. Dar click en (CMakeLists.txt).
 4. Seleccionar el Kit adecuado.
 5. Presionar Build.
 
