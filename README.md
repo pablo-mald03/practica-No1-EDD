@@ -62,7 +62,7 @@ echo " $(pwd)/PracticaNo1"
 echo "------------------------------------"
 
 ```
-##==========================================
+## ==========================================
 
 ## Luego de copiar el script:
 
@@ -79,7 +79,7 @@ chmod +x build.sh
 
 Debido a que mi proyecto esta en QT este pide que este instalado, entonces sigue los siguientes pasos:
 
-##Compilacion en linux:
+## Compilacion en linux:
 
 ```
 sudo apt update
